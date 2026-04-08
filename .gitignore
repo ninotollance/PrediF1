@@ -1,0 +1,35 @@
+# Variables d'environnement - NE JAMAIS commit
+.env
+.env.local
+.env.*.local
+
+# Dépendances
+/vendor/
+
+# Fichiers système macOS
+.DS_Store
+
+# Fichiers système Windows
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+/logs/
+
+# Cache
+/cache/
+/tmp/
+
+# Fichiers de configuration IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Fichiers uploadés par les utilisateurs
+/public/uploads/
+
+# Fichiers compilés SASS
+*.css.map
+/public/css/*.css

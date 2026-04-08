@@ -1,0 +1,43 @@
+<?php
+namespace PrediF1\controller;
+use Exception;
+
+abstract class Controller {
+
+    // Vérifie si l'utilisateur est connecté, redirige vers connexion sinon
+    protected function checkConnexion() {
+        if(empty($_SESSION['user_logged'])) { // Vérifie si l'utilisateur est connecté
+            $this->redirect('connexion'); // Redirige vers la page de connexion
+        }
+    }
+
+    // Vérifie si l'utilisateur est admin, redirige vers accueil sinon
+    protected function checkAdmin() {
+        $this->checkConnexion(); // Vérifie d'abord si l'utilisateur est connecté
+        if($_SESSION['user_role'] !== 'admin') { // Vérifie si le rôle est admin
+            $this->redirect('accueil'); // Redirige vers l'accueil si pas admin
+        }
+    }
+
+    // Redirige vers une action du router et arrête l'exécution
+    protected function redirect(string $action) {
+        header('location: ?action=' . $action); // Construit l'URL de redirection
+        exit; // Arrête l'exécution du script
+    }
+
+    // Pour les try/catch message générique
+    protected function catchError(Exception $e) {
+        $_SESSION['login_error'] = 'Une erreur est survenue'; // Message générique pour ne pas exposer les détails techniques
+        error_log($e->getMessage()); // Log l'erreur complète pour le développeur
+    }
+
+    // Pour les erreurs métier message spécifique passé en paramètre
+    protected function error(string $message) {
+        $_SESSION['login_error'] = $message; // Message spécifique passé en paramètre
+    }
+
+    // Stocke un message de succès en session pour l'afficher à l'utilisateur
+    protected function success(string $message) {
+        $_SESSION['success'] = $message; // Message spécifique passé en paramètre
+    }
+}

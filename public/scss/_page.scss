@@ -1,0 +1,6 @@
+// Grille 3 colonnes pour les courses
+.races-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}

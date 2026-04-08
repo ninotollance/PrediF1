@@ -1,0 +1,19 @@
+{
+    "name": "kerx12/predi-f1",
+    "description": "projet",
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "PrediF1\\": "app/",
+            "Config\\": "config/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Tllnc",
+            "email": "ninotollance@gmail.com"
+        }
+    ]
+}

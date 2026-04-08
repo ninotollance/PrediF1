@@ -1,0 +1,26 @@
+@use 'variable' as *;
+// Boutons d'onglets
+.tab-btn {
+    cursor: pointer;
+    background-color: $color-bg-2;
+    color: $color-white;
+    
+    &.active {
+        background-color: $color-red;
+        color: $color-white;
+    }
+}
+
+// Grille 4 colonnes pour les pilotes
+#drivers.tab-content:not([hidden]) {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+// Grille 2 colonnes pour les écuries
+#teams.tab-content:not([hidden]) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
