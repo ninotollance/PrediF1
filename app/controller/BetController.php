@@ -19,6 +19,7 @@ class BetController extends Controller {
         $this->raceModel = new RaceModel(); // Instancie le modèle RAce
         $this->driverModel = new DriverModel(); // Instancie le modèle Driver
     }
+    
 
     // Crée un pari (Admin uniquement)
     public function createByAdmin() {
@@ -43,7 +44,8 @@ class BetController extends Controller {
             $this->catchError($e);
             return; // Arrête la fonction
         }
-        $this->redirect('admin'); // Redirige vers la route 'admin'
+        $section = $_POST['section'] ?? 'bets'; // Récupère la section ou 'bets' par défaut
+        $this->redirect('admin&section=' . $section); // Redirige vers la bonne section
     }
 
     // Supprime un pari (Admin uniquement)
@@ -61,7 +63,8 @@ class BetController extends Controller {
             $this->catchError($e);
             return; // Arrête la fonction
         }
-        $this->redirect('admin'); // Redirige vers la route 'admin'
+        $section = $_GET['section'] ?? 'bets'; // Récupère la section ou 'bets' par défaut
+        $this->redirect('admin&section=' . $section); // Redirige vers la bonne section
     }
 
     // Crée un pari (Utilisateur connecté)
@@ -94,6 +97,17 @@ class BetController extends Controller {
         if($now >= $start) {
             $this->error('Paris clos, La course a dejà commencée');
             $this->redirect('accueil'); // Redirige vers la route 'accueil'
+        }
+        try {
+            $alreadyBet = $this->betModel->existsByUserAndRace($_SESSION['user_id'], $idRace);
+        } catch(Exception $e) {
+            $this->catchError($e);
+            return;
+        }
+
+        if($alreadyBet) { // Si un pari existe déjà
+            $this->error('Vous avez déjà parié sur cette course !');
+            $this->redirect('courses'); // Redirige vers les courses
         }
         try {
             $this->betModel->create([ // Crée le pari en BDD

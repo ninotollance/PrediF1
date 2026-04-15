@@ -1,4 +1,590 @@
 @use 'variable' as *;
-.logo {
-    width: 300px;
+@use 'mixin' as *;
+
+// ==============================
+// BURGER — Header mobile
+// ==============================
+
+// Bouton burger du header — utilise le mixin burger-btn
+.burger {
+    @include burger-btn(true); // true = caché sur desktop
+}
+
+// ==============================
+// OVERLAY — Header mobile
+// ==============================
+
+// Fond semi-transparent derrière le menu mobile du header
+.overlay {
+    @include overlay-base(80px); // commence après le header (80px)
+    z-index: 90;
+}
+
+// ==============================
+// MENU MOBILE — Header
+// ==============================
+
+// Menu déroulant mobile du header
+.mobile-menu {
+    background-color: $color-header;
+    padding: 15px;
+    margin: 0 -15px; // annule le padding du header pour aller jusqu'aux bords
+    position: relative;
+    z-index: 99; // au dessus de l'overlay
+
+    @media (min-width: $breakpoint-desktop) {
+        display: none !important; // caché sur desktop
+    }
+
+    ul {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    li {
+        display: block;
+        padding: 12px 15px;
+        color: $color-white;
+        font-family: $font-title;
+        font-size: $text-base;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+
+        &:hover {
+            background-color: $color-red;
+        }
+    }
+}
+
+// Pied du menu mobile — liens connexion/déconnexion
+.mobile-menu-footer {
+    @include menu-footer;
+
+    @media (min-width: $breakpoint-desktop) {
+        margin-top: auto; // poussé vers le bas sur desktop
+    }
+}
+
+// ==============================
+// HEADER — Mobile First
+// ==============================
+
+header {
+    background-color: $color-header;
+    padding: 0 15px;     // mobile : padding réduit
+    height: 80px;
+    position: sticky;
+    top: 0;
+    z-index: 100;        // au dessus de l'overlay (90) et du menu mobile (99)
+
+    @media (min-width: $breakpoint-desktop) {
+        padding: 0 40px; // desktop : plus d'espace
+        height: 90px;
+    }
+}
+
+// Nav — centré et max-width sur desktop
+header nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    gap: 20px;
+
+    @media (min-width: $breakpoint-desktop) {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+}
+
+// Logo — plus petit sur mobile
+img.logo {
+    width: 100px;        // mobile : compact
+
+    @media (min-width: $breakpoint-desktop) {
+        width: 140px;    // desktop : plus grand
+    }
+}
+
+// Liens principaux — cachés sur mobile, visibles sur desktop
+.nav-links {
+    display: none;       // mobile : caché
+
+    @media (min-width: $breakpoint-desktop) {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+    }
+}
+
+// Style des liens de navigation
+header nav a {
+    color: $color-white;
+    font-family: $font-title;
+    font-size: $text-lg;
+    transition: color 0.3s ease;
+
+    &:hover {
+        color: $color-red;
+    }
+
+    &.active {
+        color: $color-red; // lien de la page courante en rouge
+    }
+}
+
+// Boutons connexion/inscription — cachés sur mobile
+.nav-buttons {
+    display: none;       // mobile : caché
+
+    @media (min-width: $breakpoint-desktop) {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+    }
+}
+
+// Bouton "Connexion" — bordure blanche
+.btn-login,
+.btn-delete,
+.btn-delete-user {
+    color: $color-white;
+    border: 1px solid $color-white;
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-family: $font-title;
+    font-size: $text-base;
+    transition: all 0.3s ease;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $color-white;
+        color: $color-bg;
+    }
+}
+
+.btn-delete {
+    margin-top: 10px;
+    padding: 4px 20px;
+    font-family: $font-text;
+}
+
+.btn-delete-user {
+    font-family: $font-text;
+}
+
+// Bouton "Inscription" — fond rouge, utilise le mixin btn-red
+.btn-register {
+    @include btn-red;
+    padding: 8px 20px;
+    font-size: $text-base;
+}
+
+// ==============================
+// TOAST — Messages flash
+// ==============================
+
+// Message de succès ou d'erreur affiché en bas à droite
+.toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: $color-bg-2;
+    color: $color-white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: $text-sm;
+    z-index: 200;
+    border-left: 4px solid green;
+
+    &.error {
+        border-left: 4px solid $color-red;
+    }
+}
+
+// ==============================
+// CONTENU PRINCIPAL
+// ==============================
+
+main {
+    padding: 20px 15px;  // mobile : padding réduit
+
+    @media (min-width: $breakpoint-tablet) {
+        padding: 30px 25px;
+    }
+
+    @media (min-width: $breakpoint-desktop) {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+}
+
+// ==============================
+// FOOTER
+// ==============================
+
+footer {
+    background-color: $color-header;
+    margin-top: 40px;    // mobile : espacement réduit
+
+    @media (min-width: $breakpoint-desktop) {
+        margin-top: 60px;
+    }
+}
+
+// Wrapper interne centré — même logique que header nav et main
+footer .footer-inner {
+    padding: 30px 15px;
+    display: flex;
+    flex-direction: column; // mobile : colonnes empilées
+    gap: 30px;
+
+    @media (min-width: $breakpoint-tablet) {
+        padding: 40px 25px;
+        flex-direction: row; // tablette : en ligne
+        flex-wrap: wrap;
+    }
+
+    @media (min-width: $breakpoint-desktop) {
+        max-width: 1400px;
+        margin: auto;
+        padding: 40px 20px;
+        flex-wrap: nowrap;  // desktop : tout sur une ligne
+    }
+}
+
+footer .footer-inner > div,
+footer .footer-inner > section {
+    flex: 1; // chaque colonne prend une part égale
+}
+
+.footer-logo p {
+    padding-top: 20px;
+}
+
+footer h2 {
+    font-family: $font-title;
+    font-size: $text-base; // mobile : compact
+    margin-bottom: 15px;
+    color: $color-red;
+
+    @media (min-width: $breakpoint-desktop) {
+        font-size: $text-lg; // desktop : plus grand
+    }
+}
+
+footer ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+footer li {
+    font-size: 14px;
+    color: $color-white;
+}
+
+footer a {
+    color: $color-white;
+    font-size: 14px;
+    transition: color 0.3s ease;
+
+    &:hover {
+        color: $color-red;
+    }
+}
+
+footer p {
+    color: $color-white;
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+// ==============================
+// DASHBOARD — Mobile First
+// ==============================
+
+.dashboard-body {
+    background-color: $color-bg;
+}
+
+// Layout : une colonne sur mobile, sidebar + contenu sur desktop
+.dashboard-wrapper {
+    display: grid;
+    grid-template-columns: 1fr;        // mobile : une colonne
+
+    @media (min-width: $breakpoint-desktop) {
+        grid-template-columns: 220px 1fr; // desktop : sidebar fixe + contenu
+        min-height: 100vh;
+    }
+}
+
+// Sidebar — barre de navigation admin
+.dashboard-sidebar {
+    background-color: $color-header;
+    /* padding: 0 15px; */
+    position: relative;
+    z-index: 100;
+
+    @media (min-width: $breakpoint-desktop) {
+        padding: 20px;
+        position: sticky;
+        top: 0;
+        height: 100vh;    // pleine hauteur sur desktop
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+}
+
+// Header de la sidebar — logo + burger sur mobile
+.dashboard-sidebar-header {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; // logo à gauche, burger à droite
+
+    @media (min-width: $breakpoint-desktop) {
+        justify-content: center;    // centré sur desktop
+        height: 90px;
+    }
+
+    img.logo {
+        width: 100px;
+
+        @media (min-width: $breakpoint-desktop) {
+            width: 250px;
+        }
+    }
+}
+
+// Burger du dashboard — utilise le mixin burger-btn
+.dashboard-burger {
+    @include burger-btn(true); // true = caché sur desktop
+}
+
+// Menu de navigation du dashboard
+.dashboard-nav {
+    display: none;       // caché par défaut sur mobile
+
+    &.open {
+        display: block;  // visible quand JS ajoute la classe open
+        position: relative;
+        z-index: 101;
+        background-color: $color-header;
+        padding: 10px 0;
+    }
+
+    @media (min-width: $breakpoint-desktop) {
+        display: flex !important; // toujours visible sur desktop
+        flex-direction: column;
+        flex: 1;
+    }
+
+    nav ul {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        margin-left: 15px;
+    }
+
+    nav a {
+        display: block;
+        padding: 10px 15px;
+        color: $color-white;
+        font-family: $font-title;
+        font-size: $text-base;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+            background-color: $color-red;
+        }
+    }
+}
+
+// Overlay du dashboard — utilise le mixin overlay-base
+.overlay-dashboard {
+    @include overlay-base(0); // commence en haut de page
+    z-index: 50;              // sous la sidebar (100) et le menu (101)
+}
+
+// Pied de la sidebar — utilise le mixin menu-footer
+.dashboard-sidebar-footer {
+    @include menu-footer;
+    margin-left: 15px;
+
+    @media (min-width: $breakpoint-desktop) {
+        margin-top: auto; // poussé vers le bas sur desktop
+    }
+}
+
+// Contenu principal du dashboard
+.dashboard-main {
+    padding: 15px;       // mobile : compact
+    margin-top: 20px;
+
+    @media (min-width: $breakpoint-desktop) {
+        padding: 30px 40px;
+    }
+
+    h1 {
+        font-family: $font-title;
+        font-size: $text-xl;    // mobile
+        margin-bottom: 20px;
+        color: $color-white;
+
+        @media (min-width: $breakpoint-desktop) {
+            font-size: $text-2xl; // desktop
+            margin-bottom: 30px;
+        }
+    }
+}
+
+// Sections du dashboard — chaque section correspond à un onglet
+.dashboard-section {
+    h2 {
+        font-family: $font-title;
+        font-size: $text-lg;    // mobile
+        margin-bottom: 15px;
+        color: $color-white;
+
+        @media (min-width: $breakpoint-desktop) {
+            font-size: $text-xl; // desktop
+            margin-bottom: 20px;
+        }
+
+        a {
+            font-size: $text-sm;
+            color: $color-red;
+            margin-left: 10px;
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+// Wrapper pour scroll horizontal sur mobile
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+// Tableau de données
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: $color-bg-2;
+    border-radius: 8px;
+    display: table;
+
+    th {
+        background-color: $color-header;
+        color: $color-white;
+        font-family: $font-title;
+        font-size: $text-sm;     // mobile : compact
+        padding: 10px 12px;
+        text-align: left;
+        white-space: nowrap;
+
+        @media (min-width: $breakpoint-desktop) {
+            font-size: $text-base;
+            padding: 15px 20px;
+        }
+    }
+
+    td {
+        padding: 10px 12px;
+        color: $color-white;
+        font-size: $text-sm;     // mobile : compact
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+        @media (min-width: $breakpoint-desktop) {
+            padding: 15px 20px;
+            font-size: $text-base;
+        }
+    }
+
+    tr:hover td {
+        background-color: rgba(255, 255, 255, 0.05); // surlignage au survol
+    }
+
+    a {
+        color: $color-red;
+        font-size: $text-sm;
+        margin-right: 10px;
+        cursor: pointer;
+
+        @media (min-width: $breakpoint-desktop) {
+            font-size: $text-base;
+            margin-right: 15px;
+        }
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+// Formulaires du dashboard
+.dashboard-section form {
+    display: flex;
+    flex-direction: column; // champs toujours empilés verticalement
+    gap: 12px;
+    max-width: 100%;        // mobile : pleine largeur
+    margin-top: 15px;
+
+    @media (min-width: $breakpoint-desktop) {
+        gap: 15px;
+        max-width: 600px;   // desktop : largeur limitée
+        margin-top: 20px;
+    }
+}
+
+.dashboard-section label {
+    color: $color-white;
+    font-family: $font-title;
+    font-size: $text-sm;
+}
+
+// Champs du dashboard
+.dashboard-section input,
+.dashboard-section select,
+.dashboard-section textarea {
+    background-color: $color-bg-2;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 8px 12px;
+    color: $color-white;
+    font-size: $text-base;
+    width: 100%;
+
+    &:focus {
+        outline: none;
+        border-color: $color-red; // bordure rouge au focus
+    }
+
+    @media (min-width: $breakpoint-desktop) {
+        padding: 10px 15px;
+    }
+}
+
+// Bouton submit du dashboard — utilise le mixin btn-red
+.dashboard-section button[type="submit"] {
+    @include btn-red(100%); // 100% sur mobile
+    padding: 10px 15px;
+    font-size: $text-sm;
+    border-radius: 6px;
+
+    @media (min-width: $breakpoint-desktop) {
+        width: fit-content; // largeur auto sur desktop
+        padding: 10px 20px;
+    }
 }

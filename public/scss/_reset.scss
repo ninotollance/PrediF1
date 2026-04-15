@@ -1,3 +1,97 @@
+@use 'variable' as *;
+
+// ==============================
+// RESET
+// ==============================
+
+// Supprime les marges et paddings par défaut du navigateur
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; // Bordures incluses dans la largeur
+}
+
+// Empêche les images de dépasser leur conteneur
+img {
+    max-width: 100%;
+    display: block;
+}
+
+// Supprime le style par défaut des listes
+ul {
+    list-style: none;
+}
+
+// Supprime le soulignement des liens
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+// Supprime le style par défaut des boutons
+button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+// Style global du body
+body {
+    background-color: $color-bg; // Fond bleu nuit
+    color: $color-white;         // Texte blanc
+    font-family: $font-text;     // Police Inter
+    font-size: $text-base;       // Taille de texte de base
+}
+
+// ==============================
+// TYPOGRAPHIE
+// ==============================
+
+// Titres avec police Orbitron
+h1 {
+    font-size: $text-2xl;
+    font-family: $font-title;
+    font-weight: 500;
+    line-height: 1.5;
+
+    @media (min-width: $breakpoint-desktop) {
+        font-size: $text-3xl; // Plus grand sur desktop
+    }
+}
+
+h2 {
+    font-size: $text-xl;
+    font-family: $font-title;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+h3 {
+    font-size: $text-lg;
+    font-family: $font-title;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+// Textes courants
+p {
+    font-size: $text-base;
+    font-family: $font-text;
+    line-height: 1.6; // Espacement des lignes pour la lisibilité
+}
+
+// Boutons avec police Orbitron
+button {
+    font-size: $text-base;
+    font-family: $font-title;
+    font-weight: 500;
+}
+
+// ==============================
+// POLICES
+// ==============================
+
 @font-face {
     font-display: swap;
     font-family: 'Orbitron';

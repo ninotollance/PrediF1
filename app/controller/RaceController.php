@@ -16,7 +16,10 @@ class RaceController extends Controller {
     public function create() {
         $this->checkAdmin(); // Vérifie si l'utilisateur est admin, redirige sinon
         if($_SERVER['REQUEST_METHOD'] !== 'POST') { // Si le formulaire n'est pas soumis
-            $this->redirect('admin'); // Redirige vers la route 'admin'
+            require RACINE . "/app/view/layout/header.php";
+            require RACINE . "/app/view/admin/createRace.php";
+            require RACINE . "/app/view/layout/footer.php";
+            return; 
         }
         try {
             $this->raceModel->create([ // Crée la course en BDD
@@ -34,7 +37,8 @@ class RaceController extends Controller {
             $this->catchError($e);
             return; // Arrête la fonction
         }
-        $this->redirect('admin'); // Redirige vers la route 'admin'
+        $section = $_POST['section'] ?? 'races'; // Récupère la section ou 'races' par défaut
+        $this->redirect('admin&section=' . $section); // Redirige vers la bonne section
     }
 
     // Modifie une course (Admin uniquement)
@@ -64,7 +68,8 @@ class RaceController extends Controller {
             $this->catchError($e);
             return; // Arrête la fonction
         }
-        $this->redirect('admin'); // Redirige vers la route 'admin'
+        $section = $_POST['section'] ?? 'races'; // Récupère la section ou 'races' par défaut
+        $this->redirect('admin&section=' . $section); // Redirige vers la bonne section
     }
 
     // Supprime une course (Admin uniquement)
@@ -82,7 +87,8 @@ class RaceController extends Controller {
             $this->catchError($e);
             return; // Arrête la fonction
         }
-        $this->redirect('admin'); // Redirige vers la route 'admin'
+        $section = $_POST['section'] ?? 'races'; // Récupère la section ou 'races' par défaut
+        $this->redirect('admin&section=' . $section); // Redirige vers la bonne section
     }
 
     // Ajoute le vainqueur d'une course (Admin uniquement)
@@ -108,7 +114,8 @@ class RaceController extends Controller {
             $this->catchError($e);
             return; // Arrête la fonction
         }
-        $this->redirect('admin'); // Redirige vers la route 'admin'
+        $section = $_GET['section'] ?? 'winner'; // Récupère la section ou 'races' par défaut
+        $this->redirect('admin&section=' . $section); // Redirige vers la bonne section
     }
 
     public function index() {

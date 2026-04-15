@@ -33,9 +33,10 @@ class RaceModel extends Model {
     }
 
     public function getLastRace() {
-        $query = "SELECT RACE.*, DRIVER.name as winnerName, DRIVER.firstName as winnerFirstName
+        $query = "SELECT RACE.*, DRIVER.name as winnerName, DRIVER.firstName as winnerFirstName, TEAM.name as teamName
         FROM RACE 
-        LEFT JOIN DRIVER ON RACE.idWinner = DRIVER.id 
+        LEFT JOIN DRIVER ON RACE.idWinner = DRIVER.id
+        LEFT JOIN TEAM ON DRIVER.idTeam = TEAM.id 
         WHERE RACE.raceStart < NOW()
         ORDER BY RACE.raceStart DESC
         LIMIT 1";

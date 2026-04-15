@@ -1,8 +1,8 @@
+// L'ordre des imports est important !
+// variable et mixin en premier car les autres fichiers en dépendent
 @use 'variable';
+@use 'mixin';
 @use 'reset';
 @use 'component';
 @use 'layout';
 @use 'page';
-
-
-

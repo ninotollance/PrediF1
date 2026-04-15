@@ -1,6 +1,504 @@
-// Grille 3 colonnes pour les courses
+@use 'variable' as *;
+@use 'mixin' as *;
+
+// ==============================
+// GRILLE COURSES — Mobile First
+// ==============================
+
 .races-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr;        // mobile : 1 colonne
+    gap: 15px;
+    align-items: stretch;
+
+    @media (min-width: $breakpoint-tablet) {
+        grid-template-columns: repeat(2, 1fr); // tablette : 2 colonnes
+    }
+
+    @media (min-width: $breakpoint-desktop) {
+        grid-template-columns: repeat(3, 1fr); // desktop : 3 colonnes
+        gap: 20px;
+    }
+}
+
+// ==============================
+// CARD COURSE — Mobile First
+// ==============================
+
+.race-card-home {
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+
+    @media (min-width: $breakpoint-desktop) {
+        margin-bottom: 25px;
+    }
+}
+
+// Zone image de la card course
+.race-card-home-img {
+    position: relative;
+    height: auto;
+}
+
+// Image pleine largeur avec hauteur fixe
+.race-card-home-img img {
+    width: 100%;
+    height: 200px;       // mobile : moins haut
+    object-fit: cover;
+
+    @media (min-width: $breakpoint-desktop) {
+        height: 250px;   // desktop : plus haut
+    }
+}
+
+// Corps de la card — utilise le mixin card-body
+.race-card-home-body {
+    @include card-body;
+    flex: 1; // s'étire pour que toutes les cards aient la même hauteur
+}
+
+// Infos du GP — pays et nom officiel
+.info-gp {
+    flex: 1;
+}
+
+// Titre du pays dans la card course
+.info-gp h2 {
+    font-weight: bold;
+    font-size: $text-xl; // mobile
+    font-family: $font-title;
+
+    @media (min-width: $breakpoint-desktop) {
+        font-size: $text-2xl;
+    }
+}
+
+// Nom officiel du GP — réduit car textes longs
+.info-gp p {
+    font-size: $text-sm;
+    font-family: $font-text;
+
+    @media (min-width: $breakpoint-desktop) {
+        font-size: $text-base;
+    }
+}
+
+.info-gp .info-gp-start {
+    padding-top: 5px;
+}
+
+// Pays + nom sur la même ligne (page accueil)
+.race-card-country {
+    display: flex;
+}
+
+.race-card-country h2 {
+    font-weight: bold;
+    font-size: $text-sm; // mobile
+    font-family: $font-title;
+
+    @media (min-width: $breakpoint-desktop) {
+        font-size: $text-2xl;
+    }
+}
+
+.race-card-country p {
+    font-size: $text-base;
+    font-family: $font-title;
+
+    @media (min-width: $breakpoint-desktop) {
+        font-size: $text-2xl;
+    }
+}
+
+// Séparateur entre pays et nom du GP
+.separator {
+    margin: 0 8px;
+    margin-top: 4px;
+    font-weight: bold;
+}
+
+// Badge sur l'image — statut de la course
+.badge {
+    position: absolute;
+    color: $color-white;
+    background-color: $color-red;
+    border-radius: 10px;
+    top: 10px;
+    left: 10px;
+    padding: 4px 10px;
+    font-size: $text-sm;
+
+    @media (min-width: $breakpoint-desktop) {
+        top: 15px;
+        left: 15px;
+        padding: 5px 12px;
+    }
+}
+
+// ==============================
+// CARDS PILOTES & ÉCURIES HOME
+// ==============================
+
+// Grille — 1 colonne sur mobile, 2 sur tablette
+.cards-container {
+    display: grid;
+    grid-template-columns: 1fr;        // mobile : 1 colonne
+    gap: 15px;
+    margin-top: 20px;
+
+    @media (min-width: $breakpoint-tablet) {
+        grid-template-columns: repeat(2, 1fr); // tablette et desktop : 2 colonnes
+        gap: 20px;
+    }
+}
+
+// Corps de la card pilote/écurie — utilise le mixin card-body
+.pilote-card-home-body {
+    @include card-body;
+}
+
+.pilote-card-home-body h2 {
+    font-weight: bold;
+    font-size: $text-xl; // mobile
+    font-family: $font-title;
+
+    @media (min-width: $breakpoint-desktop) {
+        font-size: $text-2xl;
+    }
+}
+
+.pilote-card-home-body p {
+    font-size: $text-base;
+    font-family: $font-text;
+
+    @media (min-width: $breakpoint-desktop) {
+        font-size: $text-xl;
+        padding-bottom: 15px;
+    }
+}
+
+// ==============================
+// BOUTONS
+// ==============================
+
+// Bouton principal rouge — utilise le mixin btn-red
+.btn-home {
+    @include btn-red;
+    padding: 8px 16px;
+    font-size: $text-sm; // mobile
+    align-self: flex-start;
+
+    @media (min-width: $breakpoint-desktop) {
+        padding: 8px 20px;
+        font-size: $text-base;
+    }
+}
+
+// Bouton course annulée — variante assombrie
+.btn-home-cancel {
+    background-color: #b30500; // rouge foncé au survol
+    color: $color-white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-family: $font-title;
+    font-size: $text-sm;
+    font-weight: bold;
+    align-self: flex-start;
+
+    @media (min-width: $breakpoint-desktop) {
+        padding: 8px 20px;
+        font-size: $text-base;
+    }
+}
+
+// ==============================
+// PAGE PARIS — Mobile First
+// ==============================
+
+// Conteneur principal de la page paris
+.bets {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+// Cards stats — paris placés et gagnés côte à côte
+.bets-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); // 2 colonnes égales dès mobile
+    gap: 15px;
+    
+
+    @media (min-width: $breakpoint-desktop) {
+        gap: 20px;
+        width: 59%;
+    }
+}
+
+// Card stat individuelle — utilise le mixin card-body
+.bets-won {
+    @include card-body;
+    border-radius: 10px;
+    h2 {
+        font-family: $font-title;
+        font-size: $text-base; // mobile
+        color: $color-red;
+
+        @media (min-width: $breakpoint-desktop) {
+            font-size: $text-lg;
+        }
+    }
+
+    p {
+        font-family: $font-title;
+        font-size: $text-3xl; // grand nombre mis en valeur
+        font-weight: bolder;
+        color: $color-white;
+    }
+}
+
+// Historique des paris
+.bets-history {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+// Card de pari — grille 3 colonnes sur desktop
+.bet-card {
+    @include card-body;
+    border-left: 4px solid $color-red;
+    border-radius: 10px;
+
+    &.bet-won { border-left: 4px solid $color-green; }
+    &.bet-pending { border-left: 4px solid $color-blue; }
+    &.bet-cancelled { border-left: 4px solid $color-grey; }
+
+    @media (min-width: $breakpoint-desktop) {
+        display: grid;
+        grid-template-columns: 650px 520px auto;
+        align-items: start;
+        gap: 20px;
+
+        .bet-driver,
+        .bet-status {
+            justify-self: start;
+        }
+    }
+}
+.bet-card .btn-delete {
+    width: 180px;
+    margin-top: 0;
+}
+
+// Badge statut du pari
+.bet-status {
+    font-family: $font-title;
+    font-size: $text-sm;
+    padding: 4px 10px;
+    border-radius: 10px;
+    background-color: $color-red;
+    color: $color-white;
+    align-self: flex-start;
+
+    &.bet-won      { background-color: $color-green; }
+    &.bet-pending  { background-color: $color-blue; }
+    &.bet-cancelled { background-color: $color-grey; }
+
+    @media (min-width: $breakpoint-desktop) {
+        font-size: $text-base;
+    }
+}
+
+// ==============================
+// PAGE PROFIL — Mobile First
+// ==============================
+
+// Wrapper — empilé sur mobile, côte à côte sur desktop
+.profile-wrapper {
+    display: flex;
+    flex-direction: column; // mobile : empilé
     gap: 20px;
+
+    @media (min-width: $breakpoint-desktop) {
+        flex-direction: row;    // desktop : côte à côte
+        align-items: flex-start;
+        gap: 30px;
+    }
+}
+
+// Nav profil — horizontale sur mobile, verticale sur desktop
+.profile-nav {
+    display: flex;
+    flex-direction: row;    // mobile : horizontal
+    gap: 10px;
+    background-color: $color-header;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+
+    @media (min-width: $breakpoint-desktop) {
+        flex-direction: column; // desktop : vertical
+        width: 220px;
+        flex-shrink: 0;
+        position: sticky;
+        top: 140px;
+    }
+}
+
+// Boutons de la nav profil
+.profile-btn {
+    flex: 1;
+    padding: 10px 15px;
+    color: $color-white;
+    background: none;
+    border: none;
+    border-radius: 6px;
+    font-family: $font-title;
+    font-size: $text-sm;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+
+    &:hover, &.active {
+        background-color: $color-red;
+    }
+}
+
+.profile-content {
+    flex: 1; // prend tout l'espace restant
+
+        @media (min-width: $breakpoint-desktop) {
+            margin-left: 55px;
+        }
+    
+}
+
+.profile-info {
+    h2 {
+        font-family: $font-title;
+        font-size: $text-lg; // mobile
+        margin-bottom: 15px;
+        color: $color-white;
+
+        @media (min-width: $breakpoint-desktop) {
+            font-size: $text-xl;
+            margin-bottom: 20px;
+        }
+    }
+}
+
+.btn-update {
+    width: fit-content !important;
+    align-self: flex-end;
+    margin-bottom: 15px;
+    margin-top: 5px;
+
+    @media (min-width: $breakpoint-desktop) {
+        padding: 10px 20px;
+    }
+}
+
+// Section suppression de compte
+.delete-user {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid $color-grey;
+    border-top: 1px solid $color-grey;
+    padding: 15px 0;
+
+    @media (min-width: $breakpoint-desktop) {
+        max-width: 600px; // limité sur desktop
+    }
+}
+
+.dashboard-section .bets-stats{
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+
+// ==============================
+// PAGE CONTACT — Mobile First
+// ==============================
+
+.contact {
+    // --- MOBILE ---
+    h1 {
+        margin-bottom: 30px;
+    }
+
+    // Formulaire — pleine largeur sur mobile
+    form {
+        display: flex;
+        flex-direction: column; // champs empilés verticalement
+        gap: 12px;
+        width: 100%;
+    }
+
+    label {
+        font-size: $text-sm;
+        color: $color-white;
+        margin-bottom: 4px;
+    }
+
+    // Champs texte
+    input, textarea {
+        width: 100%;
+        padding: 12px;
+        background-color: $color-bg-2;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        color: $color-white;
+        font-family: $font-text;
+        font-size: $text-base;
+        transition: border 0.3s ease;
+
+        &:focus {
+            outline: none;
+            border-color: $color-red; // bordure rouge au focus
+        }
+    }
+
+    textarea {
+        height: 150px;
+        resize: vertical; // redimensionnable uniquement en hauteur
+    }
+
+    // Bouton envoi — utilise le mixin btn-red
+    button[type="submit"] {
+        @include btn-red(100%); // pleine largeur sur mobile
+        padding: 12px;
+        border-radius: 8px;
+        font-size: $text-base;
+        margin-top: 10px;
+        align-self: flex-end;
+
+        @media (min-width: $breakpoint-desktop) {
+            width: fit-content; // largeur auto sur desktop
+            padding: 12px 30px;
+        }
+    }
+
+    // --- TABLETTE ---
+    @media (min-width: $breakpoint-tablet) {
+        form {
+            width: 80%;      // moins large sur tablette
+            margin: 0 auto;  // centré
+        }
+    }
+
+    // --- DESKTOP ---
+    @media (min-width: $breakpoint-desktop) {
+        form {
+            width: 50%;      // encore plus étroit sur desktop
+            margin: 0 auto;
+        }
+    }
 }

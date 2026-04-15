@@ -6,5 +6,21 @@ $font-text: 'Inter', sans-serif;
 $color-bg: #0F1726;        // Fond principal
 $color-bg-2: #1E2939;      // Fond secondaire
 $color-header: #090E17;    // Header et footer
-$color-red: #E10600;       // Rouge F1 (boutons, CTA)
+$color-red: #E10600;        // Rouge F1 (boutons, CTA)
+$color-blue: #233bd9;       // Statu en cours
+$color-green: #159b22;      // Statu gagné
 $color-white: #FFFFFF;     // Textes
+$color-grey: #A1A1A1;
+
+// Breakpoints écrans
+$breakpoint-tablet: 768px;   // Tablette
+$breakpoint-desktop: 1024px; // Desktop
+$breakpoint-wide: 1400px;    // Grand écran
+
+// Tailles de texte
+$text-sm: 14px;
+$text-base: 16px;
+$text-lg: 18px;
+$text-xl: 20px;
+$text-2xl: 24px;
+$text-3xl: 30px;

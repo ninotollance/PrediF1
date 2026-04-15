@@ -170,11 +170,6 @@ class Route {
                 $ctrl->delete();
                 break;
 
-            case 'ecuries':
-                $ctrl = new TeamController();
-                $ctrl->index();
-                break;
-
             // ════════════════════════════════════════
             // PARIS
             // ════════════════════════════════════════

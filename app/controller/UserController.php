@@ -20,11 +20,16 @@ class UserController extends Controller {
         $this->checkConnexion(); // Vérifie si l'utilisateur est connecté, redirige sinon
         try {
             $user = $this->userModel->getById($_SESSION['user_id']); // Récupère les infos de l'utilisateur connecté via son id en session
+            $bets = $this->betModel->getAllByUser($_SESSION['user_id']);
         } catch(Exception $e) {
             $this->catchError($e);
             return; // Arrête la fonction
         }
+        $totalBets = count($bets); 
+        $wonBets = count(array_filter($bets, fn($bet) => $bet['won'] === 1));
+        require RACINE . "/app/view/layout/header.php";
         require RACINE . '/app/view/user/profile.php'; // Affiche la vue profil avec les données
+        require RACINE . "/app/view/layout/footer.php";
     }
 
     // Modifie le profil utilisateur
@@ -38,12 +43,12 @@ class UserController extends Controller {
         try {
             $this->userModel->update($_SESSION['user_id'], [ // Modifie l'utilisateur en BDD via son id en session
                 'email' => $_POST['email'],
-                'password' => $hashedPassword,
                 'name' => $_POST['name'],
                 'firstName' => $_POST['firstname'],
             ]);
             $this->success('Profil modifié avec succès !'); // Message de succès
         } catch(Exception $e) {
+            error_log($e->getMessage()); // ← log l'erreur
             $this->catchError($e);
             return; // Arrête la fonction
         }
@@ -73,6 +78,10 @@ class UserController extends Controller {
             $this->catchError($e);
             return; // Arrête la fonction
         }
+        $totalBets = count($bets); // Compte le nombre total de paris de l'utilisateur
+        $wonBets = count(array_filter($bets, fn($bet) => $bet['won'] === 1)); // Compte uniquement les paris gagnés (won === 1 signifie que le pilote parié est le vainqueur)
+        require RACINE . "/app/view/layout/header.php";
         require RACINE . '/app/view/user/betHistory.php'; // Affiche la vue historique des paris
+        require RACINE . "/app/view/layout/footer.php";
     }
 }

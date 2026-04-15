@@ -7,6 +7,7 @@ use Exception;
 class HomeController extends Controller {
 
     private $raceModel;
+    private $betModel;
 
     public function __construct(){
         $this->raceModel = new RaceModel(); // Instancie le modèle Race

@@ -49,11 +49,17 @@ abstract class Model {
 
     // Modifie un enregistrement par son id
     public function update(int $id, array $data) {
-        $set = implode(',', array_map(fn($col) => "$col = :$col", array_keys($data))); // Construit "email = :email, name = :name" à partir des clés de $data
-        $query = "UPDATE $this->table SET $set WHERE id = :id"; // Construit la requête UPDATE avec le SET dynamique à partir de la variable $set
-        $stmt = $this->db->prepare($query); // Prépare la requête (anti-injection SQL)
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT); // Lie l'id pour le WHERE
-        return $stmt->execute($data); // Lie $data et exécute, retourne true/false
+        $set = implode(',', array_map(fn($col) => "$col = :$col", array_keys($data)));
+        $query = "UPDATE $this->table SET $set WHERE id = :id";
+        $stmt = $this->db->prepare($query);
+        
+        // Lie chaque valeur de $data manuellement
+        foreach($data as $col => $value) {
+            $stmt->bindValue(':' . $col, $value); // Lie chaque paramètre
+        }
+        
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT); // Lie l'id séparément
+        return $stmt->execute(); // Execute sans paramètres
     }
 
 

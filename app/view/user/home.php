@@ -1,94 +1,120 @@
 <?php if($lastRace) : // Vérifie si une course passée existe en BDD ?>
-    <div class="race-card">
-        <span class="badge">Résultats</span>
+    <article class="race-card-home">
+        <figure class="race-card-home-img">
+            <figcaption class="badge">Résultats</figcaption> <!-- Badge fixe pour la dernière course -->
 
-        <?php if($lastRace['picture']) : // Si une image est renseignée en BDD ?>
-            <img src="public/img/circuits/<?= htmlspecialchars($lastRace['picture'], ENT_QUOTES, 'UTF-8') ?>" 
-            alt="<?= htmlspecialchars($lastRace['name'], ENT_QUOTES, 'UTF-8') ?>">
-        <?php else : // Sinon on affiche une image par défaut ?>
-            <img src="public/img/circuits/default.webp" alt="Circuit par défaut">
-        <?php endif; ?>
-
+            <?php if($lastRace['picture']) : // Si une image est renseignée en BDD ?>
+                <img src="public/img/circuits/<?= htmlspecialchars($lastRace['picture'], ENT_QUOTES, 'UTF-8') ?>" 
+                alt="<?= htmlspecialchars($lastRace['name'], ENT_QUOTES, 'UTF-8') ?>">
+            <?php else : // Sinon on affiche une image par défaut ?>
+                <img src="public/img/circuits/default.webp" alt="Circuit par défaut">
+            <?php endif; ?>
+            <figcaption class="date-race">
+                <p><?= date('d/m', strtotime($lastRace['gpStart'])) ?> 
+                - <?= date('d/m', strtotime($lastRace['gpEnd'])) ?></p>
+            </figcaption>
+        </figure>
+        <div class="race-card-home-body">
         <!-- Pays en titre principal, nom du GP en sous-titre -->
-        <h2><?= htmlspecialchars($lastRace['country'], ENT_QUOTES, 'UTF-8') ?></h2>
-        <p><?= htmlspecialchars($lastRace['name'], ENT_QUOTES, 'UTF-8') ?></p>
+            <div class="race-card-country">
+                <h2><?= htmlspecialchars($lastRace['country'], ENT_QUOTES, 'UTF-8') ?></h2>
+                <span class="separator">_</span>
+                <p><?= htmlspecialchars($lastRace['name'], ENT_QUOTES, 'UTF-8') ?></p>
+            </div>
+            <div class="winner">
+                <?php if($lastRace['winnerName']) : // Si un vainqueur est enregistré en BDD ?>
+                    <p>Vainqueur 🏆 
+                        <?= htmlspecialchars($lastRace['winnerFirstName'], ENT_QUOTES, 'UTF-8') ?>
+                        <?= htmlspecialchars($lastRace['winnerName'], ENT_QUOTES, 'UTF-8') ?>
+                        - <?= htmlspecialchars($lastRace['teamName'], ENT_QUOTES, 'UTF-8') ?>
+                    </p>
+                <?php else : // Si aucun vainqueur n'est encore renseigné ?>
+                    <p>Aucun vainqueur encore enregistré</p>
+                <?php endif; ?>
 
-        <?php if($lastRace['winnerName']) : // Si un vainqueur est enregistré en BDD ?>
-            <p>Vainqueur : 
-                <?= htmlspecialchars($lastRace['winnerFirstName'], ENT_QUOTES, 'UTF-8') ?>
-                <?= htmlspecialchars($lastRace['winnerName'], ENT_QUOTES, 'UTF-8') ?>
-            </p>
-        <?php else : // Si aucun vainqueur n'est encore renseigné ?>
-            <p>Aucun vainqueur encore enregistré</p>
-        <?php endif; ?>
-
-        <!-- Dates du week-end formatées en français -->
-        <p>Du <?= date('d/m/Y', strtotime($lastRace['gpStart'])) ?> 
-        au <?= date('d/m/Y', strtotime($lastRace['gpEnd'])) ?></p>
-
-        <!-- Lien vers la liste complète des courses -->
-        <a href="?action=courses">Voir toutes les courses</a>
-    </div>
+            </div>
+        
+            <!-- Lien vers la liste complète des courses -->
+            <a href="?action=courses" class="btn-home">Voir toutes les courses</a>
+        </div>
+    </article>
 <?php else : // Si aucune course passée n'existe en BDD ?>
     <p>Aucune course passée pour le moment.</p>
 <?php endif; ?>
 
 
 <?php if($nextRace) : // Vérifie si une prochaine course existe en BDD ?>
-    <div class="race-card">
+    <article class="race-card-home">
+        <figure class="race-card-home-img">
+        <!-- Badge selon le statut de la course — traduit via opérateur ternaire -->
+            <figcaption class="badge">
+                <?= $nextRace['status'] === 'cancelled' ? 'Annulée' : 'Prochaine Course' ?>
+            </figcaption>
 
-        <?php if($nextRace['status'] === 'cancelled') : // Si la course est annulée ?>
-            <span class="badge">Course annulée</span>
-        <?php else : // Sinon c'est une course à venir ?>
-            <span class="badge">Prochaine Course</span>
-        <?php endif; ?>
-
-        <?php if($nextRace['picture']) : // Si une image est renseignée en BDD ?>
-            <img src="public/img/circuits/<?= htmlspecialchars($nextRace['picture'], ENT_QUOTES, 'UTF-8') ?>" 
-            alt="<?= htmlspecialchars($nextRace['name'], ENT_QUOTES, 'UTF-8') ?>">
-        <?php else : // Sinon on affiche une image par défaut ?>
-            <img src="public/img/circuits/default.webp" alt="Circuit par défaut">
-        <?php endif; ?>
-
-        <!-- Pays en titre principal, dates du week-end et nom du GP -->
-        <h2><?= htmlspecialchars($nextRace['country'], ENT_QUOTES, 'UTF-8') ?></h2>
-        <p>Du <?= date('d/m/Y', strtotime($nextRace['gpStart'])) ?> 
-        au <?= date('d/m/Y', strtotime($nextRace['gpEnd'])) ?></p>
-        <p><?= htmlspecialchars($nextRace['name'], ENT_QUOTES, 'UTF-8') ?></p>
-
-        <?php if($nextRace['status'] !== 'cancelled') : // Si la course n'est pas annulée ?>
-            <p>Placez votre pari avant le début de la course</p>
-            <?php if(isset($_SESSION['user_logged'])) : // Si l'utilisateur est connecté ?>
-                <a href="?action=parier&idRace=<?= $nextRace['id'] ?>">Parier</a>
-            <?php else : // Sinon on invite à se connecter ?>
-                <a href="?action=connexion">Connectez-vous pour parier</a>
+            <?php if($nextRace['picture']) : // Si une image est renseignée en BDD ?>
+                <img src="public/img/circuits/<?= htmlspecialchars($nextRace['picture'], ENT_QUOTES, 'UTF-8') ?>" 
+                alt="<?= htmlspecialchars($nextRace['name'], ENT_QUOTES, 'UTF-8') ?>">
+            <?php else : // Sinon on affiche une image par défaut ?>
+                <img src="public/img/circuits/default.webp" alt="Circuit par défaut">
             <?php endif; ?>
-        <?php else : // Si la course est annulée on affiche un message ?>
-            <span>Cette course a été annulée</span>
-        <?php endif; ?>
-
-    </div>
+            <figcaption class="date-race">
+                <p><?= date('d/m', strtotime($nextRace['gpStart'])) ?> 
+                - <?= date('d/m', strtotime($nextRace['gpEnd'])) ?></p>
+            </figcaption>
+        </figure>
+        <div class="race-card-home-body">
+            <!-- Pays en titre principal, dates du week-end et nom du GP -->
+            <div class="race-card-country">
+                <h2><?= htmlspecialchars($nextRace['country'], ENT_QUOTES, 'UTF-8') ?></h2>
+                <span class="separator">_</span>
+                <p><?= htmlspecialchars($nextRace['name'], ENT_QUOTES, 'UTF-8') ?></p>
+            </div>
+            
+            <div class="winner">
+                <?php if($nextRace['status'] !== 'cancelled') : // Si la course n'est pas annulée ?>
+                    <p>Placez votre pari avant le début de la course</p>
+                    <p>Départ : <?= date('H:i', strtotime($nextRace['raceStart'])) ?></p>
+                </div>
+                    <?php if(isset($_SESSION['user_logged'])) : // Si l'utilisateur est connecté ?>
+                        <a href="?action=parier&idRace=<?= $nextRace['id'] ?>" class="btn-home">Parier</a>
+                    <?php else : // Sinon on invite à se connecter ?>
+                        <a href="?action=connexion" class="btn-home">Connectez-vous pour parier</a>
+                    <?php endif; ?>
+                <?php else : // Si la course est annulée on affiche un message ?>
+                    <span class="btn-home-cancel">Cette course a été annulée</span>
+                <?php endif; ?>
+            
+        </div>
+    </article>
 <?php else : // Si aucune course à venir n'existe en BDD ?>
     <p>Aucune course à venir.</p>
 <?php endif; ?>
 
+ <!-- Cards statiques Pilotes et Écuries -->
 <div class="cards-container">
 
-    <div class="race-card">
-        <span class="badge">Pilotes</span>
-        <img src="public/img/drivers/pilotes.jpg" alt="Pilotes F1">
-        <h2>Pilotes</h2>
-        <p>Découvrez tous les pilotes du championnat du monde de F1.</p>
-        <a href="?action=pilotes">Voir les pilotes</a>
-    </div>
+    <article class="home-card">
+        <figure class="race-card-home-img">
+            <figcaption class="badge">Pilotes</figcaption>
+            <img src="public/img/drivers/default.webp" alt="Pilotes F1">
+        </figure>
+        <div class="pilote-card-home-body">
+            <h2>Pilotes</h2>
+            <p>Découvrez tous les pilotes du championnat du monde de F1.</p>
+            <a href="?action=pilotes" class="btn-home">Voir les pilotes</a>
+        </div>
+    </article>
 
-    <div class="race-card">
-        <span class="badge">Écuries</span>
-        <img src="public/img/teams/ecuries.jpg" alt="Écuries F1">
-        <h2>Écuries</h2>
-        <p>Découvrez toutes les écuries du championnat du monde de F1.</p>
-        <a href="?action=ecuries">Voir les écuries</a>
-    </div>
-
+    <article class="home-card">
+        <figure class="race-card-home-img">
+            <figcaption class="badge">Écuries</figcaption>
+            <img src="public/img/teams/default.webp" alt="Écuries F1">
+        </figure>
+        <div class="pilote-card-home-body">
+            <h2>Écuries</h2>
+            <p>Découvrez toutes les écuries du championnat du monde de F1.</p>
+            <a href="?action=pilotes&tab=teams" class="btn-home">Voir les écuries</a>
+        </div>
+    </article>
 </div>
 

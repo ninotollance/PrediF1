@@ -5,6 +5,7 @@ use PrediF1\model\UserModel; // Importe le modèle User pour gérer les données
 use PrediF1\model\RaceModel; // Importe le modèle Race pour gérer les données utilisateur
 use PrediF1\model\DriverModel; // Importe le modèle Driver pour gérer les données utilisateur
 use PrediF1\model\TeamModel; // Importe le modèle Team pour gérer les données utilisateur
+use PrediF1\model\BetModel; // Importe le modèle Bet pour gérer les données utilisateur
 use Exception; // Nécessaire pour les try catch (classe native PHP, obligatoire avec les namespaces)
 
 class AdminController extends Controller {
@@ -13,28 +14,34 @@ class AdminController extends Controller {
     private $raceModel; // Instance du modèle Race
     private $driverModel; // Instance du modèle Driver
     private $teamModel; // Instance du modèle Team
+    private $betModel; // Instance du modèle Bet
+
 
     public function __construct() {
         $this->userModel = new UserModel(); // Instancie le modèle User
         $this->raceModel  = new RaceModel(); // Instancie le modèle Race
         $this->driverModel = new DriverModel(); // Instancie le modèle Driver
         $this->teamModel  = new TeamModel(); // Instancie le modèle Team
+        $this->betModel   = new BetModel(); // ← ajouter
     }
+
 
     // Affiche le dashboard admin
     public function dashboard() {
         $this->checkAdmin(); // Vérifie si l'utilisateur est admin, redirige sinon
         try {
-            $users   = $this->userModel->getAll();           // Tous les utilisateurs
-            $races   = $this->raceModel->getAll();           // Toutes les courses
+            $users = $this->userModel->getAll(); // Tous les utilisateurs
+            $races = $this->raceModel->getAll(); // Toutes les courses
             $drivers = $this->driverModel->getAllWithTeam();  // Tous les pilotes
-            $teams   = $this->teamModel->getAll();           // Toutes les écuries
+            $teams = $this->teamModel->getAll(); // Toutes les écuries
+            $bets = $this->betModel->getAllWithDetails(); // Tous les paris avec infos
         } catch(Exception $e) {
             $this->catchError($e);
             return; // Arrête la fonction
         }
         require RACINE . '/app/view/admin/dashboard.php'; // Affiche la vue dashboard admin
     }
+
 
     ////////////////////////////// UTILISATEUR //////////////////////////////
 
@@ -62,7 +69,8 @@ class AdminController extends Controller {
             $this->catchError($e);
             return; // Arrête la fonction
         }
-        $this->redirect('admin'); // Redirige vers la route 'admin'
+        $section = $_POST['section'] ?? 'users'; // Récupère la section ou 'users' par défaut
+        $this->redirect('admin&section=' . $section); // Redirige vers la bonne section
     }
 
     // Supprime un utilisateur (Admin uniquement)
@@ -80,6 +88,7 @@ class AdminController extends Controller {
             $this->catchError($e);
             return; // Arrête la fonction
         }
-        $this->redirect('admin'); // Redirige vers la route 'admin'
+        $section = $_GET['section'] ?? 'users'; // Récupère la section ou 'users' par défaut
+        $this->redirect('admin&section=' . $section); // Redirige vers la bonne section
     }
 }

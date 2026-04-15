@@ -27,7 +27,7 @@ abstract class Controller {
 
     // Pour les try/catch message générique
     protected function catchError(Exception $e) {
-        $_SESSION['login_error'] = 'Une erreur est survenue'; // Message générique pour ne pas exposer les détails techniques
+        $_SESSION['login_error'] = $e->getMessage(); // Message générique pour ne pas exposer les détails techniques
         error_log($e->getMessage()); // Log l'erreur complète pour le développeur
     }
 

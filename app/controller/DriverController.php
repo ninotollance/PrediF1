@@ -21,19 +21,43 @@ class DriverController extends Controller {
         if($_SERVER['REQUEST_METHOD'] !== 'POST') { // Si le formulaire n'est pas soumis
             $this->redirect('admin'); // Redirige vers la route 'admin'
         }
+
         try {
+            // Récupère le nom original du fichier
+            $filename = $_FILES['picture']['name'];
+
+            // Récupère l'extension du fichier en minuscules ex: "jpg", "png"
+            $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+            
+            // Liste des extensions autorisées
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp'];
+            
+            // Vérifie que l'extension est bien dans la liste autorisée
+            if(!in_array($extension, $allowedExtensions)) {
+                $this->error('Format de fichier non autorisé');
+                $this->redirect('admin');
+                return;
+            }
+
+            // Déplace le fichier :
+            // - depuis le dossier temporaire → $_FILES['picture']['tmp_name']
+            // - vers notre dossier           → 'public/img/drivers/' . $filename
+            move_uploaded_file($_FILES['picture']['tmp_name'], 'public/img/drivers/' . $filename);
+
             $this->driverModel->create([ // Crée le pilote en BDD
                 'name' => $_POST['name'], // Nom du pilote
                 'firstName' => $_POST['firstName'], // Prénom du pilote
                 'number_api' => $_POST['number_api'], // Numéro du pilote dans l'API
-                'picture' => $_POST['picture'], // Photo du pilote
+                'idTeam' => $_POST['idTeam'], // Écurie du pilotes
+                'picture' => $filename, // Photo du pilote
             ]);
             $this->success('Pilote ajouté avec succès !'); // Message de succès
         } catch(Exception $e) {
             $this->catchError($e);
             return; // Arrête la fonction
         }
-        $this->redirect('admin'); // Redirige vers la route 'admin'
+        $section = $_POST['section'] ?? 'drivers'; // Récupère la section ou 'drivers' par défaut
+        $this->redirect('admin&section=' . $section); // Redirige vers la bonne section
     }
 
     // Modifie un pilote (Admin uniquement)
@@ -48,11 +72,32 @@ class DriverController extends Controller {
         }
         $id = (int)$id; // Convertit l'id en entier
         try {
+        // Récupère le pilote actuel en BDD pour avoir l'ancienne image
+        $driver = $this->driverModel->getById($id);
+
+        // Cas 1 : l'admin a uploadé une nouvelle image
+        if(!empty($_FILES['picture']['name'])) {
+            $filename = $_FILES['picture']['name'];
+            $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp'];
+            if(!in_array($extension, $allowedExtensions)) {
+                $this->error('Format de fichier non autorisé');
+                $this->redirect('admin');
+                return;
+            }
+            move_uploaded_file($_FILES['picture']['tmp_name'], 'public/img/drivers/' . $filename);
+        
+        // Cas 2 : l'admin n'a pas changé la photo
+        } else {
+            $filename = $driver['picture']; // Récupère l'ancienne image 
+        }
+
             $this->driverModel->update($id, [ // Modifie le pilote en BDD
                 'name' => $_POST['name'], // Nom du pilote
                 'firstName' => $_POST['firstName'], // Prénom du pilote
                 'number_api' => $_POST['number_api'], // Numéro du pilote dans l'API
-                'picture' => $_POST['picture'], // Photo du pilote
+                'picture' => $filename, // Photo du pilote
+                'idTeam' => $_POST['idTeam'], // Écurie du pilotes
             ]);
             $this->success('Pilote mis à jour avec succès !'); // Message de succès
         } catch(Exception $e) {
@@ -60,7 +105,8 @@ class DriverController extends Controller {
             return; // Arrête la fonction
             
         }
-        $this->redirect('admin'); // Redirige vers la route 'admin'
+        $section = $_POST['section'] ?? 'drivers'; // Récupère la section ou 'drivers' par défaut
+        $this->redirect('admin&section=' . $section); // Redirige vers la bonne section
     }
 
     // Supprime un pilote (Admin uniquement)
@@ -78,7 +124,8 @@ class DriverController extends Controller {
             $this->catchError($e);
             return; // Arrête la fonction
         }
-        $this->redirect('admin'); // Redirige vers la route 'admin'
+        $section = $_GET['section'] ?? 'drivers'; // Récupère la section ou 'drivers' par défaut
+        $this->redirect('admin&section=' . $section); // Redirige vers la bonne section
     }
 
     // Affiche la liste des pilotes et des écuries (accessible à tous)
