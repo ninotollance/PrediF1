@@ -121,6 +121,7 @@ class RaceController extends Controller {
     public function index() {
         try {
             $races = $this->raceModel->getAllWithWinner();
+            $nextRace = $this->raceModel->getNextRace(); // Récupère la prochaine course
         } catch(Exception $e) {
             $this->catchError($e);
             return;

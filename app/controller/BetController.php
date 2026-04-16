@@ -88,8 +88,9 @@ class BetController extends Controller {
             $this->error('Course introuvable'); // Message d'erreur pour l'utilisateur
             $this->redirect('accueil'); // Redirige vers l'accueil et arrête l'exécution
         }
-        if($race['status'] === 'cancelled') {
-            $this->error('Cette course a été annulée');
+        // Si la course n'est pas disponible aux paris (terminée ou annulée)
+        if($race['status'] === 'cancelled' || $race['status'] === 'finished') {
+            $this->error('Cette course n\'est pas disponible aux paris');
             $this->redirect('accueil');
         }
         $now = new DateTime(); // Date et heure actuelles
@@ -151,7 +152,7 @@ class BetController extends Controller {
         }
         $idRace = (int)$idRace; // Convertit en entier pour sécuriser
         try {
-            $race = $this->raceModel->getById($idRace); // Récupère la course en BDD par son id
+            $race = $this->raceModel->getNextRace(); // Récupère la course en BDD par son id
         } catch(Exception $e) {
             $this->catchError($e);
             return; // Arrête la fonction
@@ -160,9 +161,10 @@ class BetController extends Controller {
             $this->error('Course introuvable'); // Message d'erreur pour l'utilisateur
             $this->redirect('accueil'); // Redirige vers l'accueil
         }
-        if($race['status'] === 'cancelled') { // Si la course est annulée
-            $this->error('Cette course a été annulée'); // Message d'erreur
-            $this->redirect('accueil'); // Redirige vers l'accueil
+        // Si la course n'est pas disponible aux paris (terminée ou annulée)
+        if($race['status'] === 'cancelled' || $race['status'] === 'finished') {
+            $this->error('Cette course n\'est pas disponible aux paris');
+            $this->redirect('accueil');
         }
         $now = new DateTime(); // Date et heure actuelles
         $start = new DateTime($race['raceStart']); // Date de début de la course depuis la BDD

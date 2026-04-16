@@ -64,6 +64,16 @@
 .info-gp {
     flex: 1;
 }
+// Indication prochaine course — alignée en bas à droite
+
+.next-race-label {
+    position: absolute;  // sort du flux, ne prend plus de place
+    bottom: 15px;        // collé en bas
+    right: 15px;         // collé à droite
+    font-family: $font-title;
+    font-size: $text-base;
+    color: $color-white;
+}
 
 // Titre du pays dans la card course
 .info-gp h2 {
@@ -138,6 +148,11 @@
         padding: 5px 12px;
     }
 }
+.race-next{
+    background-color: $color-red;
+    cursor: pointer;
+}
+
 
 // ==============================
 // CARDS PILOTES & ÉCURIES HOME
@@ -274,6 +289,7 @@
     border-left: 4px solid $color-red;
     border-radius: 10px;
 
+
     &.bet-won { border-left: 4px solid $color-green; }
     &.bet-pending { border-left: 4px solid $color-blue; }
     &.bet-cancelled { border-left: 4px solid $color-grey; }
@@ -292,7 +308,10 @@
 }
 .bet-card .btn-delete {
     width: 180px;
-    margin-top: 0;
+    margin-top: 10px;
+    @media (min-width: $breakpoint-desktop) {
+        margin-top: -5px;
+    }
 }
 
 // Badge statut du pari
@@ -300,10 +319,11 @@
     font-family: $font-title;
     font-size: $text-sm;
     padding: 4px 10px;
-    border-radius: 10px;
+    border-radius: 4px;
     background-color: $color-red;
     color: $color-white;
     align-self: flex-start;
+    margin-top: 5px;
 
     &.bet-won      { background-color: $color-green; }
     &.bet-pending  { background-color: $color-blue; }
@@ -311,6 +331,7 @@
 
     @media (min-width: $breakpoint-desktop) {
         font-size: $text-base;
+        margin-top: 0px;
     }
 }
 
@@ -390,6 +411,46 @@
             margin-bottom: 20px;
         }
     }
+}
+.bet-section {
+
+    // Formulaire vertical avec espacement
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        max-width: 100%;
+        margin-top: 15px;
+        align-items: flex-start;
+
+        @media (min-width: $breakpoint-desktop) {
+            gap: 15px;
+            max-width: 600px;
+            margin-top: 20px;
+        }
+    }
+
+    // Style du select (menu déroulant)
+    select {
+        background-color: $color-bg-2;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 6px;
+        padding: 8px 12px;
+        color: $color-white;
+        font-size: $text-base;
+        width: 100%;
+
+        &:focus {
+            outline: none;
+            border-color: $color-red;
+        }
+    }
+}
+.choice-driver {
+    width: 300px !important;
+}
+.bet-confirm {
+    border-radius: 5px !important;
 }
 
 .btn-update {
@@ -475,7 +536,7 @@
     button[type="submit"] {
         @include btn-red(100%); // pleine largeur sur mobile
         padding: 12px;
-        border-radius: 8px;
+        border-radius: 5px;
         font-size: $text-base;
         margin-top: 10px;
         align-self: flex-end;

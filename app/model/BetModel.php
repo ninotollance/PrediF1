@@ -35,7 +35,8 @@ class BetModel extends Model {
                 JOIN RACE ON BET.idRace = RACE.id
                 JOIN DRIVER ON BET.idDriver = DRIVER.id
                 LEFT JOIN DRIVER AS winDriver ON RACE.idWinner = winDriver.id /* vainqueur de la course pariée */
-                WHERE BET.idUser = :idUser";        // lie BET à RACE et lie BET à DRIVER et filtre par course
+                WHERE BET.idUser = :idUser 
+                ORDER BY BET.date_ DESC";      // lie BET à RACE et lie BET à DRIVER et filtre par course DESC
         $stmt = $this->db->prepare($query);         // prépare la requête (anti-injection SQL)
         $stmt->bindParam(':idUser', $id);           // lie l'id du user
         $stmt->execute();

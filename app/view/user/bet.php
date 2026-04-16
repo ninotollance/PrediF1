@@ -1,5 +1,5 @@
 <!--  Card avec les infos de la course -->
- <article class="race-card-home">
+<article class="race-card-home">
 
     <!-- Badge avec statut traduit en français via la fonction helper translateStatus() -->
     <figure class="race-card-home-img">
@@ -34,7 +34,7 @@
     </div>
 
 <!-- Formulaire de pari -->
-<section id="profile-info" class="dashboard-section">
+<section id="profile-info" class="bet-section">
 <form method="POST" action="?action=creer-pari">
     <input type="hidden" name="idRace" value="<?= $race['id'] ?>">
  
@@ -49,21 +49,21 @@
             <span><?= htmlspecialchars($driver['teamName'], ENT_QUOTES, 'UTF-8') ?></span>
         </label>
     <?php endforeach; ?> -->
-    <select name="idDriver" value="<?= $driver['id'] ?>" 
-            id="driver_<?= $driver['id'] ?>" required>
-                        <?php foreach($drivers as $driver) : ?>
-                            <option value="<?= $driver['id'] ?>">
-                                #<?= htmlspecialchars($driver['number_api'], ENT_QUOTES, 'UTF-8') ?>
-                                <?= htmlspecialchars($driver['firstName'], ENT_QUOTES, 'UTF-8') ?>
-                                <?= htmlspecialchars($driver['name'], ENT_QUOTES, 'UTF-8') ?>
-                                - <?= htmlspecialchars($driver['teamName'], ENT_QUOTES, 'UTF-8') ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
+    <select class="choice-driver" name="idDriver" value="<?= $driver['id'] ?>" 
+        id="driver_<?= $driver['id'] ?>" required>
+        <?php foreach($drivers as $driver) : ?>
+            <option value="<?= $driver['id'] ?>">
+                #<?= htmlspecialchars($driver['number_api'], ENT_QUOTES, 'UTF-8') ?>
+                <?= htmlspecialchars($driver['firstName'], ENT_QUOTES, 'UTF-8') ?>
+                <?= htmlspecialchars($driver['name'], ENT_QUOTES, 'UTF-8') ?>
+                - <?= htmlspecialchars($driver['teamName'], ENT_QUOTES, 'UTF-8') ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
 
  
     <!-- Bouton confirmation -->
-    <button type="submit">Confirmer mon pari</button>
+    <button class="btn-register" type="submit">Confirmer mon pari</button>
  
 </form>
 </section>
