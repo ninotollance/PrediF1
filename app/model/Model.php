@@ -31,8 +31,14 @@ abstract class Model {
     
     // Insère un nouvel enregistrement dans la table
     public function create(array $data) {
+        // Nettoie chaque valeur — supprime les espaces et balises HTML avant insertion
+        foreach($data as $col => $value) {
+            if(is_string($value)) { // Nettoie uniquement les chaînes, pas les entiers
+                $data[$col] = trim(strip_tags($value));
+            }
+        }
         $columns = implode(', ', array_keys($data)); // array_keys() récupère uniquement les clés du tableau → ['email', 'name', '...']
-        $params = implode(',', array_map(fn($col) => ":$col", array_keys($data))); // array_map() transforme chaque clé en paramètre préparé en ajoutant ':' devant
+        $params = implode(', ', array_map(function($col) { return ':' . $col; }, array_keys($data))); // Transforme chaque clé en paramètre préparé → [':email', ':name', '...']
         $query = "INSERT INTO $this->table ($columns) VALUES ($params)"; // "INSERT INTO table du model (email, name, ...) VALUES (:email, :name, :...)"
         $stmt = $this->db->prepare($query); // Prépare la requête (anti-injection SQL)
         return $stmt->execute($data); // Lie $data et exécute, retourne true/false
@@ -49,17 +55,25 @@ abstract class Model {
 
     // Modifie un enregistrement par son id
     public function update(int $id, array $data) {
-        $set = implode(',', array_map(fn($col) => "$col = :$col", array_keys($data)));
+        // Nettoie chaque valeur — supprime les espaces et balises HTML avant modification
+        foreach($data as $col => $value) {
+            if(is_string($value)) { // Nettoie uniquement les chaînes, pas les entiers
+                $data[$col] = trim(strip_tags($value));
+            }
+        }
+
+        $setParts = array(); // Tableau pour stocker les parties du SET
+        foreach(array_keys($data) as $col) {
+            $setParts[] = "$col = :$col"; // Construit "colonne = :colonne"
+        }
+        $set = implode(', ', $setParts); // Joint avec des virgules
         $query = "UPDATE $this->table SET $set WHERE id = :id";
         $stmt = $this->db->prepare($query);
-        
-        // Lie chaque valeur de $data manuellement
         foreach($data as $col => $value) {
             $stmt->bindValue(':' . $col, $value); // Lie chaque paramètre
         }
-        
         $stmt->bindValue(':id', $id, PDO::PARAM_INT); // Lie l'id séparément
-        return $stmt->execute(); // Execute sans paramètres
+        return $stmt->execute();
     }
 
 

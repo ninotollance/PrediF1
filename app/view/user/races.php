@@ -9,7 +9,7 @@
             <?php endif; ?>
 
             <article class="race-card-home <?= ($nextRace && $race['id'] === $nextRace['id']) ? 'race-next' : '' ?>">
-                <!-- <figure class="race-card-home-img">
+                <figure class="race-card-home-img">
                     <figcaption class="badge"><?= translateStatus($race['status']) ?></figcaption>
                     <?php if($race['picture']) : ?>
                         <img src="public/img/circuits/<?= htmlspecialchars($race['picture'], ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($race['name'], ENT_QUOTES, 'UTF-8') ?>">
@@ -19,9 +19,9 @@
                     <figcaption class="date-race">
                         <p><?= date('d/m', strtotime($race['gpStart'])) ?> - <?= date('d/m', strtotime($race['gpEnd'])) ?></p>
                     </figcaption>
-                </figure> -->
+                </figure>
 
-                <figure class="race-card-home-img">
+                <!-- <figure class="race-card-home-img">
     <figcaption class="badge"><?= translateStatus($race['status']) ?></figcaption>
 
     <?php if($race['name'] === 'Formula 1 Crypto.com Miami Grand Prix') : // Vidéo pour Miami ?>
@@ -40,7 +40,7 @@
         <p><?= date('d/m', strtotime($race['gpStart'])) ?> 
         - <?= date('d/m', strtotime($race['gpEnd'])) ?></p>
     </figcaption>
-</figure>
+</figure> -->
                 <div class="race-card-home-body <?= ($nextRace && $race['id'] === $nextRace['id']) ? 'race-next' : '' ?>">
                     <div class="info-gp">
                         <h2><?= htmlspecialchars($race['country'], ENT_QUOTES, 'UTF-8') ?></h2>

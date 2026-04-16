@@ -2,7 +2,30 @@
 <article class="race-card-home">
 
     <!-- Badge avec statut traduit en français via la fonction helper translateStatus() -->
-    <figure class="race-card-home-img">
+     <figure class="race-card-home-img">
+        <figcaption class="badge"><?= translateStatus($race['status']) ?></figcaption>
+
+        <?php if($race['name'] === 'Formula 1 Crypto.com Miami Grand Prix') : // Vidéo pour Miami ?>
+            <video autoplay muted loop class="race-video">
+                <source src="public/video/miami.webm" type="video/webm">
+                <source src="public/video/miami.mp4" type="video/mp4">
+            </video>
+        <?php elseif($race['picture']) : // Sinon image normale ?>
+            <img src="public/img/circuits/<?= htmlspecialchars($race['picture'], ENT_QUOTES, 'UTF-8') ?>" 
+                alt="<?= htmlspecialchars($race['name'], ENT_QUOTES, 'UTF-8') ?>">
+        <?php else : // Image par défaut ?>
+            <img src="public/img/circuits/default.webp" alt="Circuit par défaut">
+        <?php endif; ?>
+
+        <figcaption class="date-race">
+            <p><?= date('d/m', strtotime($race['gpStart'])) ?> 
+            - <?= date('d/m', strtotime($race['gpEnd'])) ?></p>
+        </figcaption>
+    </figure>
+
+    <!-- Code pour uniquement les images 
+    
+        <figure class="race-card-home-img">
         <figcaption class="badge"><?= translateStatus($race['status']) ?></figcaption>
 
         <?php if($race['picture']) : // Si une image est renseignée en BDD ?>
@@ -15,7 +38,7 @@
                 <p> <?= date('d/m', strtotime($race['gpStart'])) ?> 
                 - <?= date('d/m', strtotime($race['gpEnd'])) ?></p>
         </figcaption>
-    </figure>
+    </figure> -->
             
     <!-- Pays en titre, dates du week-end et nom du GP -->
     <div class="race-card-home-body">
@@ -32,7 +55,7 @@
             </div>
         </div>
     </div>
-
+</article>
 <!-- Formulaire de pari -->
 <section id="profile-info" class="bet-section">
 <form method="POST" action="?action=creer-pari">
@@ -57,23 +80,5 @@
     <br>
  
 </form>
-
-<video autoplay muted loop>
-    <!-- Desktop : haute qualité -->
-    <source media="(min-width: 1024px)" src="public/video/miami-desktop.webm" type="video/webm">
-    <source media="(min-width: 1024px)" src="public/video/miami-desktop.mp4" type="video/mp4">
-    <!-- Mobile : version légère -->
-    <source src="public/video/miami-mobile.webm" type="video/webm">
-    <source src="public/video/miami-mobile.mp4" type="video/mp4">
-</video>
-
-<picture>
-    <!-- Desktop -->
-    <source media="(min-width: 1024px)" srcset="public/img/circuits/miami-desktop.webp" type="image/webp">
-    <source media="(min-width: 1024px)" srcset="public/img/circuits/miami-desktop.jpg">
-    <!-- Mobile -->
-    <source srcset="public/img/circuits/miami-mobile.webp" type="image/webp">
-    <img src="public/img/circuits/miami-mobile.jpg" alt="Miami">
-</picture>
 </section>
-
+</article>
