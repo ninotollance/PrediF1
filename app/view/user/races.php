@@ -9,7 +9,7 @@
             <?php endif; ?>
 
             <article class="race-card-home <?= ($nextRace && $race['id'] === $nextRace['id']) ? 'race-next' : '' ?>">
-                <figure class="race-card-home-img">
+                <!-- <figure class="race-card-home-img">
                     <figcaption class="badge"><?= translateStatus($race['status']) ?></figcaption>
                     <?php if($race['picture']) : ?>
                         <img src="public/img/circuits/<?= htmlspecialchars($race['picture'], ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($race['name'], ENT_QUOTES, 'UTF-8') ?>">
@@ -19,8 +19,28 @@
                     <figcaption class="date-race">
                         <p><?= date('d/m', strtotime($race['gpStart'])) ?> - <?= date('d/m', strtotime($race['gpEnd'])) ?></p>
                     </figcaption>
-                </figure>
+                </figure> -->
 
+                <figure class="race-card-home-img">
+    <figcaption class="badge"><?= translateStatus($race['status']) ?></figcaption>
+
+    <?php if($race['name'] === 'Formula 1 Crypto.com Miami Grand Prix') : // Vidéo pour Miami ?>
+        <video autoplay muted loop class="race-video">
+            <source src="public/video/miami.webm" type="video/webm">
+            <source src="public/video/miami.mp4" type="video/mp4">
+        </video>
+    <?php elseif($race['picture']) : // Sinon image normale ?>
+        <img src="public/img/circuits/<?= htmlspecialchars($race['picture'], ENT_QUOTES, 'UTF-8') ?>" 
+            alt="<?= htmlspecialchars($race['name'], ENT_QUOTES, 'UTF-8') ?>">
+    <?php else : // Image par défaut ?>
+        <img src="public/img/circuits/default.webp" alt="Circuit par défaut">
+    <?php endif; ?>
+
+    <figcaption class="date-race">
+        <p><?= date('d/m', strtotime($race['gpStart'])) ?> 
+        - <?= date('d/m', strtotime($race['gpEnd'])) ?></p>
+    </figcaption>
+</figure>
                 <div class="race-card-home-body <?= ($nextRace && $race['id'] === $nextRace['id']) ? 'race-next' : '' ?>">
                     <div class="info-gp">
                         <h2><?= htmlspecialchars($race['country'], ENT_QUOTES, 'UTF-8') ?></h2>

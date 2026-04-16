@@ -27,4 +27,19 @@ class HomeController extends Controller {
         require RACINE . "/app/view/user/home.php"; // Charge la vue accueil
         require RACINE . "/app/view/layout/footer.php"; // Charge le footer
     }
+
+    // Affiche la page des conditions d'utilisation
+    public function terms() {
+        require RACINE . "/app/view/user/terms.php";
+    }
+
+    // Affiche la page de confidentialité
+    public function privacy() {
+        require RACINE . "/app/view/user/privacy.php";
+    }
+
+    // Affiche la page de jeu responsable
+    public function responsibleGambling() {
+        require RACINE . "/app/view/user/responsible.php";
+    }
 }

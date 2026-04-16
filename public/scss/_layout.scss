@@ -183,6 +183,12 @@ header nav a {
     font-size: $text-base;
 }
 
+// Message d'erreur dans les formulaires utilisateur
+.form-error {
+    color: $color-red;
+    font-size: $text-sm;
+}
+
 // ==============================
 // TOAST — Messages flash
 // ==============================

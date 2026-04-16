@@ -35,7 +35,8 @@ class AuthController extends Controller {
             return; // Arrête la fonction
         }
         if(!$user) { // Si l'email n'existe pas en BDD
-            $this->error('Email ou mot de passe incorrects'); // Message d'erreur
+            $this->formError('Email ou mot de passe incorrects'); // Message d'erreur
+            $this->redirect('connexion'); // ← redirige vers le formulaire
             return; // Arrête la fonction
         }
         if(password_verify($_POST['password'], $user['password'])) { // Vérifie le mot de passe avec le hash en BDD
@@ -49,7 +50,8 @@ class AuthController extends Controller {
                 $this->redirect('accueil'); // ← user → accueil
             }
         } else {
-            $this->error('Email ou mot de passe incorrects'); // Message d'erreur
+            $this->formError('Email ou mot de passe incorrects'); // Message d'erreur
+            $this->redirect('connexion');
         }
     }
 
@@ -69,6 +71,23 @@ class AuthController extends Controller {
             require RACINE . '/app/view/user/register.php'; // Affiche le formulaire
             return; // Arrête la fonction
         }
+        // Validation des données avant tout traitement
+        if(empty($_POST['name']) || empty($_POST['firstname'])) { // Vérifie que les champs nom/prénom ne sont pas vides
+            $this->formError('Tous les champs sont obligatoires');
+            return;
+        }
+        if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) { // Vérifie que l'email est au bon format
+            $this->formError('Email invalide');
+            return;
+        }
+        if(strlen($_POST['password']) < 8) { // Vérifie que le mot de passe fait au moins 8 caractères
+            $this->formError('Le mot de passe doit faire au moins 8 caractères');
+            require RACINE . '/app/view/layout/header.php';
+            require RACINE . '/app/view/user/register.php'; // Réaffiche le formulaire avec le message d'erreur
+            require RACINE . '/app/view/layout/footer.php';
+            return;
+        }
+
         try {
             $user = $this->userModel->getByEmail($_POST['email']); // Vérifie si l'email existe déjà en BDD
         } catch(Exception $e) {
@@ -76,7 +95,8 @@ class AuthController extends Controller {
             return; // Arrête la fonction
         }
         if($user) { // Si l'email existe déjà
-            $this->error('Email déjà existant'); // Message d'erreur
+            $this->formError('Email déjà existant'); // Message d'erreur
+            $this->redirect('connexion'); // ← l'utilisateur existe déjà, on le redirige vers la connexion
             return; // Arrête la fonction
         }
         $hashedPassword = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash le mot de passe (jamais stocker en clair !)

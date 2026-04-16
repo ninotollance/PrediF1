@@ -115,83 +115,14 @@
                 </div>
 
                 <!-- Formulaire création course — caché par défaut -->
-                <div id="races-form-create" hidden>
-                    <h2>Créer une course <a onclick="showTable('races')">← Retour</a></h2>
-                    <form method="POST" action="?action=admin-creer-course">
-                        <input type="hidden" name="section" value="races">
+                <!-- Formulaire création -->
+                <?php $isEdit = false; $race = null; ?>
+                <?php include '_form_race.php'; ?>
 
-                        <label>Nom du Grand Prix</label>
-                        <input type="text" name="name" placeholder="Grand Prix d'Australie" required>
-
-                        <label>Pays</label>
-                        <input type="text" name="country" placeholder="Australie" required>
-
-                        <label>Début du week-end</label>
-                        <input type="date" name="gpStart" required>
-
-                        <label>Fin du week-end</label>
-                        <input type="date" name="gpEnd" required>
-
-                        <label>Heure de départ</label>
-                        <input type="datetime-local" name="raceStart" required>
-
-                        <label>Circuit Key API</label>
-                        <input type="number" name="circuitKey_api" required>
-
-                        <label>Image (nom du fichier)</label>
-                        <input type="text" name="picture" placeholder="australie.webp">
-
-                        <label>Statut</label>
-                        <select name="status">
-                            <option value="scheduled">À venir</option>
-                            <option value="cancelled">Annulée</option>
-                            <option value="finished">Terminée</option>
-                        </select>
-
-                        <button type="submit">Créer la course</button>
-                    </form>
-                </div>
-
-                <!-- Formulaire modification — un par course, caché par défaut -->
+                <!-- Formulaires modification — un par course -->
                 <?php foreach($races as $race) : ?>
-                <div id="races-form-edit-<?= $race['id'] ?>" hidden>
-                    <h2>Modifier une course <a onclick="showTable('races')">← Retour</a></h2>
-                    <form method="POST" action="?action=admin-modifier-course&id=<?= $race['id'] ?>">
-                        <input type="hidden" name="section" value="races">
-
-                        <label>Nom du Grand Prix</label>
-                        <input type="text" name="name" value="<?= htmlspecialchars($race['name'], ENT_QUOTES, 'UTF-8') ?>" required>
-
-                        <label>Pays</label>
-                        <input type="text" name="country" value="<?= htmlspecialchars($race['country'], ENT_QUOTES, 'UTF-8') ?>" required>
-
-                        <label>Début du week-end</label>
-                        <input type="date" name="gpStart" value="<?= $race['gpStart'] ?>" required>
-
-                        <label>Fin du week-end</label>
-                        <input type="date" name="gpEnd" value="<?= $race['gpEnd'] ?>" required>
-
-                        <label>Heure de départ</label>
-                        <!-- str_replace remplace l'espace par T pour le format datetime-local -->
-                        <input type="datetime-local" name="raceStart" value="<?= str_replace(' ', 'T', $race['raceStart']) ?>" required>
-
-                        <label>Circuit Key API</label>
-                        <input type="number" name="circuitKey_api" value="<?= $race['circuitKey_api'] ?>" required>
-
-                        <label>Image (nom du fichier)</label>
-                        <input type="text" name="picture" value="<?= htmlspecialchars($race['picture'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
-
-                        <label>Statut</label>
-                        <select name="status">
-                            <!-- selected : pré-sélectionne le statut actuel -->
-                            <option value="scheduled" <?= $race['status'] === 'scheduled' ? 'selected' : '' ?>>À venir</option>
-                            <option value="cancelled" <?= $race['status'] === 'cancelled' ? 'selected' : '' ?>>Annulée</option>
-                            <option value="finished" <?= $race['status'] === 'finished' ? 'selected' : '' ?>>Terminée</option>
-                        </select>
-
-                        <button type="submit">Modifier la course</button>
-                    </form>
-                </div>
+                    <?php $isEdit = true; ?>
+                    <?php include '_form_race.php'; ?>
                 <?php endforeach; ?>
 
             </section>
@@ -231,77 +162,17 @@
                         </table>
                     </div>
                 </div>
-
                 <!-- Formulaire création pilote -->
-                <div id="drivers-form-create" hidden>
-                    <h2>Ajouter un pilote <a onclick="showTable('drivers')">← Retour</a></h2>
-                    <form method="POST" action="?action=admin-creer-pilote" enctype="multipart/form-data">
-                        <input type="hidden" name="section" value="drivers">
+                <?php $isEdit = false; $driver = null; ?>
+                <?php include '_form_driver.php'; ?>
 
-                        <label>Prénom</label>
-                        <input type="text" name="firstName" required>
-
-                        <label>Nom</label>
-                        <input type="text" name="name" required>
-
-                        <label>Numéro</label>
-                        <input type="number" name="number_api" required>
-
-                        <label>Écurie</label>
-                        <select name="idTeam">
-                            <?php foreach($teams as $team) : ?>
-                                <option value="<?= $team['id'] ?>"><?= htmlspecialchars($team['name'], ENT_QUOTES, 'UTF-8') ?></option>
-                            <?php endforeach; ?>
-                        </select>
-
-                        <label>Image (nom du fichier)</label>
-                        <input type="file" name="picture">
-
-                        <button type="submit">Ajouter le pilote</button>
-                    </form>
-                </div>
-
-                <!-- Formulaire modification — un par pilote -->
+                <!-- Formulaires modification — un par pilote -->
                 <?php foreach($drivers as $driver) : ?>
-                <div id="drivers-form-edit-<?= $driver['id'] ?>" hidden>
-                    <h2>Modifier un pilote <a onclick="showTable('drivers')">← Retour</a></h2>
-                    <form method="POST" action="?action=admin-modifier-pilote&id=<?= $driver['id'] ?>" enctype="multipart/form-data">
-                        <input type="hidden" name="section" value="drivers">
-
-                        <label>Prénom</label>
-                        <input type="text" name="firstName" value="<?= htmlspecialchars($driver['firstName'], ENT_QUOTES, 'UTF-8') ?>" required>
-
-                        <label>Nom</label>
-                        <input type="text" name="name" value="<?= htmlspecialchars($driver['name'], ENT_QUOTES, 'UTF-8') ?>" required>
-
-                        <label>Numéro</label>
-                        <input type="number" name="number_api" value="<?= $driver['number_api'] ?>" required>
-
-                        <label>Écurie</label>
-                        <select name="idTeam">
-                            <?php foreach($teams as $team) : ?>
-                                <!-- selected : pré-sélectionne l'écurie actuelle du pilote -->
-                                <option value="<?= $team['id'] ?>" <?= $driver['idTeam'] == $team['id'] ? 'selected' : '' ?>>
-                                    <?= htmlspecialchars($team['name'], ENT_QUOTES, 'UTF-8') ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-
-                        <label>Image (nom du fichier)</label>
-                        <?php if($driver['picture']) : ?>
-                            <img src="public/img/drivers/<?= htmlspecialchars($driver['picture'], ENT_QUOTES, 'UTF-8') ?>" 
-                                style="width: 80px;">
-                            <p>Image actuelle : <?= htmlspecialchars($driver['picture'], ENT_QUOTES, 'UTF-8') ?></p>
-                        <?php endif; ?>
-                        <input type="file" name="picture">
-
-                        <button type="submit">Modifier le pilote</button>
-                    </form>
-                </div>
+                    <?php $isEdit = true; ?>
+                    <?php include '_form_driver.php'; ?>
                 <?php endforeach; ?>
 
             </section>
-
             <!-- ════════════════════════════════════════ -->
             <!-- SECTION ÉCURIES — caché par défaut       -->
             <!-- ════════════════════════════════════════ -->
@@ -334,49 +205,15 @@
                     </div>
                 </div>
 
+                
                 <!-- Formulaire création écurie -->
-                <div id="teams-form-create" hidden>
-                    <h2>Ajouter une écurie <a onclick="showTable('teams')">← Retour</a></h2>
-                    <form method="POST" action="?action=admin-creer-ecuries" enctype="multipart/form-data">
-                        <input type="hidden" name="section" value="teams">
+                <?php $isEdit = false; $team = null; ?>
+                <?php include '_form_team.php'; ?>
 
-                        <label>Nom</label>
-                        <input type="text" name="name" required>
-
-                        <label>Pays</label>
-                        <input type="text" name="country" required>
-
-                        <label>Image (nom du fichier)</label>
-                        <input type="file" name="picture">
-
-                        <button type="submit">Ajouter l'écurie</button>
-                    </form>
-                </div>
-
-                <!-- Formulaire modification — un par écurie -->
+                <!-- Formulaires modification — un par écurie -->
                 <?php foreach($teams as $team) : ?>
-                <div id="teams-form-edit-<?= $team['id'] ?>" hidden>
-                    <h2>Modifier une écurie <a onclick="showTable('teams')">← Retour</a></h2>
-                    <form method="POST" action="?action=admin-modifier-ecuries&id=<?= $team['id'] ?>" enctype="multipart/form-data">
-                        <input type="hidden" name="section" value="teams">
-
-                        <label>Nom</label>
-                        <input type="text" name="name" value="<?= htmlspecialchars($team['name'], ENT_QUOTES, 'UTF-8') ?>" required>
-
-                        <label>Pays</label>
-                        <input type="text" name="country" value="<?= htmlspecialchars($team['country'], ENT_QUOTES, 'UTF-8') ?>" required>
-
-                        <label>Image (nom du fichier)</label>
-                        <?php if($team['picture']) : ?>
-                            <img src="public/img/teams/<?= htmlspecialchars($team['picture'], ENT_QUOTES, 'UTF-8') ?>" 
-                                style="width: 80px;">
-                            <p>Image actuelle : <?= htmlspecialchars($team['picture'], ENT_QUOTES, 'UTF-8') ?></p>
-                        <?php endif; ?>
-                        <input type="file" name="picture">
-
-                        <button type="submit">Modifier l'écurie</button>
-                    </form>
-                </div>
+                    <?php $isEdit = true; ?>
+                    <?php include '_form_team.php'; ?>
                 <?php endforeach; ?>
 
             </section>

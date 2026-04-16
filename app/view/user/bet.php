@@ -39,16 +39,6 @@
     <input type="hidden" name="idRace" value="<?= $race['id'] ?>">
  
     <!-- Liste des pilotes sous forme de boutons radio -->
-    <!-- <?php foreach($drivers as $driver) : ?>
-        <input type="radio" name="idDriver" value="<?= $driver['id'] ?>" 
-            id="driver_<?= $driver['id'] ?>" required>
-        <label for="driver_<?= $driver['id'] ?>">
-            <span><?= htmlspecialchars($driver['firstName'], ENT_QUOTES, 'UTF-8') ?></span>
-            <span><?= htmlspecialchars($driver['name'], ENT_QUOTES, 'UTF-8') ?></span>
-            <span><?= htmlspecialchars($driver['number_api'], ENT_QUOTES, 'UTF-8') ?></span>
-            <span><?= htmlspecialchars($driver['teamName'], ENT_QUOTES, 'UTF-8') ?></span>
-        </label>
-    <?php endforeach; ?> -->
     <select class="choice-driver" name="idDriver" value="<?= $driver['id'] ?>" 
         id="driver_<?= $driver['id'] ?>" required>
         <?php foreach($drivers as $driver) : ?>
@@ -67,5 +57,23 @@
     <br>
  
 </form>
+
+<video autoplay muted loop>
+    <!-- Desktop : haute qualité -->
+    <source media="(min-width: 1024px)" src="public/video/miami-desktop.webm" type="video/webm">
+    <source media="(min-width: 1024px)" src="public/video/miami-desktop.mp4" type="video/mp4">
+    <!-- Mobile : version légère -->
+    <source src="public/video/miami-mobile.webm" type="video/webm">
+    <source src="public/video/miami-mobile.mp4" type="video/mp4">
+</video>
+
+<picture>
+    <!-- Desktop -->
+    <source media="(min-width: 1024px)" srcset="public/img/circuits/miami-desktop.webp" type="image/webp">
+    <source media="(min-width: 1024px)" srcset="public/img/circuits/miami-desktop.jpg">
+    <!-- Mobile -->
+    <source srcset="public/img/circuits/miami-mobile.webp" type="image/webp">
+    <img src="public/img/circuits/miami-mobile.jpg" alt="Miami">
+</picture>
 </section>
 

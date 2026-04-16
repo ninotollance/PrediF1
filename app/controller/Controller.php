@@ -40,4 +40,9 @@ abstract class Controller {
     protected function success(string $message) {
         $_SESSION['success'] = $message; // Message spécifique passé en paramètre
     }
+
+    // Stocke une erreur de formulaire — affichée dans le formulaire, pas en toast
+    protected function formError(string $message) {
+        $_SESSION['form_error'] = $message;
+    }
 }

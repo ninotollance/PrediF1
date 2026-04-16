@@ -571,3 +571,67 @@
         }
     }
 }
+
+
+// Page 404 — centrée verticalement
+.error-404 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    text-align: center;
+    padding: 80px 20px;
+
+    h1 {
+        font-family: $font-title;
+        font-size: 100px; // grand chiffre impactant
+        color: $color-red;
+        line-height: 1;
+    }
+
+    p {
+        font-size: $text-xl;
+        color: $color-white;
+    }
+    a {
+        align-self: center; // ← centre le bouton
+    }
+}
+
+// Pages légales — espacement et lisibilité
+.legal {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    h1 {
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        color: $color-red;
+        margin-bottom: 5px;
+    }
+
+    ul {
+        list-style: disc; // puces pour les listes
+        padding-left: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+}
+
+// Vidéo dans la card — même style que l'image
+.race-video {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+
+    @media (min-width: $breakpoint-desktop) {
+        height: 250px;
+    }
+}
