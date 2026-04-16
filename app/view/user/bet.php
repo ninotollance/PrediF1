@@ -64,6 +64,7 @@
  
     <!-- Bouton confirmation -->
     <button class="btn-register" type="submit">Confirmer mon pari</button>
+    <br>
  
 </form>
 </section>

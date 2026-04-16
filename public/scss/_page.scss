@@ -24,11 +24,15 @@
 // ==============================
 // CARD COURSE — Mobile First
 // ==============================
-
+.races-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
+}
 .race-card-home {
     border-radius: 10px;
     overflow: hidden;
-    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
 
@@ -88,11 +92,11 @@
 
 // Nom officiel du GP — réduit car textes longs
 .info-gp p {
-    font-size: $text-sm;
+    font-size: $text-base;
     font-family: $font-text;
 
     @media (min-width: $breakpoint-desktop) {
-        font-size: $text-base;
+        font-size: $text-xl;
     }
 }
 
@@ -152,6 +156,9 @@
     background-color: $color-red;
     cursor: pointer;
 }
+.winner {
+    margin-top: 5px;
+}
 
 
 // ==============================
@@ -162,7 +169,7 @@
 .cards-container {
     display: grid;
     grid-template-columns: 1fr;        // mobile : 1 colonne
-    gap: 15px;
+    gap: 20px;
     margin-top: 20px;
 
     @media (min-width: $breakpoint-tablet) {
@@ -187,8 +194,9 @@
 }
 
 .pilote-card-home-body p {
-    font-size: $text-base;
+    font-size: $text-sm;
     font-family: $font-text;
+    margin-bottom: 10px;
 
     @media (min-width: $breakpoint-desktop) {
         font-size: $text-xl;

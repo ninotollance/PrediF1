@@ -97,7 +97,7 @@ class RaceController extends Controller {
         if($_SERVER['REQUEST_METHOD'] !== 'POST') { // Si le formulaire n'est pas soumis
             $this->redirect('admin'); // Redirige vers la route 'admin'
         }
-        $id = $_GET['id']; // Récupère l'id de la course depuis l'URL
+        $id = $_POST['id']; // Récupère l'id de la course depuis le formulaire (champ caché)
         if(!is_numeric($id)) { // Vérifie que l'id est bien un nombre
             $this->redirect('admin'); // Redirige vers la route 'admin' si l'id est invalide
         }

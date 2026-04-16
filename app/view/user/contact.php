@@ -6,11 +6,11 @@
         <label>Prénom</label>
         <input type="text" name="firstName">
         <label>Email</label>
-        <input type="text" name="email">
+        <input type="text" name="email" placeholder="exemple@email.fr">
         <label>Sujet</label>
         <input type="text" name="sujet">
         <label>Message</label>
-        <textarea name="message" id="message"></textarea>
+        <textarea name="message" id="message" placeholder="Votre message"></textarea>
         <button class="btn-update" type="submit">Envoyer</button>
     </form>
 </section>

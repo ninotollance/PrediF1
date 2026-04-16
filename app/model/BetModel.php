@@ -52,6 +52,14 @@ class BetModel extends Model {
         return $stmt->execute();                // exécute, retourne true/false
     }
 
+    // Supprime tous les paris d'un utilisateur avant de supprimer son compte
+    public function deleteAllByUser($id) {
+        $query = "DELETE FROM BET WHERE idUser = :idUser";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':idUser', $id);
+        return $stmt->execute();
+    }
+
     // Supprime un pari par l'admin
     public function deleteByAdmin($id) {
         $query = "DELETE FROM BET WHERE BET.id = :id"; // admin peut supprimer n'importe quel pari
@@ -89,46 +97,4 @@ class BetModel extends Model {
     }
 }
 
-    /* // Attribut qui stocke la connexion PDO accessible dans toute la classe
-    private PDO $db;
-
-    // Récupère la connexion PDO du singleton
-    // Pas de paramètre
-    // Pas de retour, initialise juste $this->db
-    public function __construct() {
-        $this->db = Database::getInstance()->getConnection();
-    }
-
-     // Récupère un seul pari par son id
-    // Paramètre : $idBet (int) - l'id du pari recherché
-    // Retourne : un tableau associatif avec les infos du pari, du pilote et de la course associés, ou false si introuvable
-    public function getById($idBet) {
-        $query = "SELECT BET.idBet, BET.dateBet, 
-                         RACE.name AS nameRace, RACE.country, 
-                         DRIVER.number_api, DRIVER.name AS nameDriver, DRIVER.firstName 
-                  FROM BET
-                  JOIN RACE ON BET.idRace = RACE.idRace
-                  JOIN DRIVER ON BET.idDriver = DRIVER.idDriver
-                  WHERE BET.idBet = :idBet";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':idBet', $idBet);
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC); // fetch car on cherche UN seul pari par son id unique
-    }
-
-    // Crée un nouveau pari
-    // Paramètres :
-    //   $idDriver (int) - l'id du pilote sur lequel l'utilisateur parie
-    //   $idRace (int)   - l'id de la course concernée
-    //   $idUser (int)   - l'id de l'utilisateur qui place le pari
-    // Retourne : true si l'insertion a réussi, false sinon
-    // Note : la date est automatiquement renseignée avec NOW() au moment de l'insertion
-    public function create($idDriver, $idRace, $idUser) {
-        $query = "INSERT INTO BET (dateBet, idDriver, idRace, idUser) 
-                  VALUES (NOW(), :idDriver, :idRace, :idUser)";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':idDriver', $idDriver);
-        $stmt->bindParam(':idRace', $idRace);
-        $stmt->bindParam(':idUser', $idUser);
-        return $stmt->execute();
-    } */
+    

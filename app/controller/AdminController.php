@@ -35,6 +35,10 @@ class AdminController extends Controller {
             $drivers = $this->driverModel->getAllWithTeam();  // Tous les pilotes
             $teams = $this->teamModel->getAll(); // Toutes les écuries
             $bets = $this->betModel->getAllWithDetails(); // Tous les paris avec infos
+            $finishedRaces = array_filter($races, function($r) {
+                return $r['status'] === 'finished';
+            }); // Filtre les courses terminées pour le formulaire vainqueur
+            $finishedRaces = array_values($finishedRaces); // Réindexe le tableau pour éviter les problèmes d'index
         } catch(Exception $e) {
             $this->catchError($e);
             return; // Arrête la fonction
@@ -82,6 +86,7 @@ class AdminController extends Controller {
         }
         $id = (int)$id; // Convertit l'id en entier
         try {
+            $this->betModel->deleteAllByUser($id); // Supprime d'abord tous les paris de l'utilisateur
             $this->userModel->delete($id); // Supprime l'utilisateur en BDD
             $this->success('Utilisateur supprimé avec succès !'); // Message de succès
         } catch(Exception $e) {

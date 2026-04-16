@@ -388,16 +388,16 @@
             <!-- ════════════════════════════════════════ -->
             <section id="winner" class="dashboard-section" hidden>
                 <h2>Ajouter un vainqueur</h2>
-                <form method="POST" action="?action=admin-ajouter-vainqueur&id=0">
+                <form method="POST" action="?action=admin-ajouter-vainqueur">
                     <input type="hidden" name="section" value="winner">
-
+                    <!-- Champ caché qui stocke l'id de la course sélectionnée -->
+                    <input type="hidden" name="id" id="idRace" value="<?= isset($finishedRaces[0]) ? $finishedRaces[0]['id'] : '' ?>">
+                    
                     <label>Course terminée</label>
-                    <!-- onchange : met à jour l'action du formulaire avec l'id de la course sélectionnée -->
-                    <select name="idRace" onchange="this.form.action='?action=admin-ajouter-vainqueur&id=' + this.value">
-                        <?php foreach($races as $race) : ?>
-                            <?php if($race['status'] === 'finished') : // Seulement les courses terminées ?>
-                                <option value="<?= $race['id'] ?>"><?= htmlspecialchars($race['name'], ENT_QUOTES, 'UTF-8') ?></option>
-                            <?php endif; ?>
+                    <!-- onchange : met à jour le champ caché avec l'id de la course sélectionnée -->
+                    <select name="idRace" onchange="document.getElementById('idRace').value = this.value">
+                        <?php foreach($finishedRaces as $race) : ?>
+                            <option value="<?= $race['id'] ?>"><?= htmlspecialchars($race['name'], ENT_QUOTES, 'UTF-8') ?></option>
                         <?php endforeach; ?>
                     </select>
 
@@ -410,7 +410,6 @@
                             </option>
                         <?php endforeach; ?>
                     </select>
-
                     <button type="submit">Enregistrer le vainqueur</button>
                 </form>
             </section>
@@ -446,7 +445,7 @@
                                         <?= htmlspecialchars($bet['nameDriver'], ENT_QUOTES, 'UTF-8') ?></td>
                                     <td><?= date('d/m/Y', strtotime($bet['date_'])) ?></td>
                                     <td>
-                                        <a onclick="confirmDelete('?action=admin-supprimer-pari&id=<?= $bet['id'] ?>&section=users')">Supprimer</a>
+                                        <a onclick="confirmDelete('?action=admin-supprimer-pari&id=<?= $bet['id'] ?>&section=bets')">Supprimer</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

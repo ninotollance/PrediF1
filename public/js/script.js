@@ -174,8 +174,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Ex: ?action=admin&section=drivers → ouvre la section Pilotes
     const section = urlParams.get('section');
     if(section) {
-        showSection(section, null);
+        showSection(section, null); // Section demandée dans l'URL
     }
+    // Active le bon lien dans la nav au chargement
+    document.querySelectorAll('.dashboard-nav a').forEach(a => {
+        if(a.getAttribute('data-section') === (section || 'races')) {
+            a.classList.add('active');
+        }
+    });
 
     // Fait disparaître le toast après 3 secondes
     const toast = document.querySelector('.toast');
@@ -234,6 +240,16 @@ function showSection(sectionName, event) {
     if(event && event.preventDefault) {
         event.preventDefault(); // Empêche la navigation seulement si event existe
     }
+    document.querySelectorAll('.dashboard-nav a').forEach(a => {
+        a.classList.remove('active'); // Retire active de tous les liens
+    });
+    if(event && event.target) {
+        event.target.classList.add('active'); // Ajoute active sur le lien cliqué
+    }
+
+    // Met à jour l'URL sans recharger la page
+    // Comme ça si tu rafraîchis, tu restes sur le bon onglet
+    history.pushState(null, '', '?action=admin&section=' + sectionName);
 
     // Cache toutes les sections
     document.querySelectorAll('.dashboard-section').forEach(section => {

@@ -25,7 +25,7 @@
                     <div class="info-gp">
                         <h2><?= htmlspecialchars($race['country'], ENT_QUOTES, 'UTF-8') ?></h2>
                         <div class="info-gp-start">
-                            <p><?= htmlspecialchars($race['name'], ENT_QUOTES, 'UTF-8') ?></p>
+                            <hp><?= htmlspecialchars($race['name'], ENT_QUOTES, 'UTF-8') ?></hp>
                             <?php if($race['status'] === 'scheduled') : ?>
                                 <p>Départ : <?= date('H:i', strtotime($race['raceStart'])) ?></p>
                             <?php endif; ?>

@@ -79,7 +79,8 @@ header {
     z-index: 100;        // au dessus de l'overlay (90) et du menu mobile (99)
 
     @media (min-width: $breakpoint-desktop) {
-        padding: 0 40px; // desktop : plus d'espace
+        padding-left: 15px;
+        /* padding: 0 40px; // desktop : plus d'espace */
         height: 90px;
     }
 }
@@ -101,10 +102,10 @@ header nav {
 
 // Logo — plus petit sur mobile
 img.logo {
-    width: 100px;        // mobile : compact
+    width: 120px;        // mobile : compact
 
     @media (min-width: $breakpoint-desktop) {
-        width: 140px;    // desktop : plus grand
+        width: 150px;    // desktop : plus grand
     }
 }
 
@@ -317,7 +318,7 @@ footer p {
     grid-template-columns: 1fr;        // mobile : une colonne
 
     @media (min-width: $breakpoint-desktop) {
-        grid-template-columns: 220px 1fr; // desktop : sidebar fixe + contenu
+        grid-template-columns: 250px 1fr; // desktop : sidebar fixe + contenu
         min-height: 100vh;
     }
 }
@@ -330,7 +331,7 @@ footer p {
     z-index: 100;
 
     @media (min-width: $breakpoint-desktop) {
-        padding: 20px;
+        padding: 10px;
         position: sticky;
         top: 0;
         height: 100vh;    // pleine hauteur sur desktop
@@ -348,16 +349,15 @@ footer p {
     justify-content: space-between; // logo à gauche, burger à droite
 
     @media (min-width: $breakpoint-desktop) {
-        justify-content: center;    // centré sur desktop
+        margin-top: 12px;
+        /* justify-content: center;    // centré sur desktop */
         height: 90px;
     }
-
-    img.logo {
-        width: 100px;
-
-        @media (min-width: $breakpoint-desktop) {
-            width: 250px;
-        }
+}
+.dashboard-sidebar-header img.logo {
+    width: 120px; // mobile
+    @media (min-width: $breakpoint-desktop) {
+        width: 150px; // desktop
     }
 }
 
@@ -389,6 +389,11 @@ footer p {
         flex-direction: column;
         gap: 5px;
         margin-left: 15px;
+
+            @media (min-width: $breakpoint-desktop) {
+            margin-top: 30px;
+        }
+        
     }
 
     nav a {
@@ -404,7 +409,13 @@ footer p {
         &:hover {
             background-color: $color-red;
         }
+            @media (min-width: $breakpoint-desktop) {
+            font-size: $text-lg;
+        }
     }
+}
+.dashboard-nav nav a.active {
+    background-color: $color-red;
 }
 
 // Overlay du dashboard — utilise le mixin overlay-base
@@ -427,6 +438,7 @@ footer p {
 .dashboard-main {
     padding: 15px;       // mobile : compact
     margin-top: 20px;
+    min-width: 0;
 
     @media (min-width: $breakpoint-desktop) {
         padding: 30px 40px;
