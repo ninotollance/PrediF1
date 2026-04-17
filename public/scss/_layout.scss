@@ -196,8 +196,9 @@ header nav a {
 // Message de succès ou d'erreur affiché en bas à droite
 .toast {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%); // ← décale de la moitié de sa propre largeur
     background-color: $color-bg-2;
     color: $color-white;
     padding: 12px 20px;

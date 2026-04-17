@@ -152,15 +152,17 @@ class BetController extends Controller {
         }
         $idRace = (int)$idRace; // Convertit en entier pour sécuriser
         try {
-            $race = $this->raceModel->getNextRace(); // Récupère la course en BDD par son id
+            $race = $this->raceModel->getById($idRace); // Récupère la course en BDD par son id
         } catch(Exception $e) {
             $this->catchError($e);
             return; // Arrête la fonction
         }
+        
         if(!$race) { // Si la course n'existe pas en BDD
             $this->error('Course introuvable'); // Message d'erreur pour l'utilisateur
             $this->redirect('accueil'); // Redirige vers l'accueil
         }
+        $this->setTitle('Parier sur ' . $race['name'] . ' - PrediF1');
         // Si la course n'est pas disponible aux paris (terminée ou annulée)
         if($race['status'] === 'cancelled' || $race['status'] === 'finished') {
             $this->error('Cette course n\'est pas disponible aux paris');

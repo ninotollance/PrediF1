@@ -22,7 +22,7 @@ class HomeController extends Controller {
             $this->catchError($e);
             return;
         }
-        
+        $this->setTitle('Accueil - PrediF1');
         require RACINE . "/app/view/layout/header.php"; // Charge le header
         require RACINE . "/app/view/user/home.php"; // Charge la vue accueil
         require RACINE . "/app/view/layout/footer.php"; // Charge le footer
@@ -42,4 +42,5 @@ class HomeController extends Controller {
     public function responsibleGambling() {
         require RACINE . "/app/view/user/responsible.php";
     }
+    
 }

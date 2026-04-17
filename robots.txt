@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin
+Disallow: ?action=admin
+
+Sitemap: https://predif1.com/sitemap.xml

@@ -167,6 +167,10 @@
 .team-card {
     @include card-base;
 }
+.team-card img {
+    object-fit: cover;
+    object-position: center center; /* horizontal vertical */
+}
 
 .team-info {
     display: flex;

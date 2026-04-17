@@ -16,6 +16,7 @@ class RaceController extends Controller {
     public function create() {
         $this->checkAdmin(); // Vérifie si l'utilisateur est admin, redirige sinon
         if($_SERVER['REQUEST_METHOD'] !== 'POST') { // Si le formulaire n'est pas soumis
+            $this->setTitle('Créer une course - PrediF1');
             require RACINE . "/app/view/layout/header.php";
             require RACINE . "/app/view/admin/createRace.php";
             require RACINE . "/app/view/layout/footer.php";
@@ -126,6 +127,7 @@ class RaceController extends Controller {
             $this->catchError($e);
             return;
         }
+        $this->setTitle('Courses - PrediF1');
         require RACINE . "/app/view/layout/header.php";
         require RACINE . "/app/view/user/races.php"; 
         require RACINE . "/app/view/layout/footer.php";

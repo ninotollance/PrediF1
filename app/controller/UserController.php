@@ -27,6 +27,7 @@ class UserController extends Controller {
         }
         $totalBets = count($bets); 
         $wonBets = count(array_filter($bets, fn($bet) => $bet['won'] === 1));
+        $this->setTitle('Mon Profil - PrediF1');
         require RACINE . "/app/view/layout/header.php";
         require RACINE . '/app/view/user/profile.php'; // Affiche la vue profil avec les données
         require RACINE . "/app/view/layout/footer.php";
@@ -36,10 +37,12 @@ class UserController extends Controller {
     public function update() {
         $this->checkConnexion(); // Vérifie si l'utilisateur est connecté, redirige sinon
         if($_SERVER['REQUEST_METHOD'] !== 'POST') { // Si le formulaire n'est pas soumis
-            require RACINE . '/app/view/user/profile.php'; // Affiche le formulaire
-            return; // Arrête la fonction
+            $this->setTitle('Modifier mon Profil - PrediF1'); // ← titre
+            require RACINE . '/app/view/layout/header.php'; // ← manquait !
+            require RACINE . '/app/view/user/profile.php';
+            require RACINE . '/app/view/layout/footer.php'; // ← manquait !
+            return;
         }
-        $hashedPassword = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash le mot de passe (jamais stocker en clair !)
         try {
             $this->userModel->update($_SESSION['user_id'], [ // Modifie l'utilisateur en BDD via son id en session
                 'email' => $_POST['email'],
@@ -80,6 +83,7 @@ class UserController extends Controller {
         }
         $totalBets = count($bets); // Compte le nombre total de paris de l'utilisateur
         $wonBets = count(array_filter($bets, fn($bet) => $bet['won'] === 1)); // Compte uniquement les paris gagnés (won === 1 signifie que le pilote parié est le vainqueur)
+        $this->setTitle('Mes Paris - PrediF1');
         require RACINE . "/app/view/layout/header.php";
         require RACINE . '/app/view/user/betHistory.php'; // Affiche la vue historique des paris
         require RACINE . "/app/view/layout/footer.php";

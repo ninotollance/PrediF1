@@ -5,10 +5,10 @@
      <figure class="race-card-home-img">
         <figcaption class="badge"><?= translateStatus($race['status']) ?></figcaption>
 
-        <?php if($race['name'] === 'Formula 1 Crypto.com Miami Grand Prix') : // Vidéo pour Miami ?>
+        <?php if($race['name'] === 'Formula 1 Crypto.com Miami Grand Prix') : // Vidéo pour Miami ?> <!-- à ameliorer avec colonne dans table RACE BDD -->
             <video autoplay muted loop class="race-video">
                 <source src="public/video/miami.webm" type="video/webm">
-                <source src="public/video/miami.mp4" type="video/mp4">
+                <source src="public/video/miami.mp4" type="video/mp4" onerror="this.parentNode.outerHTML = '<img src=\'public/img/circuits/default.     webp\'> alt=\'Circuit par défaut\'>'"> <!-- si erreur sur la 2ème vidéo photo par défaut -->
             </video>
         <?php elseif($race['picture']) : // Sinon image normale ?>
             <img src="public/img/circuits/<?= htmlspecialchars($race['picture'], ENT_QUOTES, 'UTF-8') ?>" 
@@ -45,7 +45,7 @@
         <div class="info-gp">
             <h2><?= htmlspecialchars($race['country'], ENT_QUOTES, 'UTF-8') ?></h2>
             <div class="info-gp-start">
-                <p><?= htmlspecialchars($race['name'], ENT_QUOTES, 'UTF-8') ?></p>
+                <h3><?= htmlspecialchars($race['name'], ENT_QUOTES, 'UTF-8') ?></h3>
                 <?php if($race['status'] === 'scheduled') : ?>
                     <p>Grand Prix : Du <?= date('d/m/Y', strtotime($race['gpStart'])) ?> 
                         au <?= date('d/m/Y', strtotime($race['gpEnd'])) ?></p>

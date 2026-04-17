@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PrediF1</title>
+    <title><?= isset($GLOBALS['pageTitle']) ? htmlspecialchars($GLOBALS['pageTitle'], ENT_QUOTES, 'UTF-8') : 'PrediF1' ?></title>
+    <meta name="description" content="PrediF1 - Plateforme de paris fictifs sur la Formule 1. Pariez sur le vainqueur des Grands Prix !">
     <link rel="stylesheet" href="public/css/main.css">
+    <link rel="icon" type="image/png" href="public/img/favicon.png">
 </head>
 <body>
 <header>

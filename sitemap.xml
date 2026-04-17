@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://predif1.com/</loc>
+    </url>
+    <url>
+        <loc>https://predif1.com/?action=courses</loc>
+    </url>
+    <url>
+        <loc>https://predif1.com/?action=pilotes</loc>
+    </url>
+    <url>
+        <loc>https://predif1.com/?action=contact</loc>
+    </url>
+    <url>
+        <loc>https://predif1.com/?action=connexion</loc>
+    </url>
+    <url>
+        <loc>https://predif1.com/?action=inscription</loc>
+    </url>
+    <url>
+        <loc>https://predif1.com/?action=conditions-utilisation</loc>
+    </url>
+    <url>
+        <loc>https://predif1.com/?action=confidentialite</loc>
+    </url>
+    <url>
+        <loc>https://predif1.com/?action=jeu-responsable</loc>
+    </url>
+</urlset>

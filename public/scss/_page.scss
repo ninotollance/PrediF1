@@ -31,6 +31,7 @@
     margin-top: 20px;
 }
 .race-card-home {
+    @include card-base;
     border-radius: 10px;
     overflow: hidden;
     display: flex;
@@ -48,20 +49,39 @@
 }
 
 // Image pleine largeur avec hauteur fixe
-.race-card-home-img img {
+.race-card-home-img img,
+.driver-card-home-img img {
     width: 100%;
     height: 200px;       // mobile : moins haut
     object-fit: cover;
+    object-position: center 70%;
 
     @media (min-width: $breakpoint-desktop) {
         height: 250px;   // desktop : plus haut
     }
+}
+.driver-card-home-img img {
+    object-fit: cover;
+    object-position: center 25%;
 }
 
 // Corps de la card — utilise le mixin card-body
 .race-card-home-body {
     @include card-body;
     flex: 1; // s'étire pour que toutes les cards aient la même hauteur
+}
+.race-card-home-body .btn-connexion {
+    @include btn-red;
+    border: solid 1px $color-white;
+    background-color: $color-header;
+    padding: 8px 16px;
+    font-size: $text-sm; // mobile
+    align-self: flex-start;
+
+    @media (min-width: $breakpoint-desktop) {
+        padding: 8px 20px;
+        font-size: $text-base;
+    }
 }
 
 // Infos du GP — pays et nom officiel
@@ -103,7 +123,10 @@
 .info-gp .info-gp-start {
     padding-top: 5px;
 }
-
+.info-gp-start h3 {
+    font-family: $font-title;
+    font-weight: bold;
+}
 // Pays + nom sur la même ligne (page accueil)
 .race-card-country {
     display: flex;

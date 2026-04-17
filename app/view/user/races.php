@@ -56,11 +56,8 @@
                             <p>Vainqueur 🏆 <?= htmlspecialchars($race['winnerFirstName'], ENT_QUOTES, 'UTF-8') ?> <?= htmlspecialchars($race['winnerName'], ENT_QUOTES, 'UTF-8') ?></p>
                         <?php endif; ?>
                     </div>
-                    <?php if($nextRace && $race['id'] === $nextRace['id']) : ?>
-                                <p class="next-race-label">Prochaine course →</p>
-                            <?php endif; ?>
                     <?php if($nextRace && $race['id'] === $nextRace['id'] && !isset($_SESSION['user_logged'])) : // Pas connecté ?>
-                        <a href="?action=connexion" class="btn-home">Connectez-vous pour parier</a>
+                        <a href="?action=connexion" class="btn-connexion">Connectez-vous pour parier</a>
                     <?php endif; ?>
                 </div>
             </article>

@@ -8,7 +8,7 @@
                     <img src="public/img/circuits/<?= htmlspecialchars($lastRace['picture'], ENT_QUOTES, 'UTF-8') ?>" 
                     alt="<?= htmlspecialchars($lastRace['name'], ENT_QUOTES, 'UTF-8') ?>">
                 <?php else : // Sinon on affiche une image par défaut ?>
-                    <img src="public/img/circuits/default.webp" alt="Circuit par défaut">
+                    <img src="public/img/circuits/default-home.webp" alt="Circuit par défaut">
                 <?php endif; ?>
                 <figcaption class="date-race">
                     <p><?= date('d/m', strtotime($lastRace['gpStart'])) ?> 
@@ -55,7 +55,7 @@
                     <img src="public/img/circuits/<?= htmlspecialchars($nextRace['picture'], ENT_QUOTES, 'UTF-8') ?>" 
                     alt="<?= htmlspecialchars($nextRace['name'], ENT_QUOTES, 'UTF-8') ?>">
                 <?php else : // Sinon on affiche une image par défaut ?>
-                    <img src="public/img/circuits/default.webp" alt="Circuit par défaut">
+                    <img src="public/img/circuits/default-home.webp" alt="Circuit par défaut">
                 <?php endif; ?>
                 <figcaption class="date-race">
                     <p><?= date('d/m', strtotime($nextRace['gpStart'])) ?> 
@@ -93,7 +93,7 @@
 <div class="cards-container">
 
     <article class="race-card-home">
-        <figure class="race-card-home-img">
+        <figure class="driver-card-home-img">
             <figcaption class="badge">Pilotes</figcaption>
             <img src="public/img/drivers/default.webp" alt="Pilotes F1">
         </figure>

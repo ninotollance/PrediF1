@@ -137,6 +137,7 @@ class DriverController extends Controller {
             $this->catchError($e); // Affiche un message d'erreur générique et log l'erreur
             return;                // Arrête la fonction
         }
+        $this->setTitle('Pilotes & Écuries - PrediF1');
         require RACINE . "/app/view/layout/header.php"; // Charge le header commun
         require RACINE . "/app/view/user/drivers.php";  // Charge la vue pilotes/écuries ($drivers et $teams disponibles)
         require RACINE . "/app/view/layout/footer.php"; // Charge le footer commun

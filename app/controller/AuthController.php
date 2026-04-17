@@ -12,8 +12,10 @@ class AuthController extends Controller {
         $this->userModel = new UserModel(); // Instancie le modèle User
     }
 
+
     // Affiche le formulaire de connexion
     public function showLogin() {
+        $this->setTitle('Connexion - PrediF1');
         if(!empty($_SESSION['user_logged'])) { // Si l'utilisateur est déjà connecté
             $this->redirect('accueil'); // Redirige vers la route 'accueil'
         }
@@ -57,6 +59,7 @@ class AuthController extends Controller {
 
     // Affiche le formulaire d'inscription
     public function showRegister() {
+        $this->setTitle('Inscription - PrediF1');
         if(!empty($_SESSION['user_logged'])) { // Si l'utilisateur est déjà connecté
             $this->redirect('accueil'); // Redirige vers la route 'accueil'
         }
@@ -67,23 +70,39 @@ class AuthController extends Controller {
 
     // Inscrit un nouvel utilisateur
     public function register() {
-        if($_SERVER['REQUEST_METHOD'] !== 'POST') { // Si le formulaire n'est pas soumis
-            require RACINE . '/app/view/user/register.php'; // Affiche le formulaire
-            return; // Arrête la fonction
-        }
-        // Validation des données avant tout traitement
-        if(empty($_POST['name']) || empty($_POST['firstname'])) { // Vérifie que les champs nom/prénom ne sont pas vides
-            $this->formError('Tous les champs sont obligatoires');
-            return;
-        }
-        if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) { // Vérifie que l'email est au bon format
-            $this->formError('Email invalide');
-            return;
-        }
-        if(strlen($_POST['password']) < 8) { // Vérifie que le mot de passe fait au moins 8 caractères
-            $this->formError('Le mot de passe doit faire au moins 8 caractères');
+        $this->setTitle('Inscription - PrediF1');
+        if($_SERVER['REQUEST_METHOD'] !== 'POST') {
             require RACINE . '/app/view/layout/header.php';
-            require RACINE . '/app/view/user/register.php'; // Réaffiche le formulaire avec le message d'erreur
+            require RACINE . '/app/view/user/register.php';
+            require RACINE . '/app/view/layout/footer.php';
+            return;
+        }
+
+        // Initialise le tableau d'erreurs
+        $errors = [];
+
+        // Vérifie que les champs ne sont pas vides
+        if(empty($_POST['name'])) $errors['name'] = 'Nom requis';
+        if(empty($_POST['firstname'])) $errors['firstname'] = 'Prénom requis';
+
+        // Vérifie l'email
+        if(empty($_POST['email'])) {
+            $errors['email'] = 'Email requis';
+        } elseif(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+            $errors['email'] = 'Email invalide';
+        }
+
+        // Vérifie le mot de passe
+        if(empty($_POST['password'])) {
+            $errors['password'] = 'Mot de passe requis';
+        } elseif(strlen($_POST['password']) < 8) {
+            $errors['password'] = 'Minimum 8 caractères';
+        }
+
+        // Si erreurs → réaffiche le formulaire avec les erreurs
+        if(!empty($errors)) {
+            require RACINE . '/app/view/layout/header.php';
+            require RACINE . '/app/view/user/register.php'; // $errors disponible dans la vue
             require RACINE . '/app/view/layout/footer.php';
             return;
         }
@@ -91,7 +110,7 @@ class AuthController extends Controller {
         try {
             $user = $this->userModel->getByEmail($_POST['email']); // Vérifie si l'email existe déjà en BDD
         } catch(Exception $e) {
-            $this->error($e);
+            $this->catchError($e);
             return; // Arrête la fonction
         }
         if($user) { // Si l'email existe déjà

@@ -45,4 +45,8 @@ abstract class Controller {
     protected function formError(string $message) {
         $_SESSION['form_error'] = $message;
     }
+    // Définit le titre de la page pour le SEO
+    protected function setTitle(string $title) {
+        $GLOBALS['pageTitle'] = $title;
+    }
 }
