@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : jeu. 16 avr. 2026 à 21:22
+-- Généré le : ven. 17 avr. 2026 à 15:41
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -42,7 +42,8 @@ CREATE TABLE `BET` (
 INSERT INTO `BET` (`id`, `date_`, `idDriver`, `idRace`, `idUser`) VALUES
 (12, '2026-04-13 15:07:51', 19, 1, 1),
 (13, '2026-04-13 16:28:28', 19, 2, 1),
-(26, '2026-04-16 15:45:02', 1, 6, 1);
+(26, '2026-04-16 15:45:02', 1, 6, 1),
+(27, '2026-04-17 11:44:46', 17, 6, 6);
 
 -- --------------------------------------------------------
 
@@ -653,17 +654,17 @@ CREATE TABLE `TEAM` (
 --
 
 INSERT INTO `TEAM` (`id`, `name`, `country`, `picture`) VALUES
-(1, 'McLaren', 'Royaume-Uni', ''),
-(2, 'Red Bull Racing', 'Autriche', NULL),
+(1, 'McLaren', 'Royaume-Uni', 'mcLaren.webp'),
+(2, 'Red Bull Racing', 'Autriche', 'redbull.webp'),
 (3, 'Audi', 'Allemagne', NULL),
-(4, 'Alpine', 'France', NULL),
+(4, 'Alpine', 'France', 'alpine.webp'),
 (5, 'Cadillac', 'États-Unis', NULL),
-(6, 'Mercedes', 'Allemagne', NULL),
-(7, 'Aston Martin', 'Royaume-Uni', NULL),
-(8, 'Ferrari', 'Italie', NULL),
+(6, 'Mercedes', 'Allemagne', 'mercedes.webp'),
+(7, 'Aston Martin', 'Royaume-Uni', 'astonMartin.jpg'),
+(8, 'Ferrari', 'Italie', 'ferrari.webp'),
 (9, 'Williams', 'Royaume-Uni', NULL),
-(10, 'Racing Bulls', 'Italie', NULL),
-(11, 'Haas', 'États-Unis', NULL);
+(10, 'Racing Bulls', 'Italie', 'racingbull.webp'),
+(11, 'Haas', 'États-Unis', 'Hass.webp');
 
 -- --------------------------------------------------------
 
@@ -743,7 +744,7 @@ ALTER TABLE `USER_`
 -- AUTO_INCREMENT pour la table `BET`
 --
 ALTER TABLE `BET`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT pour la table `DRIVER`

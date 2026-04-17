@@ -49,12 +49,16 @@
     display: flex;
     gap: 10px;
     margin-bottom: 15px;
-    width: 75%;
+    width: 100%; // ← 100% sur mobile
     margin-left: auto;
     margin-right: auto;
 
+    @media (min-width: $breakpoint-desktop) {
+        width: 75%; // ← 75% sur desktop comme avant
+    }
+
     .sort-btn {
-        flex: 1; // se partagent les 50% équitablement
+        flex: 1;
     }
 }
 
@@ -226,7 +230,7 @@
     padding-bottom: 15px;
 }
 .race-card-home-body .winner p {
-    font-size: $text-lg; // mobile
+    font-size: $text-base; // mobile
 
     @media (min-width: $breakpoint-desktop) {
         font-size: $text-xl;

@@ -50,7 +50,7 @@ body {
 
 // Titres avec police Orbitron
 h1 {
-    font-size: $text-2xl;
+    font-size: $text-xl;
     font-family: $font-title;
     font-weight: 500;
     line-height: 1.5;
@@ -61,17 +61,25 @@ h1 {
 }
 
 h2 {
-    font-size: $text-xl;
-    font-family: $font-title;
-    font-weight: 500;
-    line-height: 1.5;
-}
-
-h3 {
     font-size: $text-lg;
     font-family: $font-title;
     font-weight: 500;
     line-height: 1.5;
+
+    @media (min-width: $breakpoint-desktop) {
+        font-size: $text-xl;
+    }
+}
+
+h3 {
+    font-size: $text-base;
+    font-family: $font-title;
+    font-weight: 500;
+    line-height: 1.5;
+
+    @media (min-width: $breakpoint-desktop) {
+        font-size: $text-lg;
+    }
 }
 
 // Textes courants

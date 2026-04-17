@@ -59,6 +59,8 @@
 <!-- Formulaire de pari -->
 <section id="profile-info" class="bet-section">
 <form method="POST" action="?action=creer-pari">
+    <input type="hidden" name="csrf_token" 
+        value="<?= $_SESSION['csrf_token'] ?>">
     <input type="hidden" name="idRace" value="<?= $race['id'] ?>">
  
     <!-- Liste des pilotes sous forme de boutons radio -->

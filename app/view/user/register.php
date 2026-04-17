@@ -23,14 +23,14 @@
  
         <!-- Champ email -->
         <label>Email</label>
-        <input type="email" name="email" placeholder="exemple@email.fr" required>
+        <input type="email" name="email" placeholder="Exemple@email.fr" required>
         <?php if(!empty($errors['email'])) : ?>
             <p class="form-error"><?= htmlspecialchars($errors['email'], ENT_QUOTES, 'UTF-8') ?></p>
         <?php endif; ?>
  
         <!-- Champ mot de passe -->
         <label>Mot de passe</label>
-        <input type="password" name="password" placeholder="mot de passe" required>
+        <input type="password" name="password" placeholder="Mot de passe" required>
         <?php if(!empty($errors['password'])) : ?>
             <p class="form-error"><?= htmlspecialchars($errors['password'], ENT_QUOTES, 'UTF-8') ?></p>
         <?php endif; ?>

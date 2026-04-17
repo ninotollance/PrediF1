@@ -217,7 +217,7 @@
 }
 
 .pilote-card-home-body p {
-    font-size: $text-sm;
+    font-size: $text-base;
     font-family: $font-text;
     margin-bottom: 10px;
 
@@ -344,7 +344,24 @@
         margin-top: -5px;
     }
 }
+.bet-card .bet-country {
+    display: flex;
+    flex-direction: column; // mobile : empilé
 
+    @media (min-width: $breakpoint-desktop) {
+        flex-direction: row; // desktop : côte à côte
+        align-items: center;
+        gap: 8px;
+
+        // Ajoute le séparateur entre les deux textes en CSS
+        .bet-country-name::after {
+            content: ' -'; // ← séparateur uniquement sur desktop
+        }
+    }
+}
+.bet-country h3 {
+    font-size: $text-lg;
+}
 // Badge statut du pari
 .bet-status {
     font-family: $font-title;
