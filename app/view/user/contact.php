@@ -1,6 +1,13 @@
-<section class="contact">
+<section class="contact" aria-label="Formulaire de contact">
+    <h1>Contact</h1>
     <form action="?action=envoyer-contact" method="POST">
-        <h1>Contact</h1>
+
+        <!-- Champ caché qui envoie le token CSRF avec le formulaire -->
+        <!-- Le serveur vérifiera que ce token correspond à celui en session -->
+        <input type="hidden" name="csrf_token" 
+        value="<?= $_SESSION['csrf_token'] ?>">
+
+        
         <label>Nom</label>
         <input type="text" name="name" placeholder="Prost" required>
         <?php if(!empty($errors['name'])) : ?>

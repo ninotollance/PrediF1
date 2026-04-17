@@ -13,7 +13,11 @@
         <section id="profile-info" class="dashboard-section">
             <h1>Mes informations</h1>
                 <form method="POST" action="?action=modifier-profil">
- 
+                    <!-- Champ caché qui envoie le token CSRF avec le formulaire -->
+                    <!-- Le serveur vérifiera que ce token correspond à celui en session -->
+                    <input type="hidden" name="csrf_token" 
+                    value="<?= $_SESSION['csrf_token'] ?>">
+
                     <!-- Champ prénom -->
                     <label>Prénom</label>
                     <input type="text" name="firstname"

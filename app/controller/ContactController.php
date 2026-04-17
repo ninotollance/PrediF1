@@ -20,6 +20,7 @@ class ContactController extends Controller {
         if($_SERVER['REQUEST_METHOD'] !== 'POST') {
             $this->redirect('contact');
         }
+        $this->checkCsrf(); // Vérifie le token CSRF avant tout traitement du formulaire
         // Si le champ firstname est vide → on ajoute une erreur pour ce champ
         if(empty($_POST['firstName'])) {
             $errors['firstName'] = 'Prénom requis';

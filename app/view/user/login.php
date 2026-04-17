@@ -1,7 +1,11 @@
 <!-- Formulaire de connexion -->
-<section class="contact">
+<section class="contact" aria-label="Formulaire de connexion">
     <form action="?action=login" method="POST">
- 
+        <!-- Champ caché qui envoie le token CSRF avec le formulaire -->
+        <!-- Le serveur vérifiera que ce token correspond à celui en session -->
+        <input type="hidden" name="csrf_token" 
+        value="<?= $_SESSION['csrf_token'] ?>">
+
         <!-- Champ email -->
         <label>Email</label>
         <input type="email" name="email" placeholder="Email" required>

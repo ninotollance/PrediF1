@@ -1,18 +1,15 @@
 <!-- Onglets de navigation pour switcher entre pilotes et écuries -->
-<section class="driver-team">
+<section class="driver-team" aria-label="Pilotes et Écuries">
     <div class="tabs">
-        <button class="tab-btn active" onclick="showTab('drivers', event)">Pilotes</button> <!-- Onglet actif par défaut -->
-        
-            
-        
-        <button class="tab-btn" onclick="showTab('teams', event)">Écuries</button>
+        <button class="tab-btn" data-tab="drivers">Pilotes</button>
+        <button class="tab-btn" data-tab="teams">Écuries</button>
     </div>
 
     <!-- Contenu de l'onglet Pilotes, affiché par défaut grâce à la classe active -->
     <div id="drivers" class="tab-content">
         <div class="sort-buttons">
-            <button class="sort-btn active" onclick="reorderByNumber(event)">Par numéro</button>
-            <button class="sort-btn" onclick="reorderByStandings(event)">Par classement</button>
+            <button class="sort-btn active" data-sort="number">Par numéro</button>
+            <button class="sort-btn" data-sort="standings">Par classement</button>
         </div>
         <?php foreach($drivers as $driver) : // Boucle sur chaque pilote récupéré en BDD ?>
             <article class="driver-card" data-number="<?= $driver['number_api'] ?>">

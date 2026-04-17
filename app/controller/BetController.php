@@ -27,6 +27,7 @@ class BetController extends Controller {
         if($_SERVER['REQUEST_METHOD'] !== 'POST') { // Si le formulaire n'est pas soumis
             $this->redirect('admin'); // Redirige vers la route 'admin'
         }
+        $this->checkCsrf(); // Vérifie le token CSRF avant tout traitement du formulaire
         $id = $_POST['idUser'];
         if(!is_numeric($id)) {      // ← Vérifie que c'est un nombre
             $this->redirect('admin');
@@ -73,6 +74,7 @@ class BetController extends Controller {
         if($_SERVER['REQUEST_METHOD'] !== 'POST') { // Si le formulaire n'est pas soumis
             $this->redirect('creer-pari'); // Redirige vers la route 'creer-pari'
         }
+        $this->checkCsrf(); // Vérifie le token CSRF avant tout traitement du formulaire
         $idRace = $_POST['idRace'];
         if(!is_numeric($idRace)) { // Vérifie que c'est bien un nombre
             $this->redirect('accueil');

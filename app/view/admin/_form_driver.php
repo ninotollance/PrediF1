@@ -9,6 +9,11 @@ $btnText = $isEdit ? 'Modifier le pilote' : 'Ajouter le pilote'; // Texte du bou
 <div id="<?= $formId ?>" hidden>
     <h2><?= $title ?> <a onclick="showTable('drivers')">← Retour</a></h2>
     <form method="POST" action="<?= $action ?>" enctype="multipart/form-data"> <!-- enctype nécessaire pour l'upload d'image -->
+        <!-- Champ caché qui envoie le token CSRF avec le formulaire -->
+        <!-- Le serveur vérifiera que ce token correspond à celui en session -->
+        <input type="hidden" name="csrf_token" 
+        value="<?= $_SESSION['csrf_token'] ?>">
+
         <input type="hidden" name="section" value="drivers"> <!-- Permet au JS de revenir sur la section drivers après soumission -->
 
         <label>Prénom</label>

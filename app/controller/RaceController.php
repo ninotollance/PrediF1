@@ -22,6 +22,7 @@ class RaceController extends Controller {
             require RACINE . "/app/view/layout/footer.php";
             return; 
         }
+        $this->checkCsrf(); // Vérifie le token CSRF avant tout traitement du formulaire
         try {
             $this->raceModel->create([ // Crée la course en BDD
                 'name' => $_POST['name'], // Nom du Grand Prix
@@ -48,6 +49,7 @@ class RaceController extends Controller {
         if($_SERVER['REQUEST_METHOD'] !== 'POST') { // Si le formulaire n'est pas soumis
             $this->redirect('admin'); // Redirige vers la route 'admin'
         }
+        $this->checkCsrf(); // Vérifie le token CSRF avant tout traitement du formulaire
         $id = $_GET['id']; // Récupère l'id de la course à modifier depuis l'URL
         if(!is_numeric($id)) { // Vérifie que l'id est bien un nombre
             $this->redirect('admin'); // Redirige vers la route 'admin' si l'id est invalide
@@ -98,6 +100,7 @@ class RaceController extends Controller {
         if($_SERVER['REQUEST_METHOD'] !== 'POST') { // Si le formulaire n'est pas soumis
             $this->redirect('admin'); // Redirige vers la route 'admin'
         }
+        $this->checkCsrf(); // Vérifie le token CSRF avant tout traitement du formulaire
         $id = $_POST['id']; // Récupère l'id de la course depuis le formulaire (champ caché)
         if(!is_numeric($id)) { // Vérifie que l'id est bien un nombre
             $this->redirect('admin'); // Redirige vers la route 'admin' si l'id est invalide

@@ -1,8 +1,12 @@
 
 <!-- Formulaire d'inscription -->
-<section class="contact">
+<section class="contact" aria-label="Formulaire d'inscription">
     <form action="?action=register" method="POST">
- 
+        <!-- Champ caché qui envoie le token CSRF avec le formulaire -->
+        <!-- Le serveur vérifiera que ce token correspond à celui en session -->
+        <input type="hidden" name="csrf_token" 
+        value="<?= $_SESSION['csrf_token'] ?>">
+
         <!-- Champ nom -->
         <label>Nom</label>
         <input type="text" name="name" placeholder="Senna" required>

@@ -9,6 +9,11 @@ $btnText = $isEdit ? 'Modifier la course' : 'Créer la course'; // Texte du bout
 <div id="<?= $formId ?>" hidden>
     <h2><?= $title ?> <a onclick="showTable('races')">← Retour</a></h2>
     <form method="POST" action="<?= $action ?>">
+        <!-- Champ caché qui envoie le token CSRF avec le formulaire -->
+        <!-- Le serveur vérifiera que ce token correspond à celui en session -->
+        <input type="hidden" name="csrf_token" 
+        value="<?= $_SESSION['csrf_token'] ?>">
+
         <input type="hidden" name="section" value="races"> <!-- Permet au JS de revenir sur la section races après soumission -->
 
         <label>Nom du Grand Prix</label>

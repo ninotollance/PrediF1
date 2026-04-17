@@ -1,5 +1,5 @@
 <!--  Card avec les infos de la course -->
-<article class="race-card-home">
+<article class="race-card-home" aria-label="Formulaire de pari">
 
     <!-- Badge avec statut traduit en français via la fonction helper translateStatus() -->
      <figure class="race-card-home-img">

@@ -49,4 +49,12 @@ abstract class Controller {
     protected function setTitle(string $title) {
         $GLOBALS['pageTitle'] = $title;
     }
+    // Vérifie que le token CSRF du formulaire correspond à celui en session
+    protected function checkCsrf() {
+        if(empty($_POST['csrf_token']) || 
+        $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+            $this->error('Requête invalide'); // Token absent ou incorrect
+            $this->redirect('accueil');
+        }
+    }
 }

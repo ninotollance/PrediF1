@@ -1,3 +1,15 @@
-RewriteEngine On
-RewriteCond %{HTTPS} off
-RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
+# Interdire le listing des répertoires
+Options -Indexes
+RewriteEngine on
+
+# Interdire le listing des fichiers cachés (précédés pas un .)
+RewriteRule "(^|/)\." - [F,L]
+
+# Rediriger vers HTTPS
+RewriteCond %{HTTPS} !=on
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Réécriture d'URL
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]

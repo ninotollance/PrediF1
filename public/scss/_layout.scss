@@ -560,6 +560,7 @@ table {
     max-width: 100%;        // mobile : pleine largeur
     margin-top: 15px;
 
+    
     @media (min-width: $breakpoint-desktop) {
         gap: 15px;
         max-width: 600px;   // desktop : largeur limitée

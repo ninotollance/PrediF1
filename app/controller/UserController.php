@@ -43,6 +43,7 @@ class UserController extends Controller {
             require RACINE . '/app/view/layout/footer.php'; // ← manquait !
             return;
         }
+        $this->checkCsrf(); // Vérifie le token CSRF avant tout traitement du formulaire
         try {
             $this->userModel->update($_SESSION['user_id'], [ // Modifie l'utilisateur en BDD via son id en session
                 'email' => $_POST['email'],

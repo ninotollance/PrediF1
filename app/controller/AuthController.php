@@ -30,6 +30,7 @@ class AuthController extends Controller {
             require RACINE . "/app/view/user/login.php"; // Affiche le formulaire de connexion
             return; // Arrête la fonction
         }
+        $this->checkCsrf(); // Vérifie le token CSRF avant tout traitement du formulaire
         try {
             $user = $this->userModel->getByEmail($_POST['email']); // Cherche l'utilisateur en BDD par son email
         } catch(Exception $e) {
@@ -77,6 +78,7 @@ class AuthController extends Controller {
             require RACINE . '/app/view/layout/footer.php';
             return;
         }
+        $this->checkCsrf(); // Vérifie le token CSRF avant tout traitement du formulaire
 
         // Initialise le tableau d'erreurs
         $errors = [];

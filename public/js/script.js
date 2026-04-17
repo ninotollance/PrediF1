@@ -144,14 +144,6 @@ function showTab(tabName, event) {
     if(event && event.target) {
         // Cas normal : l'utilisateur a cliqué sur un bouton
         event.target.classList.add('active');
-    } else {
-        // Cas spécial : appelé au chargement de la page depuis DOMContentLoaded
-        // On cherche manuellement le bouton qui correspond à l'onglet
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            if(btn.getAttribute('onclick').includes(tabName)) {
-                btn.classList.add('active');
-            }
-        });
     }
 }
 
@@ -176,6 +168,21 @@ document.addEventListener('DOMContentLoaded', function() {
     if(section) {
         showSection(section, null); // Section demandée dans l'URL
     }
+    // Onglets pilotes/écuries — addEventListener au lieu de onclick
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            const tab = this.getAttribute('data-tab');
+            if(tab) showTab(tab, e);
+        });
+    });
+    // tri pilotes par numéro ou classement
+    document.querySelectorAll('.sort-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        const sort = this.getAttribute('data-sort');
+        if(sort === 'number') reorderByNumber(e);
+        if(sort === 'standings') reorderByStandings(e);
+        });
+    });
     // Active le bon lien dans la nav au chargement
     document.querySelectorAll('.dashboard-nav a').forEach(a => {
         if(a.getAttribute('data-section') === (section || 'races')) {
@@ -214,6 +221,13 @@ document.addEventListener('DOMContentLoaded', function() {
             if(section) showSection(section, e);
         });
     });
+    // Burger menu — addEventListener
+    document.querySelector('.burger')?.addEventListener('click', toggleMenu);
+    document.querySelector('.overlay')?.addEventListener('click', toggleMenu);
+
+    // Burger menu Dashboard — addEventListener
+    document.querySelector('.dashboard-burger')?.addEventListener('click', toggleDashboardMenu);
+    document.querySelector('.overlay-dashboard')?.addEventListener('click', toggleDashboardMenu);
 });
 
 // ==========================
@@ -243,6 +257,11 @@ function showSection(sectionName, event) {
     document.querySelectorAll('.dashboard-nav a').forEach(a => {
         a.classList.remove('active'); // Retire active de tous les liens
     });
+
+    document.querySelectorAll('.profile-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+
     if(event && event.target) {
         event.target.classList.add('active'); // Ajoute active sur le lien cliqué
     }

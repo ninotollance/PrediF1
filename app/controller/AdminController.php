@@ -55,6 +55,7 @@ class AdminController extends Controller {
         if($_SERVER['REQUEST_METHOD'] !== 'POST') { // Si le formulaire n'est pas soumis
             $this->redirect('admin'); // Redirige vers la route 'admin'
         }
+        $this->checkCsrf(); // Vérifie le token CSRF avant tout traitement du formulaire
         $hashedPassword = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash le mot de passe (jamais stocker en clair !)
         $id = $_GET['id']; // Récupère l'id de l'utilisateur à modifier depuis l'URL
         if(!is_numeric($id)) { // Vérifie que l'id est bien un nombre

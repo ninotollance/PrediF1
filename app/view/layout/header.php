@@ -43,7 +43,7 @@
             <?php endif; ?>
         </div>
 
-        <button class="burger" onclick="toggleMenu()">
+        <button class="burger">
             <span></span>
             <span></span>
             <span></span>
@@ -87,6 +87,6 @@
         <?php unset($_SESSION['login_error']); ?>
     <?php endif; ?>
     <!-- Overlay sombre derrière le menu mobile -->
-    <div class="overlay" hidden onclick="toggleMenu()"></div>
+    <div class="overlay" hidden></div>
 </header>
 <main>

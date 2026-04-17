@@ -22,7 +22,7 @@
                     <img src="public/img/logoBlanc.png" alt="PrediF1" class="logo">
                 </a>
                 <!-- Burger : ouvre/ferme le menu via toggleDashboardMenu() -->
-                <button class="dashboard-burger" onclick="toggleDashboardMenu()">
+                <button class="dashboard-burger">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -55,7 +55,7 @@
 
         <!-- Overlay sombre derrière le menu mobile -->
         <!-- Cliquable pour fermer le menu -->
-        <div class="overlay-dashboard" hidden onclick="toggleDashboardMenu()"></div>
+        <div class="overlay-dashboard" hidden></div>
 
         <!-- ════════════════════════════════════════ -->
         <!-- CONTENU PRINCIPAL                        -->
@@ -226,6 +226,11 @@
             <section id="winner" class="dashboard-section" hidden>
                 <h2>Ajouter un vainqueur</h2>
                 <form method="POST" action="?action=admin-ajouter-vainqueur">
+                    <!-- Champ caché qui envoie le token CSRF avec le formulaire -->
+                    <!-- Le serveur vérifiera que ce token correspond à celui en session -->
+                    <input type="hidden" name="csrf_token" 
+                    value="<?= $_SESSION['csrf_token'] ?>">
+
                     <input type="hidden" name="section" value="winner">
                     <!-- Champ caché qui stocke l'id de la course sélectionnée -->
                     <input type="hidden" name="id" id="idRace" value="<?= isset($finishedRaces[0]) ? $finishedRaces[0]['id'] : '' ?>">
@@ -337,6 +342,11 @@
                 <div id="users-form-edit-<?= $user['id'] ?>" hidden>
                     <h2>Modifier un utilisateur <a onclick="showTable('users')">← Retour</a></h2>
                     <form method="POST" action="?action=admin-modifier-user&id=<?= $user['id'] ?>">
+                        <!-- Champ caché qui envoie le token CSRF avec le formulaire -->
+                        <!-- Le serveur vérifiera que ce token correspond à celui en session -->
+                        <input type="hidden" name="csrf_token" 
+                        value="<?= $_SESSION['csrf_token'] ?>">
+                        
                         <input type="hidden" name="section" value="users">
 
                         <label>Nom</label>
