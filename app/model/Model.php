@@ -12,7 +12,11 @@ abstract class Model {
         $this->db = Database::getInstance()->getConnection();
     }
 
-    // Récupère un enregistrement par son id
+    /**
+     * Récupère un enregistrement par son id
+     * @param int $id - l'id de l'enregistrement recherché
+     * @return array|false - tableau associatif ou false si introuvable
+     */
     public function getById($id) {
         $query = "SELECT * FROM $this->table WHERE id = :id"; // La requête SQL est juste une string
         $stmt = $this->db->prepare($query); // Prépare la requête (anti-injection SQL)
@@ -21,15 +25,22 @@ abstract class Model {
         return $stmt->fetch(PDO::FETCH_ASSOC); // retourne le résultat
     }
 
-    // Récupère tous les enregistrements de la table
+    /**
+     * Récupère tout les enregistrement 
+     * @return array - tableau associatif ou false si introuvable
+     */
     public function getAll() {
         $query = "SELECT * FROM $this->table";
         $stmt = $this->db->prepare($query);  // Prépare la requête (anti-injection SQL)
         $stmt->execute(); // exécute
         return $stmt->fetchAll(PDO::FETCH_ASSOC); // retourne le résultat
     }
-    
-    // Insère un nouvel enregistrement dans la table
+
+    /**
+     * Insère un nouvel enregistrement dans la table 
+     * @param array $data - tableau associatif des colonnes et valeurs à insérer
+     * @return bool - true si l'insertion a réussi, false sinon
+     */ 
     public function create(array $data) {
         // Nettoie chaque valeur — supprime les espaces et balises HTML avant insertion
         foreach($data as $col => $value) {
@@ -44,7 +55,11 @@ abstract class Model {
         return $stmt->execute($data); // Lie $data et exécute, retourne true/false
     }
 
-    // Supprime un enregistrement par son id
+    /**
+     * Supprime un enregistrement par son id
+     * @param int $id - l'id de l'enregistrement recherché
+     * @return bool - true si la suppression a réussi, false sinon
+     */ 
     public function delete($id) {
         $query = "DELETE FROM $this->table WHERE id = :id"; // La requête SQL est juste une string
         $stmt = $this->db->prepare($query); // Prépare la requête (anti-injection SQL)
@@ -53,7 +68,12 @@ abstract class Model {
         
     }
 
-    // Modifie un enregistrement par son id
+    /**
+     * Modifie un enregistrement par son id
+     * @param int $id - l'id de l'enregistrement recherché
+     * @param array $data - tableau associatif des colonnes et valeurs à modifier
+     * @return bool - true si la modification a réussi, false sinon
+     */  
     public function update(int $id, array $data) {
         // Nettoie chaque valeur — supprime les espaces et balises HTML avant modification
         foreach($data as $col => $value) {

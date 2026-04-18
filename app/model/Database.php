@@ -3,6 +3,7 @@
 namespace PrediF1\model; // Déclare que cette classe appartient au namespace PrediF1\model
 use PDO; // Nécessaire car on utilise PDO::PARAM_INT, PDO::FETCH_ASSOC (obligatoire avec les namespace)
 use PDOException;
+use Exception;
 
 
 class Database {
@@ -21,7 +22,7 @@ class Database {
                 $_ENV['DB_PASSWORD']
             );
         } catch (PDOException $e) {
-            die("Erreur de connexion : " . $e->getMessage());
+            throw new Exception("Erreur de connexion à la base de données");
         }
     }
 

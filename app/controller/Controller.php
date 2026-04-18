@@ -56,5 +56,7 @@ abstract class Controller {
             $this->error('Requête invalide'); // Token absent ou incorrect
             $this->redirect('accueil');
         }
+        // Regénère un nouveau token après vérification réussie
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
     }
 }

@@ -33,3 +33,6 @@ desktop.ini
 # Fichiers compilés SASS
 # *.css.map
 # /public/css/*.css
+
+# Dépendances Node
+node_modules/

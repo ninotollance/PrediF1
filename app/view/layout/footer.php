@@ -22,7 +22,6 @@
         <section>
             <h2>Information</h2>
             <ul>
-                <li><a href="?action=contact">Nous contacter</a></li>
                 <li><a href="?action=conditions-utilisation">Conditions d'utilisation</a></li>
                 <li><a href="?action=confidentialite">Confidentialité</a></li>
                 <li><a href="?action=jeu-responsable">Jeu responsable</a></li>
@@ -31,8 +30,7 @@
         <section>
             <h2>Contact</h2>
             <ul>
-                <li>Email: contact@f1paris.com</li>
-                <li>Tél: +33 1 23 45 67 89</li>
+                <li><a href="?action=contact">Nous contacter</a></li>
                 <li><a href="https://twitter.com/...">Twitter</a></li>
                 <li><a href="https://instagram.com/...">Instagram</a></li>
             </ul>

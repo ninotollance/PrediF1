@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - PrediF1</title>
     <link rel="stylesheet" href="public/css/main.css">
+    <link rel="icon" type="image/png" href="public/img/favicon.png">
 </head>
 <body class="dashboard-body">
     <div class="dashboard-wrapper"> <!-- Layout grid : sidebar + contenu -->
@@ -18,7 +19,7 @@
 
             <!-- Logo + burger (mobile) -->
             <header class="dashboard-sidebar-header">
-                <a href="?action=accueil">
+                <a href="?action=admin">
                     <img src="public/img/logoBlanc.png" alt="PrediF1" class="logo">
                 </a>
                 <!-- Burger : ouvre/ferme le menu via toggleDashboardMenu() -->
@@ -35,12 +36,12 @@
                 <nav>
                     <ul>
                         <!-- data-section : récupéré par JS pour afficher la bonne section -->
-                        <li><a data-section="races">Courses</a></li>
-                        <li><a data-section="drivers">Pilotes</a></li>
-                        <li><a data-section="teams">Écuries</a></li>
-                        <li><a data-section="winner">Vainqueur</a></li>
-                        <li><a data-section="bets">Paris</a></li>
-                        <li><a data-section="users">Utilisateurs</a></li>
+                        <li><a href="?action=admin&section=races" <?= $section === 'races' ? 'class="active"' : '' ?>>Courses</a></li>
+                        <li><a href="?action=admin&section=drivers" <?= $section === 'drivers' ? 'class="active"' : '' ?>>Pilotes</a></li>
+                        <li><a href="?action=admin&section=teams" <?= $section === 'teams' ? 'class="active"' : '' ?>>Écuries</a></li>
+                        <li><a href="?action=admin&section=winner" <?php $section === 'winner' ? 'class="active"' : '' ?>>Vainqueur</a></li>
+                        <li><a href="?action=admin&section=bets" <?= $section === 'bets' ? 'class="active"' : '' ?>>Paris</a></li>
+                        <li><a href="?action=admin&section=users" <?= $section === 'users' ? 'class="active"' : '' ?>>Utilisateurs</a></li>
                     </ul>
                 </nav>
 
@@ -78,7 +79,7 @@
             <!-- SECTION COURSES                          -->
             <!-- Visible par défaut                       -->
             <!-- ════════════════════════════════════════ -->
-            <section id="races" class="dashboard-section">
+            <section id="races" class="dashboard-section" <?= $section !== 'races' ? 'hidden' : '' ?>>
 
                 <!-- Tableau des courses -->
                 <div id="races-table">
@@ -130,7 +131,7 @@
             <!-- ════════════════════════════════════════ -->
             <!-- SECTION PILOTES — caché par défaut       -->
             <!-- ════════════════════════════════════════ -->
-            <section id="drivers" class="dashboard-section" hidden>
+            <section id="drivers" class="dashboard-section" <?= $section !== 'drivers' ? 'hidden' : '' ?>>
 
                 <div id="drivers-table">
                     <h2>Pilotes <a onclick="showForm('drivers', 'create')">+ Ajouter</a></h2>
@@ -176,7 +177,7 @@
             <!-- ════════════════════════════════════════ -->
             <!-- SECTION ÉCURIES — caché par défaut       -->
             <!-- ════════════════════════════════════════ -->
-            <section id="teams" class="dashboard-section" hidden>
+            <section id="teams" class="dashboard-section" <?= $section !== 'teams' ? 'hidden' : '' ?>>
 
                 <div id="teams-table">
                     <h2>Écuries <a onclick="showForm('teams', 'create')">+ Ajouter</a></h2>
@@ -223,7 +224,8 @@
             <!-- Permet d'enregistrer le gagnant d'une    -->
             <!-- course terminée                          -->
             <!-- ════════════════════════════════════════ -->
-            <section id="winner" class="dashboard-section" hidden>
+            <section id="winner" class="dashboard-section" <?= $section !== 'winner' ? 'hidden' : '' ?>>
+
                 <h2>Ajouter un vainqueur</h2>
                 <form method="POST" action="?action=admin-ajouter-vainqueur">
                     <!-- Champ caché qui envoie le token CSRF avec le formulaire -->
@@ -259,9 +261,9 @@
             <!-- ════════════════════════════════════════ -->
             <!-- SECTION PARIS — caché par défaut         -->
             <!-- ════════════════════════════════════════ -->
-            <section id="bets" class="dashboard-section" hidden>
-                <h2>Paris</h2>
+            <section id="bets" class="dashboard-section" <?= $section !== 'bets' ? 'hidden' : '' ?>>
 
+                <h2>Paris</h2>
                 <!-- Barre de recherche — filtre en JS -->
                 <input type="text" id="bets-search" placeholder="Rechercher par nom..." 
                     onkeyup="filterBets('bets-search', 'bets-table')" style="margin-bottom: 15px;">
@@ -299,7 +301,7 @@
             <!-- ════════════════════════════════════════ -->
             <!-- SECTION USERS                          -->
             <!-- ════════════════════════════════════════ -->
-            <section id="users" class="dashboard-section" hidden>
+            <section id="users" class="dashboard-section" <?= $section !== 'users' ? 'hidden' : '' ?>>
 
                 <!-- Tableau des courses -->
                 <div id="users-table">
@@ -356,10 +358,14 @@
                         <input type="text" name="firstname" value="<?= htmlspecialchars($user['firstName'], ENT_QUOTES, 'UTF-8') ?>" required>
 
                         <label>Email</label>
-                        <input type="date" name="email" value="<?= $user['email'] ?>" required>
+                        <input type="email" name="email" value="<?= $user['email'] ?>" required>
 
                         <label>Rôle</label>
-                        <input type="date" name="role" value="<?= $user['role'] ?>" required>
+                        <select name="role" required>
+                            <option value="user" <?= $user['role'] === 'user' ? 'selected' : '' ?>>User</option>
+                            <option value="admin" <?= $user['role'] === 'admin' ? 'selected' : '' ?>>Admin</option>
+                        </select>
+                        <!-- <input type="select" name="role" value="<?= $user['role'] ?>" required> -->
 
 
                         <button type="submit">Modifier l'utilisateur</button>

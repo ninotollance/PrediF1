@@ -29,6 +29,7 @@ class AdminController extends Controller {
     // Affiche le dashboard admin
     public function dashboard() {
         $this->checkAdmin(); // Vérifie si l'utilisateur est admin, redirige sinon
+        $section = $_GET['section'] ?? 'races'; // Récupère la section ou 'races' par défaut
         try {
             $users = $this->userModel->getAll(); // Tous les utilisateurs
             $races = $this->raceModel->getAll(); // Toutes les courses
@@ -61,6 +62,17 @@ class AdminController extends Controller {
         if(!is_numeric($id)) { // Vérifie que l'id est bien un nombre
             $this->redirect('admin'); // Redirige vers la route 'admin' si l'id est invalide
         }
+        // Empêche de modifier un autre admin
+        try {
+            $user = $this->userModel->getById($id);
+        } catch(Exception $e) {
+            $this->catchError($e);
+            return;
+        }
+        if($user['role'] === 'admin') {
+            $this->error('impossible de modifier cet utilisateur');
+            $this->redirect('admin');
+        }
         $id = (int)$id; // Convertit l'id en entier
         try {
             $this->userModel->update($id, [ // Modifie l'utilisateur en BDD
@@ -84,6 +96,22 @@ class AdminController extends Controller {
         $id = $_GET['id']; // Récupère l'id de l'utilisateur à supprimer depuis l'URL
         if(!is_numeric($id)) { // Vérifie que l'id est bien un nombre
             $this->redirect('admin'); // Redirige vers la route 'admin' si l'id est invalide
+        }
+        // Empêche l'admin de se supprimer lui-même
+        if($_SESSION['user_id'] === $id) {
+            $this->error('Vous ne pouvez pas supprimer votre propre compte');
+            $this->redirect('admin');
+        }
+        // Empêche de supprimer un autre admin
+        try {
+            $user = $this->userModel->getById($id);
+        } catch(Exception $e) {
+            $this->catchError($e);
+            return;
+        }
+        if($user['role'] === 'admin') {
+            $this->error('impossible de supprimer cet utilisateur');
+            $this->redirect('admin');
         }
         $id = (int)$id; // Convertit l'id en entier
         try {

@@ -49,6 +49,8 @@
         <!-- Liste des pilotes sous forme de boutons radio -->
         <select class="choice-driver" name="idDriver" value="<?= $driver['id'] ?>" 
             id="driver_<?= $driver['id'] ?>" required>
+            <!-- Option neutre par défaut — value="" empêche la soumission grâce au required -->
+            <option value="" disabled selected>Pariez sur le vainqueur</option>
             <?php foreach($drivers as $driver) : ?>
                 <option value="<?= $driver['id'] ?>">
                     #<?= htmlspecialchars($driver['number_api'], ENT_QUOTES, 'UTF-8') ?>
@@ -63,4 +65,3 @@
         <br>
     </form>
 </section>
-</article>
