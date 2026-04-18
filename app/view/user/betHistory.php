@@ -24,8 +24,8 @@
                 }?>
                 <article class="bet-card <?= $betClass ?>">
                     <div class="bet-country">
-                        <h3><?= htmlspecialchars($bet['country'], ENT_QUOTES, 'UTF-8') ?></h3>
-                        <p><?= htmlspecialchars($bet['nameRace'], ENT_QUOTES, 'UTF-8') ?></p>
+                        <h3 class="bet-country-name"><?= htmlspecialchars($bet['country'], ENT_QUOTES, 'UTF-8') ?></h3>
+                        <p class="bet-race-name"><?= htmlspecialchars($bet['nameRace'], ENT_QUOTES, 'UTF-8') ?></p>
                     </div>
                     <div class="bet-driver">
                     <?php if($bet['status'] === 'scheduled') : ?>

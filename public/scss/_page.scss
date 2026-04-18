@@ -353,9 +353,16 @@
         align-items: center;
         gap: 8px;
 
+        .bet-race-name {
+            font-size: $text-xl;
+        }
+        
+
+
         // Ajoute le séparateur entre les deux textes en CSS
         .bet-country-name::after {
             content: ' -'; // ← séparateur uniquement sur desktop
+            
         }
     }
 }

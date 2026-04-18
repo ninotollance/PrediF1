@@ -31,5 +31,5 @@ desktop.ini
 /public/uploads/
 
 # Fichiers compilés SASS
-*.css.map
-/public/css/*.css
+# *.css.map
+# /public/css/*.css
