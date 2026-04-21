@@ -38,9 +38,10 @@ class AuthController extends Controller {
             return; // Arrête la fonction
         }
         if(!$user) { // Si l'email n'existe pas en BDD
-            $this->formError('Email ou mot de passe incorrects'); // Message d'erreur
-            $this->redirect('connexion'); // ← redirige vers le formulaire
-            return; // Arrête la fonction
+            $this->error('Email ou mot de passe incorrects'); // Stocke l'erreur en session
+            $_SESSION['form_email'] = $_POST['email']; // Stocke l'email en session
+            $this->redirect('connexion'); // Redirige → plus de POST en mémoire
+            return;
         }
         if(password_verify($_POST['password'], $user['password'])) { // Vérifie le mot de passe avec le hash en BDD
             $_SESSION['user_logged'] = true; // Marque l'utilisateur comme connecté
@@ -53,8 +54,10 @@ class AuthController extends Controller {
                 $this->redirect('accueil'); // ← user → accueil
             }
         } else {
-            $this->formError('Email ou mot de passe incorrects'); // Message d'erreur
-            $this->redirect('connexion');
+            $this->error('Email ou mot de passe incorrects'); // Stocke l'erreur en session
+            $_SESSION['form_email'] = $_POST['email']; // Stocke l'email en session
+            $this->redirect('connexion'); // remplacer les require par ça
+            return;
         }
     }
 

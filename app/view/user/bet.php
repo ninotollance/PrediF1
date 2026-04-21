@@ -6,9 +6,10 @@
         <figcaption class="badge"><?= translateStatus($race['status']) ?></figcaption>
 
         <?php if($race['name'] === 'Formula 1 Crypto.com Miami Grand Prix') : // Vidéo pour Miami ?> <!-- à ameliorer avec colonne dans table RACE BDD -->
-            <video autoplay muted loop class="race-video">
+            <video autoplay muted loop preload="metadata" class="race-video" 
+                onerror="this.outerHTML = '<img src=\'public/img/circuits/default.webp\' alt=\'Circuit par défaut\'>'"> <!-- si erreur sur la vidéo -->
                 <source src="public/video/miami.webm" type="video/webm">
-                <source src="public/video/miami.mp4" type="video/mp4" onerror="this.parentNode.outerHTML = '<img src=\'public/img/circuits/default.     webp\'> alt=\'Circuit par défaut\'>'"> <!-- si erreur sur la 2ème vidéo photo par défaut -->
+                <source src="public/video/miami.mp4" type="video/mp4">
             </video>
         <?php elseif($race['picture']) : // Sinon image normale ?>
             <img src="public/img/circuits/<?= htmlspecialchars($race['picture'], ENT_QUOTES, 'UTF-8') ?>" 

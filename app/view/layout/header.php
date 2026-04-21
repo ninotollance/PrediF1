@@ -7,6 +7,7 @@
     <meta name="description" content="PrediF1 - Plateforme de paris fictifs sur la Formule 1. Pariez sur le vainqueur des Grands Prix !">
     <link rel="stylesheet" href="public/css/main.css">
     <link rel="icon" type="image/png" href="public/img/favicon.png">
+    <script src="public/js/script.js" defer></script>
 </head>
 <body>
 <header>

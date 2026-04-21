@@ -45,9 +45,11 @@ $btnText = $isEdit ? 'Modifier la course' : 'Créer la course'; // Texte du bout
             value="<?= $isEdit ? $race['circuitKey_api'] : '' ?>" required>
 
         <label>Image (nom du fichier)</label>
-        <input type="text" name="picture" 
-            value="<?= $isEdit ? htmlspecialchars($race['picture'] ?? '', ENT_QUOTES, 'UTF-8') : '' ?>" 
-            placeholder="australie.webp">
+        <?php if($isEdit && $race['picture']) : // Affiche l'image actuelle uniquement en modification ?>
+            <img src="public/img/circuits/<?= htmlspecialchars($race['picture'], ENT_QUOTES, 'UTF-8') ?>" style="width: 80px;">
+            <p>Image actuelle : <?= htmlspecialchars($race['picture'], ENT_QUOTES, 'UTF-8') ?></p>
+        <?php endif; ?>
+            <input type="file" name="picture">
 
         <label>Statut</label>
         <select name="status">

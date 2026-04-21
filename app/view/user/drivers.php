@@ -8,7 +8,7 @@
     <!-- Contenu de l'onglet Pilotes, affiché par défaut grâce à la classe active -->
     <div id="drivers" class="tab-content">
         <div class="sort-buttons">
-            <button class="sort-btn active" data-sort="number">Par numéro</button>
+            <button class="sort-btn" data-sort="number">Par numéro</button>
             <button class="sort-btn" data-sort="standings">Par classement</button>
         </div>
         <?php foreach($drivers as $driver) : // Boucle sur chaque pilote récupéré en BDD ?>
@@ -28,6 +28,7 @@
                 <!-- Prénom, nom et écurie du pilote, échappés contre les failles XSS -->
                  <div class="driver-info">
                     <div class="driver-name">
+                        <p><?= $driver['number_api'] ?> - </p>
                         <p><?= htmlspecialchars($driver['firstName'], ENT_QUOTES, 'UTF-8') ?></p>
                         <p><?= htmlspecialchars($driver['name'], ENT_QUOTES, 'UTF-8') ?></p>
                     </div>

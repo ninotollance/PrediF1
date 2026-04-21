@@ -4,18 +4,13 @@
 
 
 // Trie les cards pilotes par classement du championnat via l'API Jolpica
-// event : l'événement du clic, nécessaire pour gérer le bouton actif
-function reorderByStandings(event) {
+function reorderByStandings() {
 
     // Parcourt tous les boutons de tri et retire la classe active
     // → aucun bouton n'est actif avant d'en activer un
     document.querySelectorAll('.sort-btn').forEach(btn => {
         btn.classList.remove('active');
     });
-
-    // Ajoute la classe active sur le bouton qui a été cliqué
-    // event.target = l'élément HTML sur lequel l'utilisateur a cliqué
-    event.target.classList.add('active');
 
     // Lance une requête HTTP vers l'API Jolpica pour récupérer le classement actuel
     fetch('https://api.jolpi.ca/ergast/f1/current/driverStandings/')
@@ -33,14 +28,11 @@ function reorderByStandings(event) {
         // .DriverStandings → tableau de tous les pilotes avec leur position
         const standings = data.MRData.StandingsTable.StandingsLists[0].DriverStandings;
 
-        // Récupère toutes les cards pilotes dans le DOM
+        const activeBtn = document.querySelector('[data-sort="standings"]');
+
+        if(activeBtn) activeBtn.classList.add('active');
         const cards = document.querySelectorAll('.driver-card');
-
-        // Récupère le conteneur parent des cards (l'onglet #drivers)
         const container = document.querySelector('#drivers');
-
-        // NodeList (résultat de querySelectorAll) ne supporte pas .sort()
-        // Array.from() convertit la NodeList en vrai tableau JavaScript
         const cardsArray = Array.from(cards);
 
         // Trie le tableau de cards en comparant les pilotes deux par deux (a et b)
@@ -66,27 +58,30 @@ function reorderByStandings(event) {
 
         // Réinsère chaque card dans le conteneur dans le nouvel ordre trié
         // appendChild déplace l'élément existant → pas de duplication
-        cardsArray.forEach(card => container.appendChild(card));
+        cardsArray.forEach((card, index) => {
+            container.appendChild(card);
+            card.querySelector('.driver-number').textContent = index + 1 + 'e'; // remplace #numéro par position
+        });
     });
 }
 
 // Trie les cards pilotes par numéro de voiture (ordre croissant)
 // event : l'événement du clic, nécessaire pour gérer le bouton actif
-function reorderByNumber(event) {
+function reorderByNumber() {
 
     // Retire la classe active de tous les boutons de tri
     document.querySelectorAll('.sort-btn').forEach(btn => {
         btn.classList.remove('active');
     });
 
-    // Active le bouton cliqué
-    event.target.classList.add('active');
-
+    // Active le bon bouton
+    const activeBtn = document.querySelector('[data-sort="number"]');
+    if(activeBtn) activeBtn.classList.add('active');
     // Récupère toutes les cards pilotes
     const cards = document.querySelectorAll('.driver-card');
-
-    // Récupère le conteneur parent
+    // Récupère le conteneur
     const container = document.querySelector('#drivers');
+    // Trie et réinsère...
 
     // Convertit NodeList en tableau pour pouvoir utiliser .sort()
     const cardsArray = Array.from(cards);
@@ -97,10 +92,12 @@ function reorderByNumber(event) {
         return parseInt(a.getAttribute('data-number')) - parseInt(b.getAttribute('data-number'));
     });
 
-    // Réinsère les cards dans l'ordre trié
     cardsArray.forEach(card => {
         container.appendChild(card);
+        const number = card.getAttribute('data-number');
+        card.querySelector('.driver-number').textContent = '#' + number; // remet le numéro
     });
+
 }
 
 // =====================
@@ -124,8 +121,7 @@ function toggleMenu() {
 
 // Fonction qui affiche un onglet et cache les autres
 // tabName : l'id du div à afficher ('drivers' ou 'teams')
-// event : l'événement du clic sur le bouton (peut être null si appelé au chargement)
-function showTab(tabName, event) {
+function showTab(tabName) {
 
     // Cache tous les éléments avec la classe tab-content
     document.querySelectorAll('.tab-content').forEach(tab => {
@@ -137,14 +133,14 @@ function showTab(tabName, event) {
         btn.classList.remove('active');
     });
 
-    // Affiche uniquement le div correspondant à l'onglet cliqué
-    document.getElementById(tabName).hidden = false;
+    // Affiche le div de l'onglet s'il existe sur cette page
+    const content = document.getElementById(tabName);
+    if(content) content.hidden = false;
 
-    // Met le bouton cliqué en actif
-    if(event && event.target) {
-        // Cas normal : l'utilisateur a cliqué sur un bouton
-        event.target.classList.add('active');
-    }
+    // Active le bouton correspondant s'il existe sur cette page
+    const activeBtn = document.querySelector('[data-tab="' + tabName + '"]');
+    if(activeBtn) activeBtn.classList.add('active');
+
 }
 
 // ======================
@@ -157,30 +153,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Ouvre l'onglet pilotes/écuries demandé dans l'URL
     // Ex: ?action=pilotes&tab=teams → ouvre l'onglet Écuries
-    const tab = urlParams.get('tab');
-    if(tab) {
-        showTab(tab, null);
+    const tab = urlParams.get('tab'); // récupère le paramètre 'tab' dans l'URL
+    if(document.querySelector('.driver-team')) { // seulement sur la page pilotes
+        showTab(tab ?? 'drivers');
+        reorderByNumber();
     }
 
     // Ouvre la section dashboard demandée dans l'URL
     // Ex: ?action=admin&section=drivers → ouvre la section Pilotes
     const section = urlParams.get('section');
     if(section) {
-        showSection(section, null); // Section demandée dans l'URL
+        showSection(section); // Section demandée dans l'URL
     }
     // Onglets pilotes/écuries — addEventListener au lieu de onclick
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
             const tab = this.getAttribute('data-tab');
-            if(tab) showTab(tab, e);
+            if(tab) showTab(tab);
         });
     });
     // tri pilotes par numéro ou classement
     document.querySelectorAll('.sort-btn').forEach(btn => {
     btn.addEventListener('click', function(e) {
         const sort = this.getAttribute('data-sort');
-        if(sort === 'number') reorderByNumber(e);
-        if(sort === 'standings') reorderByStandings(e);
+        if(sort === 'number') reorderByNumber();
+        if(sort === 'standings') reorderByStandings();
         });
     });
     // Active le bon lien dans la nav au chargement
@@ -205,20 +202,17 @@ document.addEventListener('DOMContentLoaded', function() {
     // Liens du dashboard — addEventListener au lieu de onclick
     // data-section : attribut HTML qui définit la section à afficher
     document.querySelectorAll('.dashboard-nav a').forEach(a => {
-        a.addEventListener('click', function(e) {
+        a.addEventListener('click', function() {
             const section = this.getAttribute('data-section');
-            if(section) {
-                e.preventDefault(); // Empêche la navigation uniquement pour les liens de section
-                showSection(section, e);
-            }
+            if(section) showSection(section);
             // Si pas de data-section → lien normal (retour au site, déconnexion)
         });
     });
 
     document.querySelectorAll('.profile-nav .profile-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
+        btn.addEventListener('click', function() {
             const section = this.getAttribute('data-section');
-            if(section) showSection(section, e);
+            if(section) showSection(section);
         });
     });
     // Burger menu — addEventListener
@@ -250,21 +244,17 @@ function toggleDashboardMenu() {
 // ====================================
 
 // Affiche une section du dashboard et cache les autres
-function showSection(sectionName, event) {
-    if(event && event.preventDefault) {
-        event.preventDefault(); // Empêche la navigation seulement si event existe
-    }
+function showSection(sectionName) {
     document.querySelectorAll('.dashboard-nav a').forEach(a => {
         a.classList.remove('active'); // Retire active de tous les liens
     });
 
+    const activeLink = document.querySelector('[data-section="' + sectionName + '"]');
+    if(activeLink) activeLink.classList.add('active');
+
     document.querySelectorAll('.profile-btn').forEach(btn => {
         btn.classList.remove('active');
     });
-
-    if(event && event.target) {
-        event.target.classList.add('active'); // Ajoute active sur le lien cliqué
-    }
 
     // Met à jour l'URL sans recharger la page
     // Comme ça si tu rafraîchis, tu restes sur le bon onglet

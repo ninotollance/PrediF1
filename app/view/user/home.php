@@ -10,10 +10,10 @@
                 <?php else : // Sinon on affiche une image par défaut ?>
                     <img src="public/img/circuits/default-home.webp" alt="Circuit par défaut">
                 <?php endif; ?>
-                <figcaption class="date-race">
+                <div class="date-race">
                     <p><?= date('d/m', strtotime($lastRace['gpStart'])) ?> 
                     - <?= date('d/m', strtotime($lastRace['gpEnd'])) ?></p>
-                </figcaption>
+                </div>
             </figure>
             <div class="race-card-home-body">
             <!-- Pays en titre principal, nom du GP en sous-titre -->
@@ -57,10 +57,10 @@
                 <?php else : // Sinon on affiche une image par défaut ?>
                     <img src="public/img/circuits/default-home.webp" alt="Circuit par défaut">
                 <?php endif; ?>
-                <figcaption class="date-race">
+                <div class="date-race">
                     <p><?= date('d/m', strtotime($nextRace['gpStart'])) ?> 
                     - <?= date('d/m', strtotime($nextRace['gpEnd'])) ?></p>
-                </figcaption>
+                </div>
             </figure>
             <div class="race-card-home-body">
                 <!-- Pays en titre principal, dates du week-end et nom du GP -->

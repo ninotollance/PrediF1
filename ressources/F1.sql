@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : ven. 17 avr. 2026 à 15:41
+-- Généré le : mar. 21 avr. 2026 à 08:49
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -43,7 +43,7 @@ INSERT INTO `BET` (`id`, `date_`, `idDriver`, `idRace`, `idUser`) VALUES
 (12, '2026-04-13 15:07:51', 19, 1, 1),
 (13, '2026-04-13 16:28:28', 19, 2, 1),
 (26, '2026-04-16 15:45:02', 1, 6, 1),
-(27, '2026-04-17 11:44:46', 17, 6, 6);
+(29, '2026-04-20 19:07:40', 4, 6, 6);
 
 -- --------------------------------------------------------
 
@@ -613,16 +613,16 @@ CREATE TABLE `RACE` (
 --
 
 INSERT INTO `RACE` (`id`, `name`, `country`, `circuitKey_api`, `idWinner`, `gpStart`, `gpEnd`, `raceStart`, `picture`, `status`) VALUES
-(1, 'Formula 1 Qatar Airways Australian Grand Prix', 'Australie', 10, 19, '2026-03-06', '2026-03-08', '2026-03-08 05:00:00', '', 'finished'),
-(2, 'Formula 1 Heineken Chinese Grand Prix', 'Chine', 49, 7, '2026-03-13', '2026-03-15', '2026-03-15 08:00:00', NULL, 'finished'),
-(3, 'Formula 1 Aramco Japanese Grand Prix', 'Japon', 46, 7, '2026-03-27', '2026-03-29', '2026-03-29 07:00:00', NULL, 'finished'),
-(6, 'Formula 1 Crypto.com Miami Grand Prix', 'États-Unis', 151, NULL, '2026-05-01', '2026-05-03', '2026-05-03 22:00:00', NULL, 'scheduled'),
-(7, 'Formula 1 Lenovo Grand Prix du Canada', 'Canada', 23, NULL, '2026-05-22', '2026-05-24', '2026-05-24 22:00:00', NULL, 'scheduled'),
-(8, 'Formula 1 Louis Vuitton Grand Prix de Monaco', 'Monaco', 22, NULL, '2026-06-05', '2026-06-07', '2026-06-07 15:00:00', NULL, 'scheduled'),
+(1, 'Formula 1 Qatar Airways Australian Grand Prix', 'Australie', 10, 19, '2026-03-06', '2026-03-08', '2026-03-08 05:00:00', 'Australie.webp', 'finished'),
+(2, 'Formula 1 Heineken Chinese Grand Prix', 'Chine', 49, 7, '2026-03-13', '2026-03-15', '2026-03-15 08:00:00', 'Chine.webp', 'finished'),
+(3, 'Formula 1 Aramco Japanese Grand Prix', 'Japon', 46, 7, '2026-03-27', '2026-03-29', '2026-03-29 07:00:00', 'Japon.webp', 'finished'),
+(6, 'Formula 1 Crypto.com Miami Grand Prix', 'États-Unis', 151, NULL, '2026-05-01', '2026-05-03', '2026-05-03 22:00:00', 'Miami.webp', 'scheduled'),
+(7, 'Formula 1 Lenovo Grand Prix du Canada', 'Canada', 23, NULL, '2026-05-22', '2026-05-24', '2026-05-24 22:00:00', 'Canada.webp', 'scheduled'),
+(8, 'Formula 1 Louis Vuitton Grand Prix de Monaco', 'Monaco', 22, NULL, '2026-06-05', '2026-06-07', '2026-06-07 15:00:00', 'Monaco.webp', 'scheduled'),
 (9, 'Formula 1 MSC Cruises Gran Premio de Barcelona', 'Espagne', 15, NULL, '2026-06-12', '2026-06-14', '2026-06-14 15:00:00', NULL, 'scheduled'),
-(10, 'Formula 1 Lenovo Austrian Grand Prix', 'Autriche', 19, NULL, '2026-06-26', '2026-06-28', '2026-06-28 15:00:00', NULL, 'scheduled'),
-(11, 'Formula 1 Pirelli British Grand Prix', 'Royaume-Uni', 2, NULL, '2026-07-03', '2026-07-05', '2026-07-05 16:00:00', NULL, 'scheduled'),
-(12, 'Formula 1 Belgian Grand Prix', 'Belgique', 7, NULL, '2026-07-17', '2026-07-19', '2026-07-19 15:00:00', NULL, 'scheduled'),
+(10, 'Formula 1 Lenovo Austrian Grand Prix', 'Autriche', 19, NULL, '2026-06-26', '2026-06-28', '2026-06-28 15:00:00', 'Autriche.webp', 'scheduled'),
+(11, 'Formula 1 Pirelli British Grand Prix', 'Royaume-Uni', 2, NULL, '2026-07-03', '2026-07-05', '2026-07-05 16:00:00', 'Royaume-Uni.webp', 'scheduled'),
+(12, 'Formula 1 Belgian Grand Prix', 'Belgique', 7, NULL, '2026-07-17', '2026-07-19', '2026-07-19 15:00:00', 'Belgique.webp', 'scheduled'),
 (13, 'Formula 1 AWS Hungarian Grand Prix', 'Hongrie', 4, NULL, '2026-07-24', '2026-07-26', '2026-07-26 15:00:00', NULL, 'scheduled'),
 (14, 'Formula 1 Heineken Dutch Grand Prix', 'Pays-Bas', 55, NULL, '2026-08-21', '2026-08-23', '2026-08-23 15:00:00', NULL, 'scheduled'),
 (15, 'Formula 1 Pirelli Gran Premio d\'Italia', 'Italie', 39, NULL, '2026-09-04', '2026-09-06', '2026-09-06 15:00:00', NULL, 'scheduled'),
@@ -662,7 +662,7 @@ INSERT INTO `TEAM` (`id`, `name`, `country`, `picture`) VALUES
 (6, 'Mercedes', 'Allemagne', 'mercedes.webp'),
 (7, 'Aston Martin', 'Royaume-Uni', 'astonMartin.jpg'),
 (8, 'Ferrari', 'Italie', 'ferrari.webp'),
-(9, 'Williams', 'Royaume-Uni', NULL),
+(9, 'Williams', 'Royaume-Uni', 'williams .webp'),
 (10, 'Racing Bulls', 'Italie', 'racingbull.webp'),
 (11, 'Haas', 'États-Unis', 'Hass.webp');
 
@@ -744,7 +744,7 @@ ALTER TABLE `USER_`
 -- AUTO_INCREMENT pour la table `BET`
 --
 ALTER TABLE `BET`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT pour la table `DRIVER`
