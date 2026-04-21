@@ -631,8 +631,20 @@
     }
     }
 }
-
-
+.contact .valid {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.contact .valid input {
+    width: 10px;
+    height: 10px;
+    flex-shrink: 0;
+    margin-right: 0;
+}
+.contact .valid a {
+    color: $color-red;
+}
 // Page 404 — centrée verticalement
 .error-404 {
     display: flex;

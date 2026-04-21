@@ -34,6 +34,12 @@
         <?php if(!empty($errors['password'])) : ?>
             <p class="form-error"><?= htmlspecialchars($errors['password'], ENT_QUOTES, 'UTF-8') ?></p>
         <?php endif; ?>
+
+        <!-- Checkbox obligatoire RGPD -->
+        <label class="valid">
+            <input type="checkbox" name="rgpd" required>
+            J'accepte les <a href="?action=conditions-utilisation">conditions d'utilisation</a> et la <a href="?action=confidentialite">politique de confidentialité</a>
+        </label>
         
         <!-- Bouton envoi -->
         <button type="submit" class="btn-register">S'inscrire</button>

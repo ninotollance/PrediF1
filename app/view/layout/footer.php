@@ -14,7 +14,7 @@
                 <li><a href="?action=courses">Courses</a></li>
                 <li><a href="?action=pilotes">Pilotes & Écuries</a></li>
                 <?php if (isset($_SESSION['user_logged'])) : ?>
-                    <li><a href="?action=paris">Mes Paris</a></li>
+                    <li><a href="?action=historique-paris">Mes Paris</a></li>
                 
                 <?php endif; ?>
             </ul>
