@@ -136,17 +136,8 @@ class AuthController extends Controller {
             $this->catchError($e);
             return; // Arrête la fonction
         }
-        try {
-            $user = $this->userModel->getByEmail($_POST['email']); // Récupère le nouvel utilisateur en BDD
-            $_SESSION['user_logged'] = true; // Marque l'utilisateur comme connecté
-            $_SESSION['user_id'] = $user['id']; // Stocke l'id en session
-            $_SESSION['user_role'] = $user['role']; // Stocke le rôle en session (user/admin)
-            $_SESSION['user_email'] = $_POST['email']; // Stocke l'email en session
-        } catch(Exception $e) {
-            $this->catchError($e);
-            return; // Arrête la fonction
-        }
-        $this->redirect('accueil'); // Redirige vers la route 'accueil'
+        $this->success('Inscription réussie ! Connectez-vous.'); // Message de succès
+        $this->redirect('connexion'); // Redirige vers la page de connexion
     }
 
     // Déconnecte l'utilisateur et détruit la session

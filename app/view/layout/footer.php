@@ -31,8 +31,8 @@
             <h2>Contact</h2>
             <ul>
                 <li><a href="?action=contact">Nous contacter</a></li>
-                <li><a href="https://twitter.com/...">Twitter</a></li>
-                <li><a href="https://instagram.com/...">Instagram</a></li>
+                <li><a href="#">Twitter</a></li>
+                <li><a href="#">Instagram</a></li>
             </ul>
         </section>
     </div>

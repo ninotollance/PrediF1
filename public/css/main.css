@@ -31,6 +31,9 @@ body {
   color: #FFFFFF;
   font-family: "Inter", sans-serif;
   font-size: 16px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
 }
 
 h1 {
@@ -120,7 +123,8 @@ button {
   .tab-btn,
   .sort-btn {
     padding: 15px 0;
-    font-size: 16px;
+    font-size: 18px;
+    font-weight: bold;
   }
 }
 .tab-btn.active,
@@ -574,6 +578,7 @@ header nav a.active {
 }
 .btn-register:hover {
   background-color: #b30500;
+  color: #FFFFFF;
 }
 .btn-register {
   padding: 8px 20px;
@@ -604,6 +609,7 @@ header nav a.active {
 
 main {
   padding: 20px 15px;
+  width: 100%;
 }
 @media (min-width: 768px) {
   main {
@@ -882,6 +888,7 @@ footer p {
   padding: 15px;
   margin-top: 20px;
   min-width: 0;
+  width: auto;
 }
 @media (min-width: 1024px) {
   .dashboard-main {
@@ -1039,6 +1046,7 @@ table a:hover {
 }
 .dashboard-section button[type=submit]:hover {
   background-color: #b30500;
+  color: #FFFFFF;
 }
 .dashboard-section button[type=submit] {
   padding: 10px 15px;
@@ -1164,6 +1172,7 @@ table a:hover {
 }
 .race-card-home-body .btn-connexion:hover {
   background-color: #b30500;
+  color: #FFFFFF;
 }
 .race-card-home-body .btn-connexion {
   border: solid 1px #FFFFFF;
@@ -1344,6 +1353,7 @@ table a:hover {
 }
 .btn-home:hover {
   background-color: #b30500;
+  color: #FFFFFF;
 }
 .btn-home {
   padding: 8px 16px;
@@ -1718,6 +1728,7 @@ table a:hover {
 }
 .contact button[type=submit]:hover {
   background-color: #b30500;
+  color: #FFFFFF;
 }
 .contact button[type=submit] {
   padding: 12px;

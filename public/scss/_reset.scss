@@ -41,7 +41,10 @@ body {
     background-color: $color-bg; // Fond bleu nuit
     color: $color-white;         // Texte blanc
     font-family: $font-text;     // Police Inter
-    font-size: $text-base;       // Taille de texte de base
+    font-size: $text-base;      // Taille de texte de base
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
 }
 
 // ==============================

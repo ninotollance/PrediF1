@@ -26,7 +26,8 @@
 
     @media (min-width: $breakpoint-desktop) {
         padding: 15px 0;
-        font-size: $text-base;
+        font-size: $text-lg;
+        font-weight: bold;
     }
 
     &.active {

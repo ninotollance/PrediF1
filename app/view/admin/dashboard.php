@@ -249,8 +249,10 @@
                     <select name="idWinner">
                         <?php foreach($drivers as $driver) : ?>
                             <option value="<?= $driver['id'] ?>">
-                                <?= htmlspecialchars($driver['firstName'], ENT_QUOTES, 'UTF-8') ?>
+                                <?= htmlspecialchars($driver['number_api'], ENT_QUOTES, 'UTF-8') ?>
+                                -<?= htmlspecialchars($driver['firstName'], ENT_QUOTES, 'UTF-8') ?>
                                 <?= htmlspecialchars($driver['name'], ENT_QUOTES, 'UTF-8') ?>
+                                 
                             </option>
                         <?php endforeach; ?>
                     </select>
