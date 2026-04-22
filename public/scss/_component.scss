@@ -11,7 +11,9 @@
     margin-bottom: 20px;
     gap: 10px;
 }
-
+.tab-btn {
+    margin-top: 30px;
+}
 .tab-btn,
 .sort-btn {
     cursor: pointer;
@@ -244,4 +246,15 @@
     @media (min-width: $breakpoint-desktop) {
         font-size: $text-xl;
     }
+}
+.h1-hidden {
+    position: absolute;    // sort du flux normal
+    width: 1px;            // réduit à 1px (display:none serait ignoré par les moteurs)
+    height: 1px;           // idem
+    padding: 0;
+    margin: -1px;          // compense le 1px
+    overflow: hidden;      // cache le débordement
+    clip: rect(0,0,0,0);   // zone visible nulle
+    white-space: nowrap;   // empêche le retour à la ligne
+    border: 0;
 }

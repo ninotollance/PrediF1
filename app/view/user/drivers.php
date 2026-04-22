@@ -1,5 +1,6 @@
 <!-- Onglets de navigation pour switcher entre pilotes et écuries -->
 <section class="driver-team" aria-label="Pilotes et Écuries">
+    <h1>Pilotes & Écuries</h1>
     <div class="tabs">
         <button class="tab-btn" data-tab="drivers">Pilotes</button>
         <button class="tab-btn" data-tab="teams">Écuries</button>

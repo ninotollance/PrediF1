@@ -6,7 +6,7 @@
     <title><?= isset($GLOBALS['pageTitle']) ? htmlspecialchars($GLOBALS['pageTitle'], ENT_QUOTES, 'UTF-8') : 'PrediF1' ?></title>
     <meta name="description" content="PrediF1 - Plateforme de paris fictifs sur la Formule 1. Pariez sur le vainqueur des Grands Prix !">
     <link rel="stylesheet" href="public/css/main.css">
-    <link rel="icon" type="image/png" href="public/img/favicon.png">
+    <link rel="icon" type="image/png" href="public/img/favicon.webp">
     <script src="public/js/script.js" defer></script>
 </head>
 <body>
@@ -14,7 +14,7 @@
     <nav>
         <!-- Logo -->
         <a href="?action=accueil">
-            <img src="public/img/logoBlanc.png" alt="F1 Paris" class="logo">
+            <img src="public/img/logoBlanc.webp" alt="F1 Paris" class="logo">
         </a>
 
         <!-- Liens principaux — classe active sur le lien de la page courante -->
@@ -44,7 +44,7 @@
             <?php endif; ?>
         </div>
 
-        <button class="burger">
+        <button class="burger" aria-label="bouton burger">
             <span></span>
             <span></span>
             <span></span>

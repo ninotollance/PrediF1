@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - PrediF1</title>
     <link rel="stylesheet" href="public/css/main.css">
-    <link rel="icon" type="image/png" href="public/img/favicon.png">
+    <link rel="icon" type="image/png" href="public/img/favicon.webp">
 </head>
 <body class="dashboard-body">
     <div class="dashboard-wrapper"> <!-- Layout grid : sidebar + contenu -->
@@ -20,7 +20,7 @@
             <!-- Logo + burger (mobile) -->
             <header class="dashboard-sidebar-header">
                 <a href="?action=admin">
-                    <img src="public/img/logoBlanc.png" alt="PrediF1" class="logo">
+                    <img src="public/img/logoBlanc.webp" alt="PrediF1" class="logo">
                 </a>
                 <!-- Burger : ouvre/ferme le menu via toggleDashboardMenu() -->
                 <button class="dashboard-burger">

@@ -1,6 +1,7 @@
 
 <!-- Formulaire d'inscription -->
 <section class="contact" aria-label="Formulaire d'inscription">
+    <h1>Inscription</h1>
     <form action="?action=register" method="POST">
         <!-- Champ caché qui envoie le token CSRF avec le formulaire -->
         <!-- Le serveur vérifiera que ce token correspond à celui en session -->

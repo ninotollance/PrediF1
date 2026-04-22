@@ -1,11 +1,12 @@
 <div class="races-container">
+    <h1 class="h1-hidden">Accueil PrediF1</h1>
     <?php if($lastRace) : // Vérifie si une course passée existe en BDD ?>
         <article class="race-card-home">
             <figure class="race-card-home-img">
                 <figcaption class="badge">Résultats</figcaption> <!-- Badge fixe pour la dernière course -->
 
                 <?php if($lastRace['picture']) : // Si une image est renseignée en BDD ?>
-                    <img src="public/img/circuits/<?= htmlspecialchars($lastRace['picture'], ENT_QUOTES, 'UTF-8') ?>" 
+                    <img src="public/img/circuits/home/<?= htmlspecialchars($lastRace['picture'], ENT_QUOTES, 'UTF-8') ?>" 
                     alt="<?= htmlspecialchars($lastRace['name'], ENT_QUOTES, 'UTF-8') ?>">
                 <?php else : // Sinon on affiche une image par défaut ?>
                     <img src="public/img/circuits/default-home.webp" alt="Circuit par défaut">
@@ -52,7 +53,7 @@
                 </figcaption>
 
                 <?php if($nextRace['picture']) : // Si une image est renseignée en BDD ?>
-                    <img src="public/img/circuits/<?= htmlspecialchars($nextRace['picture'], ENT_QUOTES, 'UTF-8') ?>" 
+                    <img src="public/img/circuits/home/<?= htmlspecialchars($nextRace['picture'], ENT_QUOTES, 'UTF-8') ?>" 
                     alt="<?= htmlspecialchars($nextRace['name'], ENT_QUOTES, 'UTF-8') ?>">
                 <?php else : // Sinon on affiche une image par défaut ?>
                     <img src="public/img/circuits/default-home.webp" alt="Circuit par défaut">
@@ -105,7 +106,7 @@
     </article>
 
     <article class="race-card-home">
-        <figure class="race-card-home-img">
+        <figure class="ecurie-card-home-img">
             <figcaption class="badge">Écuries</figcaption>
             <img src="public/img/teams/default.webp" alt="Écuries F1">
         </figure>

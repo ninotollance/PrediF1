@@ -7,7 +7,9 @@ use Exception;
 
 
 class Database {
-
+    
+    // L'instance est stockée dans une propriété statique
+    // elle persiste pendant toute l'exécution du script
     private static ?Database $instance = null;
     private PDO $connection;
 

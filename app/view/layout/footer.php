@@ -3,7 +3,7 @@
     <div class="footer-inner">
         <div class="footer-logo">
             <a href="?action=accueil">
-                <img src="public/img/logoBlanc.png" alt="Logo PrediF1" class="logo">
+                <img src="public/img/logoBlanc.webp" alt="Logo PrediF1" class="logo">
             </a>
             <p>Votre plateforme de paris sur la Formule 1.</p>
         </div>

@@ -43,14 +43,17 @@
 }
 
 // Zone image de la card course
-.race-card-home-img {
+.race-card-home-img,
+.driver-card-home-img,
+.ecurie-card-home-img {
     position: relative;
     height: auto;
 }
 
 // Image pleine largeur avec hauteur fixe
 .race-card-home-img img,
-.driver-card-home-img img {
+.driver-card-home-img img,
+.ecurie-card-home-img img {
     width: 100%;
     height: 200px;       // mobile : moins haut
     object-fit: cover;
