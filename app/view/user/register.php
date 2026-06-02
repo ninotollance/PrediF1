@@ -1,8 +1,8 @@
 
 <!-- Formulaire d'inscription -->
-<section class="contact" aria-label="Formulaire d'inscription">
+<section class="form-wrapper" aria-label="Formulaire d'inscription">
     <h1>Inscription</h1>
-    <form action="?action=register" method="POST">
+    <form action="?action=register-post" method="POST">
         <!-- Champ caché qui envoie le token CSRF avec le formulaire -->
         <!-- Le serveur vérifiera que ce token correspond à celui en session -->
         <input type="hidden" name="csrf_token" 
@@ -10,14 +10,14 @@
 
         <!-- Champ nom -->
         <label>Nom</label>
-        <input type="text" name="name" placeholder="Senna" required>
+        <input type="text" name="name" placeholder="Dupont" required>
         <?php if(!empty($errors['name'])) : ?>
             <p class="form-error"><?= htmlspecialchars($errors['name'], ENT_QUOTES, 'UTF-8') ?></p>
         <?php endif; ?>
  
         <!-- Champ prénom -->
         <label>Prénom</label>
-        <input type="text" name="firstname" placeholder="Ayrton" required>
+        <input type="text" name="firstname" placeholder="Jean" required>
         <?php if(!empty($errors['firstname'])) : ?>
             <p class="form-error"><?= htmlspecialchars($errors['firstname'], ENT_QUOTES, 'UTF-8') ?></p>
         <?php endif; ?>
@@ -35,12 +35,6 @@
         <?php if(!empty($errors['password'])) : ?>
             <p class="form-error"><?= htmlspecialchars($errors['password'], ENT_QUOTES, 'UTF-8') ?></p>
         <?php endif; ?>
-
-        <!-- Checkbox obligatoire RGPD -->
-        <label class="valid">
-            <input type="checkbox" name="rgpd" required>
-            J'accepte les <a href="?action=conditions-utilisation">conditions d'utilisation</a> et la <a href="?action=confidentialite">politique de confidentialité</a>
-        </label>
         
         <!-- Bouton envoi -->
         <button type="submit" class="btn-register">S'inscrire</button>

@@ -1,7 +1,7 @@
 <!-- Formulaire de connexion -->
-<section class="contact" aria-label="Formulaire de connexion">
+<section class="form-wrapper" aria-label="Formulaire de connexion">
     <h1>Connexion</h1>
-    <form action="?action=login" method="POST">
+    <form action="?action=login-post" method="POST">
         <!-- Champ caché qui envoie le token CSRF avec le formulaire -->
         <!-- Le serveur vérifiera que ce token correspond à celui en session -->
         <input type="hidden" name="csrf_token" 

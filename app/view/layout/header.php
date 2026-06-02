@@ -3,44 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= isset($GLOBALS['pageTitle']) ? htmlspecialchars($GLOBALS['pageTitle'], ENT_QUOTES, 'UTF-8') : 'PrediF1' ?></title>
-    <meta name="description" content="PrediF1 - Plateforme de paris fictifs sur la Formule 1. Pariez sur le vainqueur des Grands Prix !">
+    <title>TestCDA</title>
     <link rel="stylesheet" href="public/css/main.css">
-    <link rel="icon" type="image/png" href="public/img/favicon.webp">
     <script src="public/js/script.js" defer></script>
 </head>
 <body>
 <header>
     <nav>
-        <!-- Logo -->
-        <a href="?action=accueil">
-            <img src="public/img/logoBlanc.webp" alt="F1 Paris" class="logo">
-        </a>
 
-        <!-- Liens principaux — classe active sur le lien de la page courante -->
+        <!-- Liens principaux -->
         <ul class="nav-links">
-            <?php $action = $_GET['action'] ?? 'accueil'; // Récupère l'action courante, accueil par défaut ?>
-            <li><a href="?action=accueil" class="<?= $action === 'accueil' ? 'active' : '' ?>">Accueil</a></li>
-            <li><a href="?action=courses" class="<?= $action === 'courses' ? 'active' : '' ?>">Courses</a></li>
-            <li><a href="?action=pilotes" class="<?= $action === 'pilotes' ? 'active' : '' ?>">Pilotes & Écuries</a></li>
-            <?php if (isset($_SESSION['user_logged'])) : ?>
-                <li><a href="?action=historique-paris" class="<?= $action === 'historique-paris' ? 'active' : '' ?>">Mes Paris</a></li>
-            <?php endif; ?>
-            <li><a href="?action=contact" class="<?= $action === 'contact' ? 'active' : '' ?>">Contact</a></li>
+            <li><a href="?action=home">Afficher les clients</a></li>
+            <li><a href="?action=client-search">Rechercher un client</a></li>
+            <li><a href="?action=client-create">Créer un client</a></li>
         </ul>
 
-        <!-- Boutons connexion/inscription ou profil/déconnexion -->
+        <!-- Boutons connexion/déconnexion -->
         <div class="nav-buttons">
-            <?php if (isset($_SESSION['user_logged'])) : ?>
+            <?php if(isset($_SESSION['user_logged'])) : ?>
                 <?php if(isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin') : ?>
                     <a href="?action=admin" class="btn-login">Dashboard</a>
-                <?php else : ?>
-                    <a href="?action=profil" class="btn-login <?= $action === 'profil' ? 'active' : '' ?>">Profil</a>
                 <?php endif; ?>
-                <a href="?action=deconnexion" class="btn-register">Déconnexion</a>
+                <a href="?action=logout" class="btn-register">Déconnexion</a>
             <?php else : ?>
-                <a href="?action=connexion" class="btn-login <?= $action === 'connexion' ? 'active' : '' ?>">Connexion</a>
-                <a href="?action=inscription" class="btn-register">Inscription</a>
+                <a href="?action=login" class="btn-login">Connexion</a>
+                <a href="?action=register" class="btn-register">Inscription</a>
             <?php endif; ?>
         </div>
 
@@ -50,44 +37,39 @@
             <span></span>
         </button>
     </nav>
+
+    <!-- Menu mobile -->
     <div class="mobile-menu" hidden>
         <ul>
             <div class="mobile-menu-header">
-                <li><a href="?action=accueil">Accueil</a></li>
-                <li><a href="?action=courses">Courses</a></li>
-                <li><a href="?action=pilotes">Pilotes & Écuries</a></li>
-                <?php if(isset($_SESSION['user_logged'])) : ?>
-                    <li><a href="?action=historique-paris">Mes Paris</a></li>
-                    <li><a href="?action=contact">Contact</a></li>
-                    <li><a href="?action=profil">Profil</a></li>
-                <?php endif; ?>
+                <li><a href="?action=home">Affichage clients</a></li>
+                <li><a href="?action=client-search">Rechercher un client</a></li>
+                <li><a href="?action=client-create">Ajouter un client</a></li>
             </div>
             <div class="mobile-menu-footer">
-                
-                    <?php if(isset($_SESSION['user_role'])&& $_SESSION['user_role'] === 'admin') : ?>  <!-- Si admin connecté -->
-                        <a href="?action=admin">← Dashboard</a>
-                    <?php endif; ?>
-                    <?php if(isset($_SESSION['user_logged'])): ?>
-                        <a href="?action=deconnexion">Déconnexion</a>
-                    <?php else : ?>
-                        <a href="?action=connexion">Connexion</a>
-                        <a href="?action=inscription">Inscription</a>
+                <?php if(isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin') : ?>
+                    <a href="?action=admin">← Dashboard</a>
+                <?php endif; ?>
+                <?php if(isset($_SESSION['user_logged'])) : ?>
+                    <a href="?action=logout">Déconnexion</a>
+                <?php else : ?>
+                    <a href="?action=login">Connexion</a>
+                    <a href="?action=register">Inscription</a>
                 <?php endif; ?>
             </div>
         </ul>
     </div>
 
-    <!-- Messages flash protégés contre XSS -->
+    <!-- Messages flash -->
     <?php if(isset($_SESSION['success'])) : ?>
         <div class="toast"><?= htmlspecialchars($_SESSION['success'], ENT_QUOTES, 'UTF-8') ?></div>
         <?php unset($_SESSION['success']); ?>
     <?php endif; ?>
-
     <?php if(isset($_SESSION['login_error'])) : ?>
         <div class="toast error"><?= htmlspecialchars($_SESSION['login_error'], ENT_QUOTES, 'UTF-8') ?></div>
         <?php unset($_SESSION['login_error']); ?>
     <?php endif; ?>
-    <!-- Overlay sombre derrière le menu mobile -->
+
     <div class="overlay" hidden></div>
 </header>
 <main>

@@ -1,6 +1,6 @@
 <?php 
 
-namespace PrediF1\model; // Déclare que cette classe appartient au namespace PrediF1\model
+namespace TestCDA\model; // Déclare que cette classe appartient au namespace TestCDA\model
 use PDO; // Nécessaire car on utilise PDO::PARAM_INT, PDO::FETCH_ASSOC (obligatoire avec les namespace)
 use PDOException; 
 use Exception;
@@ -108,7 +108,7 @@ abstract class Model {
             }
         }
 
-        $setParts = array(); // Tableau pour stocker les parties du SET
+        $setParts = array(); // Tableau pour stocker les parties du "SET"
         foreach(array_keys($data) as $col) {
             $setParts[] = "$col = :$col"; // Construit "colonne = :colonne"
         }

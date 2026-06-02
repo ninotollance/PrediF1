@@ -1,11 +1,11 @@
 <?php
 // ============================================================
-// PREDIF1 - Configuration Globale
+// TestCDA - Configuration Globale
 // ============================================================
 
 // --- Racine du projet ---
 
-define('RACINE', __DIR__ . '/..'); // Pointe vers le dossier PrediF1/
+define('RACINE', __DIR__ . '/..'); // Pointe vers le dossier TestCDA/
 
 // Charge les variables d'environnement du fichier .env dans $_ENV
 require_once RACINE . '/vendor/autoload.php'; 

@@ -1,6 +1,6 @@
 <?php
 
-namespace PrediF1\model; // Déclare que cette classe appartient au namespace PrediF1\model
+namespace TestCDA\model; // Déclare que cette classe appartient au namespace TestCDA\model
 use PDO; // Nécessaire car on utilise PDO::PARAM_INT, PDO::FETCH_ASSOC (obligatoire avec les namespace)
 use PDOException;
 use Exception;
@@ -9,7 +9,7 @@ class UserModel extends Model {
     
     protected $table = "USER_";
 
-    // Retourne un utilisateur par son email (utilisé pour la connexion)
+    // Retourne un utilisateur par son email 
     public function getByEmail($email) {
         try {
             $query = "SELECT * FROM $this->table WHERE email = :email";
@@ -23,6 +23,6 @@ class UserModel extends Model {
             throw new Exception('Erreur BDD getByEmail : ' . $e->getMessage());
         }
     }
-
+    
 }
     

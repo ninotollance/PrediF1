@@ -2,24 +2,18 @@
 
 namespace Config;
 
-use PrediF1\controller\HomeController;
-use PrediF1\controller\RaceController;
-use PrediF1\controller\DriverController;
-use PrediF1\controller\UserController;
-use PrediF1\controller\BetController;
-use PrediF1\controller\AuthController;
-use PrediF1\controller\AdminController;
-use PrediF1\controller\ContactController;
-use PrediF1\controller\TeamController;
+use TestCDA\controller\HomeController;
+use TestCDA\controller\AuthController;
+use TestCDA\controller\ClientController;
+use TestCDA\controller\AdminController;
 
 class Route {
 
     public $action; // Stocke l'action récupérée depuis l'URL
 
-    // Récupère l'action dans l'URL ex: "?action=courses"
-    // Si aucune action n'est précisée, affiche l'accueil par défaut
+    // Récupère l'action dans l'URL ex: "?action=clients"
     public function __construct() {
-        $this->action = $_GET["action"] ?? "accueil";
+        $this->action = $_GET["action"] ?? "home";
     }
 
     public function dispatch() {
@@ -28,174 +22,70 @@ class Route {
             // ════════════════════════════════════════
             // HOME
             // ════════════════════════════════════════
-            case 'accueil':
-                $ctrl = new HomeController();
+            case 'home':
+                $ctrl = new ClientController();
                 $ctrl->index();
-                break;
-
-            case 'conditions-utilisation':
-                $ctrl = new HomeController();
-                $ctrl->terms();
-                break;
-
-            case 'confidentialite':
-                $ctrl = new HomeController();
-                $ctrl->privacy();
-                break;
-
-            case 'jeu-responsable':
-                $ctrl = new HomeController();
-                $ctrl->responsibleGambling();
                 break;
 
             // ════════════════════════════════════════
             // AUTHENTIFICATION
             // ════════════════════════════════════════
-            case 'connexion':
+            case 'login':
                 $ctrl = new AuthController();
                 $ctrl->showLogin();
                 break;
 
-            case 'login':
+            case 'login-post':
                 $ctrl = new AuthController();
                 $ctrl->login();
                 break;
 
-            case 'inscription':
+            case 'register':
                 $ctrl = new AuthController();
                 $ctrl->showRegister();
                 break;
 
-            case 'register':
+            case 'register-post':
                 $ctrl = new AuthController();
                 $ctrl->register();
                 break;
 
-            case 'deconnexion':
+            case 'logout':
                 $ctrl = new AuthController();
                 $ctrl->logout();
                 break;
 
             // ════════════════════════════════════════
-            // UTILISATEUR
+            // CLIENTS
             // ════════════════════════════════════════
-            case 'profil':
-                $ctrl = new UserController();
-                $ctrl->profile();
-                break;
-
-            case 'modifier-profil':
-                $ctrl = new UserController();
-                $ctrl->update();
-                break;
-
-            case 'supprimer-compte':
-                $ctrl = new UserController();
-                $ctrl->deleteUser();
-                break;
-
-            case 'historique-paris':
-                $ctrl = new UserController();
-                $ctrl->betHistory();
-                break;
-
-            // ════════════════════════════════════════
-            // COURSES
-            // ════════════════════════════════════════
-
-            case 'admin-creer-course':
-                $ctrl = new RaceController();
-                $ctrl->create();
-                break;
-
-            case 'admin-modifier-course':
-                $ctrl = new RaceController();
-                $ctrl->update();
-                break;
-
-            case 'admin-supprimer-course':
-                $ctrl = new RaceController();
-                $ctrl->delete();
-                break;
-
-            case 'admin-ajouter-vainqueur':
-                $ctrl = new RaceController();
-                $ctrl->addWinner();
-                break;
-
-            case 'courses':
-                $ctrl = new RaceController();
+            case 'clients':
+                $ctrl = new ClientController();
                 $ctrl->index();
                 break;
+    
+            case 'client-show':
+                $ctrl = new ClientController();
+                $ctrl->show();
+                break;
 
-            // ════════════════════════════════════════
-            // PILOTES
-            // ════════════════════════════════════════
+            case 'client-search':
+                $ctrl = new ClientController();
+                $ctrl->search();
+                break;
 
-            case 'admin-creer-pilote':
-                $ctrl = new DriverController();
+            case 'client-create':
+                $ctrl = new ClientController();
                 $ctrl->create();
                 break;
 
-            case 'admin-modifier-pilote':
-                $ctrl = new DriverController();
+            case 'client-update':
+                $ctrl = new ClientController();
                 $ctrl->update();
                 break;
 
-            case 'admin-supprimer-pilote':
-                $ctrl = new DriverController();
+            case 'client-delete':
+                $ctrl = new ClientController();
                 $ctrl->delete();
-                break;
-
-            case 'pilotes':
-                $ctrl = new DriverController();
-                $ctrl->index();
-                break;
-
-            // ════════════════════════════════════════
-            // ÉCURIES
-            // ════════════════════════════════════════
-            case 'admin-creer-ecuries':
-                $ctrl = new TeamController();
-                $ctrl->create();
-                break;
-
-            case 'admin-modifier-ecuries':
-                $ctrl = new TeamController();
-                $ctrl->update();
-                break;
-
-            case 'admin-supprimer-ecuries':
-                $ctrl = new TeamController();
-                $ctrl->delete();
-                break;
-
-            // ════════════════════════════════════════
-            // PARIS
-            // ════════════════════════════════════════
-            case 'parier':
-                $ctrl = new BetController();
-                $ctrl->showBet();
-                break;
-                
-            case 'creer-pari':
-                $ctrl = new BetController();
-                $ctrl->createByUser();
-                break;
-
-            case 'supprimer-pari':
-                $ctrl = new BetController();
-                $ctrl->deleteByUser();
-                break;
-
-            case 'admin-creer-pari':
-                $ctrl = new BetController();
-                $ctrl->createByAdmin();
-                break;
-
-            case 'admin-supprimer-pari':
-                $ctrl = new BetController();
-                $ctrl->deleteByAdmin();
                 break;
 
             // ════════════════════════════════════════
@@ -206,27 +96,14 @@ class Route {
                 $ctrl->dashboard();
                 break;
 
-            case 'admin-modifier-user':
+            case 'admin-update-user':
                 $ctrl = new AdminController();
                 $ctrl->updateUser();
                 break;
 
-            case 'admin-supprimer-user':
+            case 'admin-delete-user':
                 $ctrl = new AdminController();
                 $ctrl->deleteUser();
-                break;
-
-            // ════════════════════════════════════════
-            // CONTACT
-            // ════════════════════════════════════════
-            case 'contact':
-                $ctrl = new ContactController();
-                $ctrl->show();
-                break;
-
-            case 'envoyer-contact':
-                $ctrl = new ContactController();
-                $ctrl->send();
                 break;
 
             // ════════════════════════════════════════

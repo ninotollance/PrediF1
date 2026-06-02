@@ -1,7 +1,10 @@
 <?php
 
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 if(session_status() === PHP_SESSION_NONE ) {
-    session_name('<prediF1>');
+    session_name('TestCDA');
     session_start();
 }
 

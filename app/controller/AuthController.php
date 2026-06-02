@@ -1,80 +1,83 @@
 <?php
 
-namespace PrediF1\controller;
-use PrediF1\model\UserModel; // Importe le modèle User pour gérer les données utilisateur
+namespace TestCDA\controller;
+use TestCDA\model\UserModel; // Importe le modèle User pour gérer les données utilisateur
+use TestCDA\model\ClientModel; // Importe le modèle Client pour l'export au logout
 use Exception; // Nécessaire pour les try catch (classe native PHP, obligatoire avec les namespaces)
 
 class AuthController extends Controller {
 
     private $userModel; // Instance du modèle User
+    private $clientModel; // Instance du modèle Client
 
     public function __construct() {
         $this->userModel = new UserModel(); // Instancie le modèle User
+        $this->clientModel = new ClientModel(); // Instancie le modèle Client
     }
 
 
     // Affiche le formulaire de connexion
     public function showLogin() {
-        $this->setTitle('Connexion - PrediF1');
+        $this->setTitle('Connexion - TestCDA');
         if(!empty($_SESSION['user_logged'])) { // Si l'utilisateur est déjà connecté
-            $this->redirect('accueil'); // Redirige vers la route 'accueil'
+            $this->redirect('home'); // Redirige vers la route 'home'
         }
         require RACINE . "/app/view/layout/header.php";
-        require RACINE . "/app/view/user/login.php"; // Affiche le formulaire de connexion
+        require RACINE . "/app/view/user/login.php";
         require RACINE . "/app/view/layout/footer.php";
     }
 
     // Connecte l'utilisateur avec son email et mot de passe
     public function login() {
         if($_SERVER['REQUEST_METHOD'] !== 'POST') { // Si le formulaire n'est pas soumis
-            require RACINE . "/app/view/user/login.php"; // Affiche le formulaire de connexion
-            return; // Arrête la fonction
+            require RACINE . "/app/view/user/login.php";
+            return;
         }
         $this->checkCsrf(); // Vérifie le token CSRF avant tout traitement du formulaire
         try {
-            $user = $this->userModel->getByEmail($_POST['email']); // Cherche l'utilisateur en BDD par son email
+            $user = $this->userModel->getByEmail($_POST['email']); // Cherche l'utilisateur par email
         } catch(Exception $e) {
             $this->catchError($e);
-            return; // Arrête la fonction
-        }
-        if(!$user) { // Si l'email n'existe pas en BDD
-            $this->error('Email ou mot de passe incorrects'); // Stocke l'erreur en session
-            $_SESSION['form_email'] = $_POST['email']; // Stocke l'email en session
-            $this->redirect('connexion'); // Redirige → plus de POST en mémoire
             return;
         }
-        if(password_verify($_POST['password'], $user['password'])) { // Vérifie le mot de passe avec le hash en BDD
+        if(!$user) { // Si l'email n'existe pas en BDD
+            $this->error('Email ou mot de passe incorrects');
+            $_SESSION['form_email'] = $_POST['email'];
+            $this->redirect('login');
+            return;
+        }
+        if(password_verify($_POST['password'], $user['password'])) { // Vérifie le mot de passe
             $_SESSION['user_logged'] = true; // Marque l'utilisateur comme connecté
             $_SESSION['user_id'] = $user['id']; // Stocke l'id en session
-            $_SESSION['user_role'] = $user['role']; // Stocke le rôle en session (user/admin)
+            $_SESSION['user_role'] = $user['role']; // Stocke le rôle en session
             $_SESSION['user_email'] = $_POST['email']; // Stocke l'email en session
             if($_SESSION['user_role'] === 'admin') {
-                $this->redirect('admin'); // ← admin → dashboard
+                $this->redirect('admin');
             } else {
-                $this->redirect('accueil'); // ← user → accueil
+                $this->redirect('home');
             }
         } else {
-            $this->error('Email ou mot de passe incorrects'); // Stocke l'erreur en session
-            $_SESSION['form_email'] = $_POST['email']; // Stocke l'email en session
-            $this->redirect('connexion'); // remplacer les require par ça
+            $this->error('Email ou mot de passe incorrects');
+            $_SESSION['form_email'] = $_POST['email'];
+            $this->redirect('login');
             return;
         }
     }
 
     // Affiche le formulaire d'inscription
     public function showRegister() {
-        $this->setTitle('Inscription - PrediF1');
+        $this->setTitle('Inscription - TestCDA');
         if(!empty($_SESSION['user_logged'])) { // Si l'utilisateur est déjà connecté
-            $this->redirect('accueil'); // Redirige vers la route 'accueil'
+            $this->redirect('home');
         }
         require RACINE . "/app/view/layout/header.php";
-        require RACINE . "/app/view/user/register.php"; // Affiche le formulaire d'inscription
+        require RACINE . "/app/view/user/register.php";
         require RACINE . "/app/view/layout/footer.php";
     }
 
     // Inscrit un nouvel utilisateur
     public function register() {
-        $this->setTitle('Inscription - PrediF1');
+        $this->setTitle('Inscription - TestCDA');
         if($_SERVER['REQUEST_METHOD'] !== 'POST') {
             require RACINE . '/app/view/layout/header.php';
             require RACINE . '/app/view/user/register.php';
@@ -83,8 +86,7 @@ class AuthController extends Controller {
         }
         $this->checkCsrf(); // Vérifie le token CSRF avant tout traitement du formulaire
 
-        // Initialise le tableau d'erreurs
-        $errors = [];
+        $errors = []; // Initialise le tableau d'erreurs
 
         // Vérifie que les champs ne sont pas vides
         if(empty($_POST['name'])) $errors['name'] = 'Nom requis';
@@ -107,25 +109,25 @@ class AuthController extends Controller {
         // Si erreurs → réaffiche le formulaire avec les erreurs
         if(!empty($errors)) {
             require RACINE . '/app/view/layout/header.php';
-            require RACINE . '/app/view/user/register.php'; // $errors disponible dans la vue
+            require RACINE . '/app/view/user/register.php';
             require RACINE . '/app/view/layout/footer.php';
             return;
         }
 
         try {
-            $user = $this->userModel->getByEmail($_POST['email']); // Vérifie si l'email existe déjà en BDD
+            $user = $this->userModel->getByEmail($_POST['email']); // Vérifie si l'email existe déjà
         } catch(Exception $e) {
             $this->catchError($e);
-            return; // Arrête la fonction
+            return;
         }
         if($user) { // Si l'email existe déjà
-            $this->formError('Email déjà existant'); // Message d'erreur
-            $this->redirect('connexion'); // ← l'utilisateur existe déjà, on le redirige vers la connexion
-            return; // Arrête la fonction
+            $this->formError('Email déjà existant');
+            $this->redirect('login');
+            return;
         }
-        $hashedPassword = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash le mot de passe (jamais stocker en clair !)
+        $hashedPassword = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash le mot de passe
         try {
-            $this->userModel->create([ // Crée l'utilisateur en BDD
+            $this->userModel->create([
                 'email' => $_POST['email'],
                 'password' => $hashedPassword,
                 'name' => $_POST['name'],
@@ -134,16 +136,25 @@ class AuthController extends Controller {
             ]);
         } catch(Exception $e) {
             $this->catchError($e);
-            return; // Arrête la fonction
+            return;
         }
-        $this->success('Inscription réussie ! Connectez-vous.'); // Message de succès
-        $this->redirect('connexion'); // Redirige vers la page de connexion
+        $this->success('Inscription réussie ! Connectez-vous.');
+        $this->redirect('login');
     }
 
-    // Déconnecte l'utilisateur et détruit la session
+    // Exporte les clients puis déconnecte l'utilisateur et détruit la session
     public function logout() {
+        try {
+            $clients = $this->clientModel->getAll(); // Récupère tous les clients
+            foreach($clients as $c) { // Boucle sur chaque client et ajoute une ligne CSV
+                $content .= '"'.$c['id'].'","'.$c['name'].'","'.$c['firstName'].'","'.$c['phone'].'","'.$c['address'].'","'.$c['zipCode'].'","'.$c['city'].'"'."\n";
+            }
+            file_put_contents(RACINE . '/Data/data.dat', $content); // Écrit dans le fichier
+        } catch(Exception $e) {
+            error_log($e->getMessage()); // Log l'erreur sans bloquer la déconnexion
+        }
         $_SESSION = []; // Vide toutes les variables de session
         session_destroy(); // Détruit la session
-        $this->redirect('accueil'); // Redirige vers la route 'accueil'
+        $this->redirect('home');
     }
 }

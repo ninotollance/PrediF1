@@ -1,14 +1,15 @@
 {
-    "name": "kerx12/predi-f1",
-    "description": "projet",
+    "name": "kerx12/test-cda",
+    "description": "Test CDA - Gestion de portefeuille clients",
     "require": {
         "vlucas/phpdotenv": "^5.6"
     },
     "autoload": {
-        "psr-4": {
-            "PrediF1\\": "app/",
-            "Config\\": "config/"
-        }
+    "psr-4": {
+        "TestCDA\\": "app/",
+        "Config\\": "config/"
+    }
+        
     },
     "authors": [
         {
